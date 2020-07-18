@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, OnInit, Injector, ViewChild, OnDestroy, DoCheck, KeyValueDiffers } from '@angular/core';
+import { Events } from 'ionic-angular';
 import { CoreBlockDelegate } from '../../providers/delegate';
 import { CoreDynamicComponent } from '@components/dynamic-component/dynamic-component';
 import { Subscription } from 'rxjs';
@@ -43,7 +44,7 @@ export class CoreBlockComponent implements OnInit, OnDestroy, DoCheck {
     protected differ: any; // To detect changes in the data input.
 
     constructor(protected injector: Injector, protected blockDelegate: CoreBlockDelegate, differs: KeyValueDiffers,
-            protected eventsProvider: CoreEventsProvider) {
+            protected eventsProvider: CoreEventsProvider, protected events: Events) {
         this.differ = differs.find([]).create();
     }
 
@@ -71,7 +72,14 @@ export class CoreBlockComponent implements OnInit, OnDestroy, DoCheck {
             // Check if there's any change in the extraData object.
             const changes = this.differ.diff(this.extraData);
             if (changes) {
+                if (this.data.title === "addon.block_newsitems.pluginname") {
+                    console.log(this.data, "eh da data fel blocks 2");
+                    }
                 this.data = Object.assign(this.data, this.extraData || {});
+                if (this.data.title === "addon.block_newsitems.pluginname" && this.data.block && this.data.block.contents && this.data.block.contents.content) {
+                    this.data.numberOfElements = this.getNumberOfElements(this.data.block.contents.content);
+                    this.events.publish('announcements:updated', this.data, Date.now());
+                }
             }
         }
     }
@@ -110,6 +118,13 @@ export class CoreBlockComponent implements OnInit, OnDestroy, DoCheck {
                     link: data.link || null,
                     linkParams: data.linkParams || null,
                 }, this.extraData || {}, data.componentData || {});
+                if (this.data.title === "addon.block_newsitems.pluginname") {
+                console.log(this.data, "eh da data fel blocks 1");
+                }
+                if (this.data.title === "addon.block_newsitems.pluginname" && this.data.block && this.data.block.contents && this.data.block.contents.content) {
+                    this.data.numberOfElements = this.getNumberOfElements(this.data.block.contents.content);
+                    this.events.publish('announcements:updated', this.data, Date.now());
+                }
         }).catch(() => {
             // Ignore errors.
         }).finally(() => {
@@ -139,9 +154,16 @@ export class CoreBlockComponent implements OnInit, OnDestroy, DoCheck {
         if (this.dynamicComponent) {
             return Promise.resolve(this.dynamicComponent.callComponentFunction('doRefresh', [refresher, done, showErrors]));
         }
-
+        if (this.data.title === "addon.block_newsitems.pluginname") {
+            console.log(this.data, "eh da data fel blocks refreshed");
+            }
         return Promise.resolve();
     }
+
+    getNumberOfElements(content: string) {
+        var count = (content.match(/<li/g) || []).length;
+        return count;
+    } 
 
     /**
      * Invalidate some data.

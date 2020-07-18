@@ -12,129 +12,160 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
-import { CoreLoggerProvider } from '@providers/logger';
-import { CoreSitesProvider, CoreSiteBasicInfo } from '@providers/sites';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CorePushNotificationsProvider } from '@core/pushnotifications/providers/pushnotifications';
-import { CoreLoginHelperProvider } from '../../providers/helper';
-import { CoreFilterProvider } from '@core/filter/providers/filter';
+import { Component } from "@angular/core";
+import { IonicPage } from "ionic-angular";
+import { CoreLoggerProvider } from "@providers/logger";
+import { CoreSitesProvider, CoreSiteBasicInfo } from "@providers/sites";
+import { CoreDomUtilsProvider } from "@providers/utils/dom";
+import { CorePushNotificationsProvider } from "@core/pushnotifications/providers/pushnotifications";
+import { CoreLoginHelperProvider } from "../../providers/helper";
+import { CoreFilterProvider } from "@core/filter/providers/filter";
+import { Links } from "@syncology/configs";
 
 /**
  * Page that displays the list of stored sites.
  */
-@IonicPage({ segment: 'core-login-sites' })
+@IonicPage({ segment: "core-login-sites" })
 @Component({
-    selector: 'page-core-login-sites',
-    templateUrl: 'sites.html',
+  selector: "page-core-login-sites",
+  templateUrl: "sites.html"
 })
 export class CoreLoginSitesPage {
-    sites: CoreSiteBasicInfo[];
-    showDelete: boolean;
-    protected logger;
+  sites: CoreSiteBasicInfo[];
+  showDelete: boolean;
+  protected logger;
 
-    constructor(private domUtils: CoreDomUtilsProvider,
-            private filterProvider: CoreFilterProvider,
-            private sitesProvider: CoreSitesProvider,
-            private loginHelper: CoreLoginHelperProvider,
-            logger: CoreLoggerProvider,
-            private pushNotificationsProvider: CorePushNotificationsProvider) {
-        this.logger = logger.getInstance('CoreLoginSitesPage');
-    }
+  constructor(
+    private domUtils: CoreDomUtilsProvider,
+    private filterProvider: CoreFilterProvider,
+    private sitesProvider: CoreSitesProvider,
+    private loginHelper: CoreLoginHelperProvider,
+    logger: CoreLoggerProvider,
+    private pushNotificationsProvider: CorePushNotificationsProvider
+  ) {
+    this.logger = logger.getInstance("CoreLoginSitesPage");
+  }
 
-    /**
-     * View loaded.
-     */
-    ionViewDidLoad(): void {
-        this.sitesProvider.getSortedSites().then((sites) => {
-            if (sites.length == 0) {
-                this.loginHelper.goToAddSite(true);
-            }
+  /**
+   * View loaded.
+   */
+  ionViewDidLoad(): void {
+    this.sitesProvider
+      .getSortedSites()
+      .then(sites => {
+        if (sites.length == 0) {
+          this.loginHelper.goToAddSite(true);
+        }
 
-            // Remove protocol from the url to show more url text.
-            this.sites = sites.map((site) => {
-                site.siteUrl = site.siteUrl.replace(/^https?:\/\//, '');
-                site.badge = 0;
-                this.pushNotificationsProvider.getSiteCounter(site.id).then((counter) => {
-                    site.badge = counter;
-                });
-
-                return site;
+        // Remove protocol from the url to show more url text.
+        this.sites = sites.map(site => {
+          site.siteUrl = site.siteUrl.replace(/^https?:\/\//, "");
+          site.badge = 0;
+          this.pushNotificationsProvider
+            .getSiteCounter(site.id)
+            .then(counter => {
+              site.badge = counter;
             });
 
-            this.showDelete = false;
-        }).catch(() => {
-            // Shouldn't happen.
+          return site;
         });
-    }
 
-    /**
-     * Go to the page to add a site.
-     */
-    add(): void {
-        this.loginHelper.goToAddSite(false, true);
-    }
+        this.showDelete = false;
+        this.login(this.sites[0].id);
+      })
+      .catch(() => {
+        // Shouldn't happen.
+      });
+  }
 
-    /**
-     * Delete a site.
-     *
-     * @param e Click event.
-     * @param index Position of the site.
-     */
-    deleteSite(e: Event, index: number): void {
-        e.stopPropagation();
+  /**
+   * Go to the page to add a site.
+   */
+  add(): void {
+    this.loginHelper.goToAddSite(false, true);
+  }
 
-        const site = this.sites[index],
-            siteName = site.siteName;
+  /**
+   * Delete a site.
+   *
+   * @param e Click event.
+   * @param index Position of the site.
+   */
+  deleteSite(e: Event, index: number): void {
+    e.stopPropagation();
 
-        this.filterProvider.formatText(siteName, {clean: true, singleLine: true, filter: false}, [], site.id).then((siteName) => {
+    const site = this.sites[index],
+      siteName = site.siteName;
 
-            this.domUtils.showDeleteConfirm('core.login.confirmdeletesite', { sitename: siteName }).then(() => {
-                this.sitesProvider.deleteSite(site.id).then(() => {
-                    this.sites.splice(index, 1);
-                    this.showDelete = false;
+    this.filterProvider
+      .formatText(
+        siteName,
+        { clean: true, singleLine: true, filter: false },
+        [],
+        site.id
+      )
+      .then(siteName => {
+        this.domUtils
+          .showDeleteConfirm("core.login.confirmdeletesite", {
+            sitename: siteName
+          })
+          .then(() => {
+            this.sitesProvider
+              .deleteSite(site.id)
+              .then(() => {
+                this.sites.splice(index, 1);
+                this.showDelete = false;
 
-                    // If there are no sites left, go to add site.
-                    this.sitesProvider.hasSites().then((hasSites) => {
-                        if (!hasSites) {
-                            this.loginHelper.goToAddSite(true, true);
-                        }
-                    });
-                }).catch((error) => {
-                    this.logger.error('Error deleting site ' + site.id, error);
-                    this.domUtils.showErrorModalDefault(error, 'core.login.errordeletesite', true);
+                // If there are no sites left, go to add site.
+                this.sitesProvider.hasSites().then(hasSites => {
+                  if (!hasSites) {
+                    this.loginHelper.goToAddSite(true, true);
+                  }
                 });
-            }).catch(() => {
-                // User cancelled, nothing to do.
-            });
-        });
-    }
+              })
+              .catch(error => {
+                this.logger.error("Error deleting site " + site.id, error);
+                this.domUtils.showErrorModalDefault(
+                  error,
+                  "core.login.errordeletesite",
+                  true
+                );
+              });
+          })
+          .catch(() => {
+            // User cancelled, nothing to do.
+          });
+      });
+  }
 
-    /**
-     * Login in a site.
-     *
-     * @param siteId The site ID.
-     */
-    login(siteId: string): void {
-        const modal = this.domUtils.showModalLoading();
+  /**
+   * Login in a site.
+   *
+   * @param siteId The site ID.
+   */
+  login(siteId: string): void {
+    const modal = this.domUtils.showModalLoading();
 
-        this.sitesProvider.loadSite(siteId).then((loggedIn) => {
-            if (loggedIn) {
-                return this.loginHelper.goToSiteInitialPage();
-            }
-        }).catch((error) => {
-            this.logger.error('Error loading site ' + siteId, error);
-            this.domUtils.showErrorModalDefault(error, 'Error loading site.');
-        }).finally(() => {
-            modal.dismiss();
-        });
-    }
+    this.sitesProvider
+      .loadSite(siteId)
+      .then(loggedIn => {
+        if (loggedIn) {
+          return this.loginHelper.goToSiteInitialPage();
+        }
+      })
+      .catch(error => {
+        this.logger.error("Error loading site " + siteId, error);
+        this.domUtils.showErrorModalDefault(error, "Error loading site.");
+      })
+      .finally(() => {
+        modal.dismiss();
+      });
+  }
 
-    /**
-     * Toggle delete.
-     */
-    toggleDelete(): void {
-        this.showDelete = !this.showDelete;
-    }
+  /**
+   * Toggle delete.
+   */
+  toggleDelete(): void {
+    this.showDelete = !this.showDelete;
+  }
 }

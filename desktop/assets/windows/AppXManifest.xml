@@ -3,14 +3,14 @@
    xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
    xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities">
-  <Identity Name="3312ADB7.MoodleDesktop"
+  <Identity Name="3312ADB7.EduSyncDesktop"
     ProcessorArchitecture="x64"
     Publisher="CN=33CDCDF6-1EB5-4827-9897-ED25C91A32F6"
     Version="3.8.2.0" />
   <Properties>
-    <DisplayName>Moodle Desktop</DisplayName>
-    <PublisherDisplayName>Moodle Pty Ltd.</PublisherDisplayName>
-    <Description>The official app for Moodle.</Description>
+    <DisplayName>EduSync Desktop</DisplayName>
+    <PublisherDisplayName>Syncology eServices.</PublisherDisplayName>
+    <Description>The official app for EduSync.</Description>
     <Logo>assets\StoreLogo.png</Logo>
   </Properties>
   <Resources>
@@ -23,19 +23,19 @@
     <rescap:Capability Name="runFullTrust"/>
   </Capabilities>
   <Applications>
-    <Application Id="com.moodle.moodlemobile" Executable="app\Moodle Desktop.exe" EntryPoint="Windows.FullTrustApplication">
+    <Application Id="tech.syncology.edusync" Executable="app\EduSync Desktop.exe" EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
-       BackgroundColor="#464646"
-       DisplayName="Moodle Desktop"
+       BackgroundColor="#2062c2"
+       DisplayName="EduSync Desktop"
        Square150x150Logo="assets\Square150x150Logo.png"
        Square44x44Logo="assets\Square44x44Logo.png"
-       Description="Moodle Desktop: The official desktop app for Moodle.">
+       Description="EduSync Desktop: The official desktop app for EduSync.">
         <uap:DefaultTile Wide310x150Logo="assets\Wide310x150Logo.png" />
       </uap:VisualElements>
       <Extensions>
         <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="moodlemobile">
-            <uap:DisplayName>Moodle Mobile URI Scheme</uap:DisplayName>
+          <uap:Protocol Name="edusyncmobile">
+            <uap:DisplayName>EduSync Mobile URI Scheme</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
       </Extensions>

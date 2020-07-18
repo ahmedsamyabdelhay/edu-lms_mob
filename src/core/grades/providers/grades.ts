@@ -199,19 +199,26 @@ export class CoreGradesProvider {
      * @param siteId Site ID. If not defined, current site.
      * @return Promise to be resolved when the grades are retrieved.
      */
-    getCoursesGrades(siteId?: string): Promise<any> {
+    getCoursesGrades(siteId?: string, userId?: number): Promise<any> {
         return this.sitesProvider.getSite(siteId).then((site) => {
             this.logger.debug('Get course grades');
 
+            let data = undefined;
+            if (userId) {
+              data = {
+                  userid: userId
+              }
+            }
             const preSets = {
                 cacheKey: this.getCoursesGradesCacheKey()
             };
-
-            return site.read('gradereport_overview_get_course_grades', undefined, preSets).then((data) => {
+            console.log(userId, "hot damn shit");
+            return site.read('gradereport_overview_get_course_grades', data, preSets).then((data) => {
+                console.log(data, "shit 1");
                 if (data && data.grades) {
                     return data.grades;
                 }
-
+                console.log(data, "shit 2");
                 return Promise.reject(null);
             });
         });

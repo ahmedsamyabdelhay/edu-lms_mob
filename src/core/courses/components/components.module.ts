@@ -12,43 +12,48 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from 'ionic-angular';
-import { TranslateModule } from '@ngx-translate/core';
-import { CoreComponentsModule } from '@components/components.module';
-import { CoreDirectivesModule } from '@directives/directives.module';
-import { CorePipesModule } from '@pipes/pipes.module';
-import { CoreCoursesCourseProgressComponent } from './course-progress/course-progress';
-import { CoreCoursesCourseListItemComponent } from './course-list-item/course-list-item';
-import { CoreCoursesCourseOptionsMenuComponent } from './course-options-menu/course-options-menu';
-import { CoreCoursesMyCoursesComponent } from './my-courses/my-courses';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { IonicModule } from "ionic-angular";
+import { TranslateModule } from "@ngx-translate/core";
+import { CoreComponentsModule } from "@components/components.module";
+import { CoreDirectivesModule } from "@directives/directives.module";
+import { CorePipesModule } from "@pipes/pipes.module";
+import { CoreCoursesCourseProgressComponent } from "./course-progress/course-progress";
+import { CoreCoursesCourseListItemComponent } from "./course-list-item/course-list-item";
+import { CoreCoursesCourseOptionsMenuComponent } from "./course-options-menu/course-options-menu";
+import { CoreCoursesMyCoursesComponent } from "./my-courses/my-courses";
+import { CoreSiteHomeNewsComponent } from "./news/news";
+import { CoreDashboardAnnouncementComponent } from "./announcements/announcements";
+import { CoreCourseComponentsModule } from "@core/course/components/components.module";
 
 @NgModule({
-    declarations: [
-        CoreCoursesCourseProgressComponent,
-        CoreCoursesCourseListItemComponent,
-        CoreCoursesCourseOptionsMenuComponent,
-        CoreCoursesMyCoursesComponent
-    ],
-    imports: [
-        CommonModule,
-        IonicModule,
-        TranslateModule.forChild(),
-        CoreComponentsModule,
-        CoreDirectivesModule,
-        CorePipesModule
-    ],
-    providers: [
-    ],
-    exports: [
-        CoreCoursesCourseProgressComponent,
-        CoreCoursesCourseListItemComponent,
-        CoreCoursesCourseOptionsMenuComponent,
-        CoreCoursesMyCoursesComponent
-    ],
-    entryComponents: [
-        CoreCoursesCourseOptionsMenuComponent
-    ]
+  declarations: [
+    CoreCoursesCourseProgressComponent,
+    CoreCoursesCourseListItemComponent,
+    CoreCoursesCourseOptionsMenuComponent,
+    CoreCoursesMyCoursesComponent,
+    CoreSiteHomeNewsComponent,
+    CoreDashboardAnnouncementComponent
+  ],
+  imports: [
+    CommonModule,
+    IonicModule,
+    TranslateModule.forChild(),
+    CoreComponentsModule,
+    CoreDirectivesModule,
+    CorePipesModule,
+    CoreCourseComponentsModule
+  ],
+  providers: [],
+  exports: [
+    CoreCoursesCourseProgressComponent,
+    CoreCoursesCourseListItemComponent,
+    CoreCoursesCourseOptionsMenuComponent,
+    CoreCoursesMyCoursesComponent,
+    CoreSiteHomeNewsComponent,
+    CoreDashboardAnnouncementComponent
+  ],
+  entryComponents: [CoreCoursesCourseOptionsMenuComponent]
 })
 export class CoreCoursesComponentsModule {}

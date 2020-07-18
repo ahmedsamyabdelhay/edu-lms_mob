@@ -206,7 +206,6 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
         this.loadMoreError = false;
 
         const promises = [];
-
         promises.push(this.forumProvider.getForum(this.courseId, this.module.id).then((forum) => {
             this.forum = forum;
 
@@ -388,7 +387,6 @@ export class AddonModForumIndexComponent extends CoreCourseModuleMainActivityCom
                 } else {
                     this.discussions = this.discussions.concat(discussions);
                 }
-
                 this.canLoadMore = response.canLoadMore;
                 this.page++;
 

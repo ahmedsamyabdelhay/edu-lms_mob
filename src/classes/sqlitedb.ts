@@ -310,7 +310,6 @@ export class SQLiteDB {
     createTable(name: string, columns: SQLiteDBColumnSchema[], primaryKeys?: string[], uniqueKeys?: string[][],
             foreignKeys?: SQLiteDBForeignKeySchema[], tableCheck?: string): Promise<any> {
         const sql = this.buildCreateTableSql(name, columns, primaryKeys, uniqueKeys, foreignKeys, tableCheck);
-
         return this.execute(sql);
     }
 

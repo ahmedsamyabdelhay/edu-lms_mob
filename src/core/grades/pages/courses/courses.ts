@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Content } from 'ionic-angular';
+import { IonicPage, NavParams, Content } from 'ionic-angular';
 import { CoreGradesProvider } from '../../providers/grades';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreSplitViewComponent } from '@components/split-view/split-view';
@@ -36,8 +36,9 @@ export class CoreGradesCoursesPage {
     userId: number;
     gradesLoaded = false;
 
-    constructor(private gradesProvider: CoreGradesProvider, private domUtils: CoreDomUtilsProvider,
+    constructor(navParams: NavParams, private gradesProvider: CoreGradesProvider, private domUtils: CoreDomUtilsProvider,
         private gradesHelper: CoreGradesHelperProvider) {
+            this.userId = navParams.get('userId');
     }
 
     /**
@@ -69,8 +70,11 @@ export class CoreGradesCoursesPage {
      * @return Resolved when done.
      */
     fetchData(): Promise<any> {
-        return this.gradesProvider.getCoursesGrades().then((grades) => {
+        console.log(this.userId, "pre hot damn shit");
+        return this.gradesProvider.getCoursesGrades(undefined, this.userId).then((grades) => {
+            console.log(grades, "shit 3")
             return this.gradesHelper.getGradesCourseData(grades).then((grades) => {
+                console.log(grades, "shit 4")
                this.grades = grades;
             });
         }).catch((error) => {

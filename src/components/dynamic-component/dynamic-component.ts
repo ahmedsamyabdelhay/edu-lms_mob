@@ -13,12 +13,24 @@
 // limitations under the License.
 
 import {
-    Component, Input, ViewChild, OnInit, OnChanges, DoCheck, ViewContainerRef, ComponentFactoryResolver, ComponentRef,
-    KeyValueDiffers, SimpleChange, ChangeDetectorRef, Optional, ElementRef
-} from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { CoreLoggerProvider } from '@providers/logger';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+  Component,
+  Input,
+  ViewChild,
+  OnInit,
+  OnChanges,
+  DoCheck,
+  ViewContainerRef,
+  ComponentFactoryResolver,
+  ComponentRef,
+  KeyValueDiffers,
+  SimpleChange,
+  ChangeDetectorRef,
+  Optional,
+  ElementRef
+} from "@angular/core";
+import { NavController } from "ionic-angular";
+import { CoreLoggerProvider } from "@providers/logger";
+import { CoreDomUtilsProvider } from "@providers/utils/dom";
 
 /**
  * Component to create another component dynamically.
@@ -49,137 +61,149 @@ import { CoreDomUtilsProvider } from '@providers/utils/dom';
  * if no component is supplied then the template will show the message "Cannot render the data.".
  */
 @Component({
-    selector: 'core-dynamic-component',
-    templateUrl: 'core-dynamic-component.html'
+  selector: "core-dynamic-component",
+  templateUrl: "core-dynamic-component.html"
 })
 export class CoreDynamicComponent implements OnInit, OnChanges, DoCheck {
+  @Input()
+  component: any;
+  @Input()
+  data: any;
 
-    @Input() component: any;
-    @Input() data: any;
+  // Get the container where to put the dynamic component.
+  @ViewChild("dynamicComponent", { read: ViewContainerRef })
+  set dynamicComponent(el: ViewContainerRef) {
+    this.container = el;
+    this.createComponent();
+  }
 
-    // Get the container where to put the dynamic component.
-    @ViewChild('dynamicComponent', { read: ViewContainerRef }) set dynamicComponent(el: ViewContainerRef) {
-        this.container = el;
-        this.createComponent();
+  instance: any;
+  container: ViewContainerRef;
+  protected logger: any;
+  protected differ: any; // To detect changes in the data input.
+  protected lastComponent: any;
+
+  constructor(
+    logger: CoreLoggerProvider,
+    protected factoryResolver: ComponentFactoryResolver,
+    differs: KeyValueDiffers,
+    @Optional() protected navCtrl: NavController,
+    protected cdr: ChangeDetectorRef,
+    protected element: ElementRef,
+    protected domUtils: CoreDomUtilsProvider
+  ) {
+    this.logger = logger.getInstance("CoreDynamicComponent");
+    this.differ = differs.find([]).create();
+  }
+
+  /**
+   * Component being initialized.
+   */
+  ngOnInit(): void {
+    this.createComponent();
+  }
+
+  /**
+   * Detect changes on input properties.
+   */
+  ngOnChanges(changes: { [name: string]: SimpleChange }): void {
+    if (changes.component && !this.component) {
+      // Component not set, destroy the instance if any.
+      this.lastComponent = undefined;
+      this.instance = undefined;
+      this.container && this.container.clear();
+    } else if (
+      changes.component &&
+      (!this.instance || this.component != this.lastComponent)
+    ) {
+      this.createComponent();
     }
+  }
 
-    instance: any;
-    container: ViewContainerRef;
-    protected logger: any;
-    protected differ: any; // To detect changes in the data input.
-    protected lastComponent: any;
-
-    constructor(logger: CoreLoggerProvider, protected factoryResolver: ComponentFactoryResolver, differs: KeyValueDiffers,
-            @Optional() protected navCtrl: NavController, protected cdr: ChangeDetectorRef, protected element: ElementRef,
-            protected domUtils: CoreDomUtilsProvider) {
-
-        this.logger = logger.getInstance('CoreDynamicComponent');
-        this.differ = differs.find([]).create();
-    }
-
-    /**
-     * Component being initialized.
-     */
-    ngOnInit(): void {
-        this.createComponent();
-    }
-
-    /**
-     * Detect changes on input properties.
-     */
-    ngOnChanges(changes: { [name: string]: SimpleChange }): void {
-
-        if (changes.component && !this.component) {
-            // Component not set, destroy the instance if any.
-            this.lastComponent = undefined;
-            this.instance = undefined;
-            this.container && this.container.clear();
-        } else if (changes.component && (!this.instance || this.component != this.lastComponent)) {
-            this.createComponent();
-        }
-    }
-
-    /**
-     * Detect and act upon changes that Angular can’t or won’t detect on its own (objects and arrays).
-     */
-    ngDoCheck(): void {
-        if (this.instance) {
-            // Check if there's any change in the data object.
-            const changes = this.differ.diff(this.data);
-            if (changes) {
-                this.setInputData();
-                if (this.instance.ngOnChanges) {
-                    this.instance.ngOnChanges(this.domUtils.createChangesFromKeyValueDiff(changes));
-                }
-            }
-        }
-    }
-
-    /**
-     * Call a certain function on the component.
-     *
-     * @param name Name of the function to call.
-     * @param params List of params to send to the function.
-     * @return Result of the call. Undefined if no component instance or the function doesn't exist.
-     */
-    callComponentFunction(name: string, params?: any[]): any {
-        if (this.instance && typeof this.instance[name] == 'function') {
-            return this.instance[name].apply(this.instance, params);
-        }
-    }
-
-    /**
-     * Create a component, add it to a container and set the input data.
-     *
-     * @return Whether the component was successfully created.
-     */
-    protected createComponent(): boolean {
-        this.lastComponent = this.component;
-
-        if (!this.component || !this.container) {
-            // No component to instantiate or container doesn't exist right now.
-            return false;
-        }
-
-        if (this.instance) {
-            // Component already instantiated.
-            return true;
-        }
-
-        if (this.component instanceof ComponentRef) {
-            // A ComponentRef was supplied instead of the component class. Add it to the view.
-            this.container.insert(this.component.hostView);
-            this.instance = this.component.instance;
-
-            // This feature is usually meant for site plugins. Inject some properties.
-            this.instance['ChangeDetectorRef'] = this.cdr;
-            this.instance['NavController'] = this.navCtrl;
-            this.instance['componentContainer'] = this.element.nativeElement;
-        } else {
-            try {
-                // Create the component and add it to the container.
-                const factory = this.factoryResolver.resolveComponentFactory(this.component),
-                    componentRef = this.container.createComponent(factory);
-
-                this.instance = componentRef.instance;
-            } catch (ex) {
-                this.logger.error('Error creating component', ex);
-
-                return false;
-            }
-        }
-
+  /**
+   * Detect and act upon changes that Angular can’t or won’t detect on its own (objects and arrays).
+   */
+  ngDoCheck(): void {
+    if (this.instance) {
+      // Check if there's any change in the data object.
+      const changes = this.differ.diff(this.data);
+      if (changes) {
         this.setInputData();
-
-        return true;
-    }
-
-    /**
-     * Set the input data for the component.
-     */
-    protected setInputData(): void {
-        for (const name in this.data) {
-            this.instance[name] = this.data[name];
+        if (this.instance.ngOnChanges) {
+          this.instance.ngOnChanges(
+            this.domUtils.createChangesFromKeyValueDiff(changes)
+          );
         }
+      }
     }
+  }
+
+  /**
+   * Call a certain function on the component.
+   *
+   * @param name Name of the function to call.
+   * @param params List of params to send to the function.
+   * @return Result of the call. Undefined if no component instance or the function doesn't exist.
+   */
+  callComponentFunction(name: string, params?: any[]): any {
+    if (this.instance && typeof this.instance[name] == "function") {
+      return this.instance[name].apply(this.instance, params);
+    }
+  }
+
+  /**
+   * Create a component, add it to a container and set the input data.
+   *
+   * @return Whether the component was successfully created.
+   */
+  protected createComponent(): boolean {
+    this.lastComponent = this.component;
+    if (!this.component || !this.container) {
+      // No component to instantiate or container doesn't exist right now.
+      return false;
+    }
+
+    if (this.instance) {
+      // Component already instantiated.
+      return true;
+    }
+
+    if (this.component instanceof ComponentRef) {
+      // A ComponentRef was supplied instead of the component class. Add it to the view.
+      this.container.insert(this.component.hostView);
+      this.instance = this.component.instance;
+
+      // This feature is usually meant for site plugins. Inject some properties.
+      this.instance["ChangeDetectorRef"] = this.cdr;
+      this.instance["NavController"] = this.navCtrl;
+      this.instance["componentContainer"] = this.element.nativeElement;
+    } else {
+      try {
+        // Create the component and add it to the container.
+        const factory = this.factoryResolver.resolveComponentFactory(
+            this.component
+          ),
+          componentRef = this.container.createComponent(factory);
+
+        this.instance = componentRef.instance;
+      } catch (ex) {
+        this.logger.error("Error creating component", ex);
+
+        return false;
+      }
+    }
+
+    this.setInputData();
+
+    return true;
+  }
+
+  /**
+   * Set the input data for the component.
+   */
+  protected setInputData(): void {
+    for (const name in this.data) {
+      this.instance[name] = this.data[name];
+    }
+  }
 }

@@ -13,12 +13,15 @@ ion-app.app-root.md {
   }
 
   .bar-buttons core-context-menu .button-clear-md {
-    color: $toolbar-md-button-color;
+    color: $toolbar-text-color;
   }
 
   .item-md ion-spinner[item-start] + .item-inner,
   .item-md ion-spinner[item-start] + .item-input {
-    @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2) - 1, null);
+    @include margin-horizontal(
+      $item-md-padding-start + ($item-md-padding-start / 2) - 1,
+      null
+    );
   }
 
   .item-md ion-icon[item-start] + .item-inner,
@@ -43,7 +46,12 @@ ion-app.app-root.md {
       }
 
       &[icon-start] {
-        @include safe-area-padding(null, null, null, $card-md-padding-left * 2 + 20);
+        @include safe-area-padding(
+          null,
+          null,
+          null,
+          $card-md-padding-left * 2 + 20
+        );
 
         ion-icon {
           @include safe-area-position(null, null, null, $card-md-padding-left);
@@ -53,8 +61,8 @@ ion-app.app-root.md {
   }
 
   .core-avoid-header ion-content {
-      top: $navbar-md-height;
-      height: calc(100% - #{($navbar-md-height)});
+    top: $navbar-md-height;
+    height: calc(100% - #{($navbar-md-height)});
   }
 
   // Different levels of padding.

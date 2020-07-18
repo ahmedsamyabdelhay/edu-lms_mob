@@ -12,46 +12,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from 'ionic-angular';
-import { TranslateModule } from '@ngx-translate/core';
-import { CoreComponentsModule } from '@components/components.module';
-import { CoreDirectivesModule } from '@directives/directives.module';
-import { CoreCourseComponentsModule } from '@core/course/components/components.module';
-import { CoreBlockComponentsModule } from '@core/block/components/components.module';
-import { CoreSiteHomeIndexComponent } from './index/index';
-import { CoreSiteHomeAllCourseListComponent } from './all-course-list/all-course-list';
-import { CoreSiteHomeCategoriesComponent } from './categories/categories';
-import { CoreSiteHomeCourseSearchComponent } from './course-search/course-search';
-import { CoreSiteHomeEnrolledCourseListComponent } from './enrolled-course-list/enrolled-course-list';
-import { CoreSiteHomeNewsComponent } from './news/news';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { IonicModule } from "ionic-angular";
+import { TranslateModule } from "@ngx-translate/core";
+import { CoreComponentsModule } from "@components/components.module";
+import { CoreDirectivesModule } from "@directives/directives.module";
+import { CoreCourseComponentsModule } from "@core/course/components/components.module";
+import { CoreBlockComponentsModule } from "@core/block/components/components.module";
+import { CoreSiteHomeIndexComponent } from "./index/index";
+import { CoreSiteHomeAllCourseListComponent } from "./all-course-list/all-course-list";
+import { CoreSiteHomeCategoriesComponent } from "./categories/categories";
+import { CoreSiteHomeCourseSearchComponent } from "./course-search/course-search";
+import { CoreSiteHomeEnrolledCourseListComponent } from "./enrolled-course-list/enrolled-course-list";
 
 @NgModule({
-    declarations: [
-        CoreSiteHomeIndexComponent,
-        CoreSiteHomeAllCourseListComponent,
-        CoreSiteHomeCategoriesComponent,
-        CoreSiteHomeCourseSearchComponent,
-        CoreSiteHomeEnrolledCourseListComponent,
-        CoreSiteHomeNewsComponent
-    ],
-    imports: [
-        CommonModule,
-        IonicModule,
-        TranslateModule.forChild(),
-        CoreComponentsModule,
-        CoreDirectivesModule,
-        CoreCourseComponentsModule,
-        CoreBlockComponentsModule
-    ],
-    exports: [
-        CoreSiteHomeIndexComponent,
-        CoreSiteHomeAllCourseListComponent,
-        CoreSiteHomeCategoriesComponent,
-        CoreSiteHomeCourseSearchComponent,
-        CoreSiteHomeEnrolledCourseListComponent,
-        CoreSiteHomeNewsComponent
-    ]
+  declarations: [
+    CoreSiteHomeIndexComponent,
+    CoreSiteHomeAllCourseListComponent,
+    CoreSiteHomeCategoriesComponent,
+    CoreSiteHomeCourseSearchComponent,
+    CoreSiteHomeEnrolledCourseListComponent
+  ],
+  imports: [
+    CommonModule,
+    IonicModule,
+    TranslateModule.forChild(),
+    CoreComponentsModule,
+    CoreDirectivesModule,
+    CoreCourseComponentsModule,
+    CoreBlockComponentsModule
+  ],
+  exports: [
+    CoreSiteHomeIndexComponent,
+    CoreSiteHomeAllCourseListComponent,
+    CoreSiteHomeCategoriesComponent,
+    CoreSiteHomeCourseSearchComponent,
+    CoreSiteHomeEnrolledCourseListComponent
+  ]
 })
 export class CoreSiteHomeComponentsModule {}

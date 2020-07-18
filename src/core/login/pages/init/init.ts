@@ -90,7 +90,6 @@ export class CoreLoginInitPage {
                     return this.loadPage();
                 });
             }
-
             return this.loginHelper.goToSiteInitialPage();
         }
 

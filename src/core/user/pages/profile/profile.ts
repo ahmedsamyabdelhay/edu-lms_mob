@@ -126,7 +126,6 @@ export class CoreUserProfilePage {
                             break;
                     }
                 });
-
                 this.isLoadingHandlers = !this.userDelegate.areHandlersLoaded(user.id);
             });
 
@@ -220,6 +219,15 @@ export class CoreUserProfilePage {
         // Decide which navCtrl to use. If this page is inside a split view, use the split view's master nav.
         const navCtrl = this.svComponent ? this.svComponent.getMasterNav() : this.navCtrl;
         navCtrl.push('CoreUserAboutPage', {courseId: this.courseId, userId: this.userId});
+    }
+
+    /**
+     * Open the page with the grades.
+     */
+    openUserGrades(): void {
+        // Decide which navCtrl to use. If this page is inside a split view, use the split view's master nav.
+        const navCtrl = this.svComponent ? this.svComponent.getMasterNav() : this.navCtrl;
+        navCtrl.push('CoreGradesCoursesPage', {courseId: this.courseId, userId: this.userId});
     }
 
     /**

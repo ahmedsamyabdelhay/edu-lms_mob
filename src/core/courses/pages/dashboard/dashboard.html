@@ -43,6 +43,8 @@
                     </ion-refresher>
                     <core-loading [hideUntil]="dashboardLoaded" class="core-loading-center">
                         <ion-list>
+                            <!-- Announcements blocks. -->
+                           <core-dashboard-announcements  *ngIf="announcementsBlock && announcementsLoaded" [block]="announcementsBlock" [announcementsLoaded]="announcementsLoaded" contextLevel="user" [instanceId]="userId" [extraData]="{'downloadEnabled': downloadEnabled}"></core-dashboard-announcements>
                             <!-- Dashboard blocks. -->
                             <ng-container *ngFor="let block of blocks">
                                 <core-block *ngIf="block.visible" [block]="block" contextLevel="user" [instanceId]="userId" [extraData]="{'downloadEnabled': downloadEnabled}"></core-block>

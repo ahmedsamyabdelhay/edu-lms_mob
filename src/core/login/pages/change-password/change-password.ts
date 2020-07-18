@@ -12,58 +12,78 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
-import { CoreSitesProvider } from '@providers/sites';
-import { CoreLoginHelperProvider } from '../../providers/helper';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
+import { Component } from "@angular/core";
+import { IonicPage } from "ionic-angular";
+import { TranslateService } from "@ngx-translate/core";
+import { CoreSitesProvider } from "@providers/sites";
+import { CoreLoginHelperProvider } from "../../providers/helper";
+import { CoreDomUtilsProvider } from "@providers/utils/dom";
+import { Strings } from "@syncology/configs";
 
 /**
  * Page that shows instructions to change the password.
  */
-@IonicPage({ segment: 'core-login-change-password' })
+@IonicPage({ segment: "core-login-change-password" })
 @Component({
-    selector: 'page-core-change-password',
-    templateUrl: 'change-password.html',
+  selector: "page-core-change-password",
+  templateUrl: "change-password.html"
 })
 export class CoreLoginChangePasswordPage {
-    changingPassword = false;
-    logoutLabel: string;
+  changingPassword = false;
+  logoutLabel: string;
+  appName = Strings.APP_NAME;
+  appNameArabic = Strings.APP_NAME_ARABIC;
 
-    constructor(private translate: TranslateService, private sitesProvider: CoreSitesProvider,
-            private loginHelper: CoreLoginHelperProvider, private domUtls: CoreDomUtilsProvider) {
-        this.logoutLabel = this.loginHelper.getLogoutLabel();
-    }
+  constructor(
+    private translate: TranslateService,
+    private sitesProvider: CoreSitesProvider,
+    private loginHelper: CoreLoginHelperProvider,
+    private domUtls: CoreDomUtilsProvider
+  ) {
+    this.logoutLabel = this.loginHelper.getLogoutLabel();
+  }
 
-    /**
-     * Show a help modal.
-     */
-    showHelp(): void {
-        this.domUtls.showAlert(this.translate.instant('core.help'), this.translate.instant('core.login.changepasswordhelp'));
-    }
+  /**
+   * Show a help modal.
+   */
+  showHelp(): void {
+    this.domUtls.showAlert(
+      this.translate.instant("core.help"),
+      this.translate
+        .instant("core.login.changepasswordhelp")
+        .replace("Moodle", this.appName)
+        .replace("moodle", this.appName)
+        .replace("مودل", this.appNameArabic)
+        .replace("موودل", this.appNameArabic)
+    );
+  }
 
-    /**
-     * Open the change password page in a browser.
-     */
-    openChangePasswordPage(): void {
-        this.loginHelper.openInAppForEdit(this.sitesProvider.getCurrentSiteId(), '/login/change_password.php', undefined, true);
-        this.changingPassword = true;
-    }
+  /**
+   * Open the change password page in a browser.
+   */
+  openChangePasswordPage(): void {
+    this.loginHelper.openInAppForEdit(
+      this.sitesProvider.getCurrentSiteId(),
+      "/login/change_password.php",
+      undefined,
+      true
+    );
+    this.changingPassword = true;
+  }
 
-    /**
-     * Login the user.
-     */
-    login(): void {
-        this.loginHelper.goToSiteInitialPage();
-        this.changingPassword = false;
-    }
+  /**
+   * Login the user.
+   */
+  login(): void {
+    this.loginHelper.goToSiteInitialPage();
+    this.changingPassword = false;
+  }
 
-    /**
-     * Logout the user.
-     */
-    logout(): void {
-        this.sitesProvider.logout();
-        this.changingPassword = false;
-    }
+  /**
+   * Logout the user.
+   */
+  logout(): void {
+    this.sitesProvider.logout();
+    this.changingPassword = false;
+  }
 }

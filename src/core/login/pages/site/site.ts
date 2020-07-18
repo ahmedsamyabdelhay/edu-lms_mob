@@ -12,470 +12,512 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, ModalController, AlertController, NavParams } from 'ionic-angular';
-import { CoreAppProvider } from '@providers/app';
-import { CoreEventsProvider } from '@providers/events';
-import { CoreSitesProvider, CoreSiteCheckResponse, CoreLoginSiteInfo } from '@providers/sites';
-import { CoreCustomURLSchemesProvider, CoreCustomURLSchemesHandleError } from '@providers/urlschemes';
-import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { CoreTextUtilsProvider } from '@providers/utils/text';
-import { CoreUrlUtilsProvider } from '@providers/utils/url';
-import { CoreUtilsProvider } from '@providers/utils/utils';
-import { CoreConfig } from '@providers/config';
-import { CoreConfigConstants } from '../../../../configconstants';
-import { CoreLoginHelperProvider } from '../../providers/helper';
-import { FormBuilder, FormGroup, ValidatorFn, AbstractControl } from '@angular/forms';
-import { CoreUrl } from '@singletons/url';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, ViewChild, ElementRef } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  ModalController,
+  AlertController,
+  NavParams
+} from "ionic-angular";
+import { CoreAppProvider } from "@providers/app";
+import { CoreEventsProvider } from "@providers/events";
+import {
+  CoreSitesProvider,
+  CoreSiteCheckResponse,
+  CoreLoginSiteInfo
+} from "@providers/sites";
+import {
+  CoreCustomURLSchemesProvider,
+  CoreCustomURLSchemesHandleError
+} from "@providers/urlschemes";
+import { CoreDomUtilsProvider } from "@providers/utils/dom";
+import { CoreTextUtilsProvider } from "@providers/utils/text";
+import { CoreUrlUtilsProvider } from "@providers/utils/url";
+import { CoreUtilsProvider } from "@providers/utils/utils";
+import { CoreConfig } from "@providers/config";
+import { CoreConfigConstants } from "../../../../configconstants";
+import { CoreLoginHelperProvider } from "../../providers/helper";
+import {
+  FormBuilder,
+  FormGroup,
+  ValidatorFn,
+  AbstractControl
+} from "@angular/forms";
+import { CoreUrl } from "@singletons/url";
+import { TranslateService } from "@ngx-translate/core";
+import { StatusBar } from "@ionic-native/status-bar";
+import { Links, Colors } from "@syncology/configs";
 
 /**
  * Extended data for UI implementation.
  */
 type CoreLoginSiteInfoExtended = CoreLoginSiteInfo & {
-    fromWS?: boolean; // If the site came from the WS call.
-    noProtocolUrl?: string; // Url wihtout protocol.
-    country?: string; // Based on countrycode.
+  fromWS?: boolean; // If the site came from the WS call.
+  noProtocolUrl?: string; // Url wihtout protocol.
+  country?: string; // Based on countrycode.
 };
 
 /**
  * Page to enter or select the site URL to connect to.
  */
-@IonicPage({ segment: 'core-login-site' })
+@IonicPage({ segment: "core-login-site" })
 @Component({
-    selector: 'page-core-login-site',
-    templateUrl: 'site.html',
+  selector: "page-core-login-site",
+  templateUrl: "site.html"
 })
 export class CoreLoginSitePage {
+  @ViewChild("siteFormEl")
+  formElement: ElementRef;
 
-    @ViewChild('siteFormEl') formElement: ElementRef;
+  siteForm: FormGroup;
+  fixedSites: CoreLoginSiteInfo[];
+  filteredSites: CoreLoginSiteInfo[];
+  fixedDisplay = "buttons";
+  showKeyboard = false;
+  filter = "";
+  sites: CoreLoginSiteInfoExtended[] = [];
+  hasSites = false;
+  loadingSites = false;
+  onlyWrittenSite = false;
+  searchFnc: Function;
+  showScanQR: boolean;
 
-    siteForm: FormGroup;
-    fixedSites: CoreLoginSiteInfo[];
-    filteredSites: CoreLoginSiteInfo[];
-    fixedDisplay = 'buttons';
-    showKeyboard = false;
-    filter = '';
-    sites: CoreLoginSiteInfoExtended[] = [];
-    hasSites = false;
-    loadingSites = false;
-    onlyWrittenSite = false;
-    searchFnc: Function;
-    showScanQR: boolean;
+  constructor(
+    navParams: NavParams,
+    protected navCtrl: NavController,
+    fb: FormBuilder,
+    protected appProvider: CoreAppProvider,
+    protected sitesProvider: CoreSitesProvider,
+    protected loginHelper: CoreLoginHelperProvider,
+    protected modalCtrl: ModalController,
+    protected alertCtrl: AlertController,
+    protected urlUtils: CoreUrlUtilsProvider,
+    protected domUtils: CoreDomUtilsProvider,
+    protected eventsProvider: CoreEventsProvider,
+    protected translate: TranslateService,
+    protected utils: CoreUtilsProvider,
+    protected urlSchemesProvider: CoreCustomURLSchemesProvider,
+    protected textUtils: CoreTextUtilsProvider,
+    private statusBar: StatusBar
+  ) {
+    this.showKeyboard = !!navParams.get("showKeyboard");
+    this.showScanQR = this.utils.canScanQR();
 
-    constructor(navParams: NavParams,
-            protected navCtrl: NavController,
-            fb: FormBuilder,
-            protected appProvider: CoreAppProvider,
-            protected sitesProvider: CoreSitesProvider,
-            protected loginHelper: CoreLoginHelperProvider,
-            protected modalCtrl: ModalController,
-            protected alertCtrl: AlertController,
-            protected urlUtils: CoreUrlUtilsProvider,
-            protected domUtils: CoreDomUtilsProvider,
-            protected eventsProvider: CoreEventsProvider,
-            protected translate: TranslateService,
-            protected utils: CoreUtilsProvider,
-            protected urlSchemesProvider: CoreCustomURLSchemesProvider,
-            protected textUtils: CoreTextUtilsProvider) {
+    // set status bar to white
+    this.statusBar.backgroundColorByHexString(
+      Colors.LOGIN.LOGIN_STATUS_BAR_COLOR
+    );
 
-        this.showKeyboard = !!navParams.get('showKeyboard');
-        this.showScanQR = this.utils.canScanQR();
+    let url = Links.SYNCOLOGY_LMS_URL;
 
-        let url = '';
+    this.connect(
+      new Event("click"),
+      url
+    );
+  }
 
-        // Load fixed sites if they're set.
-        if (this.loginHelper.hasSeveralFixedSites()) {
-            this.fixedSites = <any[]> this.loginHelper.getFixedSites();
-            this.fixedDisplay = CoreConfigConstants.multisitesdisplay;
-            // Autoselect if not defined.
-            if (['list', 'listnourl', 'select', 'buttons'].indexOf(this.fixedDisplay) < 0) {
-                this.fixedDisplay = this.fixedSites.length > 8 ? 'list' : (this.fixedSites.length > 3 ? 'select' : 'buttons');
-            }
-            this.filteredSites = this.fixedSites;
-            url = this.fixedSites[0].url;
-        } else if (CoreConfigConstants.enableonboarding && !this.appProvider.isIOS() && !this.appProvider.isMac()) {
-            CoreConfig.instance.get(CoreLoginHelperProvider.ONBOARDING_DONE, false).then((onboardingDone) => {
-                if (!onboardingDone) {
-                    // Check onboarding.
-                    this.showOnboarding();
-                }
-            });
-        }
+  /**
+   * Try to connect to a site.
+   *
+   * @param e Event.
+   * @param url The URL to connect to.
+   * @param foundSite The site clicked, if any, from the found sites list.
+   */
+  connect(e: Event, url: string, foundSite?: CoreLoginSiteInfoExtended): void {
+    e.preventDefault();
+    e.stopPropagation();
 
-        this.siteForm = fb.group({
-            siteUrl: [url, this.moodleUrlValidator()]
-        });
+    this.appProvider.closeKeyboard();
 
-        this.searchFnc = this.utils.debounce(async (search: string, isValid: boolean = false) => {
-            search = search.trim();
+    if (!url) {
+      this.domUtils.showErrorModal("core.login.siteurlrequired", true);
 
-            if (search.length >= 3) {
-                this.onlyWrittenSite = false;
-
-                // Update the sites list.
-                this.sites = await this.sitesProvider.findSites(search);
-
-                // UI tweaks.
-                this.sites.forEach((site) => {
-                    site.noProtocolUrl = CoreUrl.removeProtocol(site.url);
-                    site.fromWS = true;
-                    site.country = this.utils.getCountryName(site.countrycode);
-                });
-
-                // If it's a valid URL, add it.
-                if (isValid) {
-                    this.onlyWrittenSite = !!this.sites.length;
-                    this.sites.unshift({
-                        url: search,
-                        fromWS: false,
-                        name: this.translate.instant('core.login.yourenteredsite'),
-                        noProtocolUrl: CoreUrl.removeProtocol(search),
-                    });
-                }
-
-                this.hasSites = !!this.sites.length;
-            } else {
-                // Not reseting the array to allow animation to be displayed.
-                this.hasSites = false;
-            }
-
-            this.loadingSites = false;
-        }, 1000);
+      return;
     }
 
-    /**
-     * Try to connect to a site.
-     *
-     * @param e Event.
-     * @param url The URL to connect to.
-     * @param foundSite The site clicked, if any, from the found sites list.
-     */
-    connect(e: Event, url: string, foundSite?: CoreLoginSiteInfoExtended): void {
-        e.preventDefault();
-        e.stopPropagation();
+    if (!this.appProvider.isOnline()) {
+      this.domUtils.showErrorModal("core.networkerrormsg", true);
 
-        this.appProvider.closeKeyboard();
-
-        if (!url) {
-            this.domUtils.showErrorModal('core.login.siteurlrequired', true);
-
-            return;
-        }
-
-        if (!this.appProvider.isOnline()) {
-            this.domUtils.showErrorModal('core.networkerrormsg', true);
-
-            return;
-        }
-
-        url = url.trim();
-
-        if (url.match(/^(https?:\/\/)?campus\.example\.edu/)) {
-            this.showLoginIssue(null, this.translate.instant('core.login.errorexampleurl'));
-
-            return;
-        }
-
-        const modal = this.domUtils.showModalLoading(),
-            siteData = this.sitesProvider.getDemoSiteData(url);
-
-        if (siteData) {
-            // It's a demo site.
-            this.sitesProvider.getUserToken(siteData.url, siteData.username, siteData.password).then((data) => {
-                return this.sitesProvider.newSite(data.siteUrl, data.token, data.privateToken).then(() => {
-
-                    this.domUtils.triggerFormSubmittedEvent(this.formElement, true);
-
-                    return this.loginHelper.goToSiteInitialPage();
-                }, (error) => {
-                    this.loginHelper.treatUserTokenError(siteData.url, error, siteData.username, siteData.password);
-                    if (error.loggedout) {
-                        this.navCtrl.setRoot('CoreLoginSitesPage');
-                    }
-                });
-            }, (error) => {
-                this.loginHelper.treatUserTokenError(siteData.url, error, siteData.username, siteData.password);
-                if (error.loggedout) {
-                    this.navCtrl.setRoot('CoreLoginSitesPage');
-                }
-            }).finally(() => {
-                modal.dismiss();
-            });
-
-        } else {
-            // Not a demo site.
-            this.sitesProvider.checkSite(url)
-                .catch((error) => {
-                    // Attempt guessing the domain if the initial check failed
-                    const domain = CoreUrl.guessMoodleDomain(url);
-
-                    if (domain && domain != url) {
-                        return this.sitesProvider.checkSite(domain).catch((secondError) => {
-                            // Try to use the first error.
-                            return Promise.reject(error || secondError);
-                        });
-                    }
-
-                    return Promise.reject(error);
-                })
-                .then((result) => this.login(result, foundSite))
-                .catch((error) => this.showLoginIssue(url, error))
-                .finally(() => modal.dismiss());
-        }
+      return;
     }
 
-    /**
-     * The filter has changed.
-     *
-     * @param Received Event.
-     */
-    filterChanged(event: any): void {
-        const newValue = event.target.value && event.target.value.trim().toLowerCase();
-        if (!newValue || !this.fixedSites) {
-            this.filteredSites = this.fixedSites;
-        } else {
-            this.filteredSites = this.fixedSites.filter((site) => {
-                return site.name.toLowerCase().indexOf(newValue) > -1 || site.url.toLowerCase().indexOf(newValue) > -1;
-            });
-        }
+    url = url.trim();
+
+    if (url.match(/^(https?:\/\/)?campus\.example\.edu/)) {
+      this.showLoginIssue(
+        null,
+        this.translate.instant("core.login.errorexampleurl")
+      );
+
+      return;
     }
 
-    /**
-     * Show a help modal.
-     */
-    showHelp(): void {
-        const modal = this.modalCtrl.create('CoreLoginSiteHelpPage', {}, { cssClass: 'core-modal-fullscreen' });
-        modal.present();
-    }
+    const modal = this.domUtils.showModalLoading(),
+      siteData = this.sitesProvider.getDemoSiteData(url);
 
-    /**
-     * Show an onboarding modal.
-     */
-    showOnboarding(): void {
-        const modal = this.modalCtrl.create('CoreLoginSiteOnboardingPage', {}, { cssClass: 'core-modal-fullscreen' });
-        modal.present();
-    }
+    if (siteData) {
+      // It's a demo site.
+      this.sitesProvider
+        .getUserToken(siteData.url, siteData.username, siteData.password)
+        .then(
+          data => {
+            return this.sitesProvider
+              .newSite(data.siteUrl, data.token, data.privateToken)
+              .then(
+                () => {
+                  this.domUtils.triggerFormSubmittedEvent(
+                    this.formElement,
+                    true
+                  );
 
-    /**
-     * Show an error that aims people to solve the issue.
-     *
-     * @param url The URL the user was trying to connect to.
-     * @param error Error to display.
-     */
-    protected showLoginIssue(url: string, error: any): void {
-        error = this.domUtils.getErrorMessage(error);
-
-        if (error == this.translate.instant('core.cannotconnecttrouble')) {
-            const found = this.sites.find((site) => site.fromWS && site.url == url);
-
-            if (!found) {
-                error += ' ' + this.translate.instant('core.cannotconnectverify');
-            }
-        }
-
-        let message = '<p>' + error + '</p>';
-        if (url) {
-            const fullUrl = this.urlUtils.isAbsoluteURL(url) ? url : 'https://' + url;
-            message += '<p padding><a href="' + fullUrl + '" core-link>' + url + '</a></p>';
-        }
-
-        const buttons = [
-            {
-                text: this.translate.instant('core.needhelp'),
-                handler: (): void => {
-                    this.showHelp();
-                }
-            },
-            {
-                text: this.translate.instant('core.tryagain'),
-                role: 'cancel'
-            }
-        ];
-
-        this.domUtils.showAlertWithOptions({
-            title: this.translate.instant('core.cannotconnect'),
-            message,
-            buttons,
-        });
-    }
-
-    /**
-     * Find a site on the backend.
-     *
-     * @param e Event.
-     * @param search Text to search.
-     */
-    searchSite(e: Event, search: string): void {
-        this.loadingSites = true;
-
-        this.searchFnc(search.trim(), this.siteForm.valid);
-    }
-
-    /**
-     * Get the demo data for a certain "name" if it is a demo site.
-     *
-     * @param name Name of the site to check.
-     * @return Site data if it's a demo site, undefined otherwise.
-     */
-    getDemoSiteData(name: string): any {
-        const demoSites = CoreConfigConstants.demo_sites;
-        if (typeof demoSites != 'undefined' && typeof demoSites[name] != 'undefined') {
-            return demoSites[name];
-        }
-    }
-
-    /**
-     * Process login to a site.
-     *
-     * @param response Response obtained from the site check request.
-     * @param foundSite The site clicked, if any, from the found sites list.
-     *
-     * @return Promise resolved after logging in.
-     */
-    protected async login(response: CoreSiteCheckResponse, foundSite?: CoreLoginSiteInfoExtended): Promise<void> {
-        return this.sitesProvider.checkRequiredMinimumVersion(response.config).then(() => {
-
-            this.domUtils.triggerFormSubmittedEvent(this.formElement, true);
-
-            if (response.warning) {
-                this.domUtils.showErrorModal(response.warning, true, 4000);
-            }
-
-            if (this.loginHelper.isSSOLoginNeeded(response.code)) {
-                // SSO. User needs to authenticate in a browser.
-                this.loginHelper.confirmAndOpenBrowserForSSOLogin(
-                    response.siteUrl, response.code, response.service, response.config && response.config.launchurl);
-            } else {
-                const pageParams = { siteUrl: response.siteUrl, siteConfig: response.config };
-                if (foundSite) {
-                    pageParams['siteName'] = foundSite.name;
-                    pageParams['logoUrl'] = foundSite.imageurl;
-                }
-
-                this.navCtrl.push('CoreLoginCredentialsPage', pageParams);
-            }
-        }).catch(() => {
-            // Ignore errors.
-        });
-    }
-
-    /**
-     * Validate Url.
-     *
-     * @return {ValidatorFn} Validation results.
-     */
-    protected moodleUrlValidator(): ValidatorFn {
-        return (control: AbstractControl): {[key: string]: any} | null => {
-            const value = control.value.trim();
-            let valid = value.length >= 3 && CoreUrl.isValidMoodleUrl(value);
-
-            if (!valid) {
-                const demo = !!this.getDemoSiteData(value);
-
-                if (demo) {
-                    valid = true;
-                }
-            }
-
-            return valid ? null : {siteUrl: {value: control.value}};
-        };
-    }
-
-    /**
-     * Show instructions and scan QR code.
-     *
-     * @todo Use it in 3.9 release instead of scanQR.
-     */
-    showInstructionsAndScanQR(): void {
-        // Show some instructions first.
-        this.domUtils.showAlertWithOptions({
-            title: this.translate.instant('core.login.faqwhereisqrcode'),
-            message: this.translate.instant('core.login.faqwhereisqrcodeanswer',
-                {$image: CoreLoginHelperProvider.FAQ_QRCODE_IMAGE_HTML}),
-            buttons: [
-                {
-                    text: this.translate.instant('core.cancel'),
-                    role: 'cancel'
+                  return this.loginHelper.goToSiteInitialPage();
                 },
-                {
-                    text: this.translate.instant('core.next'),
-                    handler: (): void => {
-                        this.scanQR();
-                    }
-                },
-            ],
-        });
-    }
-
-    /**
-     * Scan a QR code and put its text in the URL input.
-     *
-     * @return Promise resolved when done.
-     */
-    async scanQR(): Promise<void> {
-        // Scan for a QR code.
-        const text = await this.utils.scanQR();
-
-        if (text) {
-            if (this.urlSchemesProvider.isCustomURL(text)) {
-                try {
-                    await this.urlSchemesProvider.handleCustomURL(text);
-                } catch (error) {
-                    if (error && error.data && error.data.isAuthenticationURL && error.data.siteUrl) {
-                        // An error ocurred, but it's an authentication URL and we have the site URL.
-                        this.treatErrorInAuthenticationCustomURL(text, error);
-                    } else {
-                        this.urlSchemesProvider.treatHandleCustomURLError(error);
-                    }
+                error => {
+                  this.loginHelper.treatUserTokenError(
+                    siteData.url,
+                    error,
+                    siteData.username,
+                    siteData.password
+                  );
+                  if (error.loggedout) {
+                    this.navCtrl.setRoot("CoreLoginSitesPage");
+                  }
                 }
-            } else {
-                // Not a custom URL scheme, put the text in the field.
-                this.siteForm.controls.siteUrl.setValue(text);
-
-                this.connect(new Event('click'), text);
+              );
+          },
+          error => {
+            this.loginHelper.treatUserTokenError(
+              siteData.url,
+              error,
+              siteData.username,
+              siteData.password
+            );
+            if (error.loggedout) {
+              this.navCtrl.setRoot("CoreLoginSitesPage");
             }
-        }
+          }
+        )
+        .finally(() => {
+          modal.dismiss();
+        });
+    } else {
+      // Not a demo site.
+      this.sitesProvider
+        .checkSite(url)
+        .catch(error => {
+          // Attempt guessing the domain if the initial check failed
+          const domain = CoreUrl.guessMoodleDomain(url);
+
+          if (domain && domain != url) {
+            return this.sitesProvider.checkSite(domain).catch(secondError => {
+              // Try to use the first error.
+              return Promise.reject(error || secondError);
+            });
+          }
+
+          return Promise.reject(error);
+        })
+        .then(result => this.login(result, foundSite))
+        .catch(error => this.showLoginIssue(url, error))
+        .finally(() => modal.dismiss());
+    }
+  }
+
+  /**
+   * The filter has changed.
+   *
+   * @param Received Event.
+   */
+  filterChanged(event: any): void {
+    const newValue =
+      event.target.value && event.target.value.trim().toLowerCase();
+    if (!newValue || !this.fixedSites) {
+      this.filteredSites = this.fixedSites;
+    } else {
+      this.filteredSites = this.fixedSites.filter(site => {
+        return (
+          site.name.toLowerCase().indexOf(newValue) > -1 ||
+          site.url.toLowerCase().indexOf(newValue) > -1
+        );
+      });
+    }
+  }
+
+  /**
+   * Show a help modal.
+   */
+  showHelp(): void {
+    const modal = this.modalCtrl.create(
+      "CoreLoginSiteHelpPage",
+      {},
+      { cssClass: "core-modal-fullscreen" }
+    );
+    modal.present();
+  }
+
+  /**
+   * Show an onboarding modal.
+   */
+  showOnboarding(): void {
+    const modal = this.modalCtrl.create(
+      "CoreLoginSiteOnboardingPage",
+      {},
+      { cssClass: "core-modal-fullscreen" }
+    );
+    modal.present();
+  }
+
+  /**
+   * Show an error that aims people to solve the issue.
+   *
+   * @param url The URL the user was trying to connect to.
+   * @param error Error to display.
+   */
+  protected showLoginIssue(url: string, error: any): void {
+    error = this.domUtils.getErrorMessage(error);
+
+    if (error == this.translate.instant("core.cannotconnecttrouble")) {
+      const found = this.sites.find(site => site.fromWS && site.url == url);
+
+      if (!found) {
+        error += " " + this.translate.instant("core.cannotconnectverify");
+      }
     }
 
-    /**
-     * Treat an error while handling a custom URL meant to perform an authentication.
-     * If the site doesn't use SSO, the user will be sent to the credentials screen.
-     *
-     * @param customURL Custom URL handled.
-     * @param error Error data.
-     * @return Promise resolved when done.
-     */
-    protected async treatErrorInAuthenticationCustomURL(customURL: string, error: CoreCustomURLSchemesHandleError): Promise<void> {
-        const siteUrl = error.data.siteUrl;
-        const modal = this.domUtils.showModalLoading();
+    let message = "<p>" + error + "</p>";
+    if (url) {
+      const fullUrl = this.urlUtils.isAbsoluteURL(url) ? url : "https://" + url;
+      message +=
+        '<p padding><a href="' + fullUrl + '" core-link>' + url + "</a></p>";
+    }
 
-        // Set the site URL in the input.
-        this.siteForm.controls.siteUrl.setValue(siteUrl);
+    const buttons = [
+      {
+        text: this.translate.instant("core.needhelp"),
+        handler: (): void => {
+          this.showHelp();
+        }
+      },
+      {
+        text: this.translate.instant("core.tryagain"),
+        role: "cancel"
+      }
+    ];
 
+    this.domUtils.showAlertWithOptions({
+      title: this.translate.instant("core.cannotconnect"),
+      message,
+      buttons
+    });
+  }
+
+  /**
+   * Find a site on the backend.
+   *
+   * @param e Event.
+   * @param search Text to search.
+   */
+  searchSite(e: Event, search: string): void {
+    this.loadingSites = true;
+
+    this.searchFnc(search.trim(), this.siteForm.valid);
+  }
+
+  /**
+   * Get the demo data for a certain "name" if it is a demo site.
+   *
+   * @param name Name of the site to check.
+   * @return Site data if it's a demo site, undefined otherwise.
+   */
+  getDemoSiteData(name: string): any {
+    const demoSites = CoreConfigConstants.demo_sites;
+    if (
+      typeof demoSites != "undefined" &&
+      typeof demoSites[name] != "undefined"
+    ) {
+      return demoSites[name];
+    }
+  }
+
+  /**
+   * Process login to a site.
+   *
+   * @param response Response obtained from the site check request.
+   * @param foundSite The site clicked, if any, from the found sites list.
+   *
+   * @return Promise resolved after logging in.
+   */
+  protected async login(
+    response: CoreSiteCheckResponse,
+    foundSite?: CoreLoginSiteInfoExtended
+  ): Promise<void> {
+    return this.sitesProvider
+      .checkRequiredMinimumVersion(response.config)
+      .then(() => {
+        this.domUtils.triggerFormSubmittedEvent(this.formElement, true);
+
+        if (response.warning) {
+          this.domUtils.showErrorModal(response.warning, true, 4000);
+        }
+
+        if (this.loginHelper.isSSOLoginNeeded(response.code)) {
+          // SSO. User needs to authenticate in a browser.
+          this.loginHelper.confirmAndOpenBrowserForSSOLogin(
+            response.siteUrl,
+            response.code,
+            response.service,
+            response.config && response.config.launchurl
+          );
+        } else {
+          const pageParams = {
+            siteUrl: response.siteUrl,
+            siteConfig: response.config
+          };
+          if (foundSite) {
+            pageParams["siteName"] = foundSite.name;
+            pageParams["logoUrl"] = foundSite.imageurl;
+          }
+
+          this.navCtrl.push("CoreLoginCredentialsPage", pageParams);
+        }
+      })
+      .catch(() => {
+        // Ignore errors.
+      });
+  }
+
+  /**
+   * Validate Url.
+   *
+   * @return {ValidatorFn} Validation results.
+   */
+  protected moodleUrlValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value.trim();
+      let valid = value.length >= 3 && CoreUrl.isValidMoodleUrl(value);
+
+      if (!valid) {
+        const demo = !!this.getDemoSiteData(value);
+
+        if (demo) {
+          valid = true;
+        }
+      }
+
+      return valid ? null : { siteUrl: { value: control.value } };
+    };
+  }
+
+  /**
+   * Show instructions and scan QR code.
+   *
+   * @todo Use it in 3.9 release instead of scanQR.
+   */
+  showInstructionsAndScanQR(): void {
+    // Show some instructions first.
+    this.domUtils.showAlertWithOptions({
+      title: this.translate.instant("core.login.faqwhereisqrcode"),
+      message: this.translate.instant("core.login.faqwhereisqrcodeanswer", {
+        $image: CoreLoginHelperProvider.FAQ_QRCODE_IMAGE_HTML
+      }),
+      buttons: [
+        {
+          text: this.translate.instant("core.cancel"),
+          role: "cancel"
+        },
+        {
+          text: this.translate.instant("core.next"),
+          handler: (): void => {
+            this.scanQR();
+          }
+        }
+      ]
+    });
+  }
+
+  /**
+   * Scan a QR code and put its text in the URL input.
+   *
+   * @return Promise resolved when done.
+   */
+  async scanQR(): Promise<void> {
+    // Scan for a QR code.
+    const text = await this.utils.scanQR();
+
+    if (text) {
+      if (this.urlSchemesProvider.isCustomURL(text)) {
         try {
-            // Check if site uses SSO.
-            const response = await this.sitesProvider.checkSite(siteUrl);
-
-            await this.sitesProvider.checkRequiredMinimumVersion(response.config);
-
-            if (!this.loginHelper.isSSOLoginNeeded(response.code)) {
-                // No SSO, go to credentials page.
-                await this.navCtrl.push('CoreLoginCredentialsPage', {
-                    siteUrl: response.siteUrl,
-                    siteConfig: response.config,
-                });
-            }
+          await this.urlSchemesProvider.handleCustomURL(text);
         } catch (error) {
-            // Ignore errors.
-        } finally {
-            modal.dismiss();
+          if (
+            error &&
+            error.data &&
+            error.data.isAuthenticationURL &&
+            error.data.siteUrl
+          ) {
+            // An error ocurred, but it's an authentication URL and we have the site URL.
+            this.treatErrorInAuthenticationCustomURL(text, error);
+          } else {
+            this.urlSchemesProvider.treatHandleCustomURLError(error);
+          }
         }
+      } else {
+        // Not a custom URL scheme, put the text in the field.
+        this.siteForm.controls.siteUrl.setValue(text);
 
-        // Now display the error.
-        error.error = this.textUtils.addTextToError(error.error,
-                '<br><br>' + this.translate.instant('core.login.youcanstillconnectwithcredentials'));
-
-        this.urlSchemesProvider.treatHandleCustomURLError(error);
+        this.connect(
+          new Event("click"),
+          text
+        );
+      }
     }
+  }
+
+  /**
+   * Treat an error while handling a custom URL meant to perform an authentication.
+   * If the site doesn't use SSO, the user will be sent to the credentials screen.
+   *
+   * @param customURL Custom URL handled.
+   * @param error Error data.
+   * @return Promise resolved when done.
+   */
+  protected async treatErrorInAuthenticationCustomURL(
+    customURL: string,
+    error: CoreCustomURLSchemesHandleError
+  ): Promise<void> {
+    const siteUrl = error.data.siteUrl;
+    const modal = this.domUtils.showModalLoading();
+
+    // Set the site URL in the input.
+    this.siteForm.controls.siteUrl.setValue(siteUrl);
+
+    try {
+      // Check if site uses SSO.
+      const response = await this.sitesProvider.checkSite(siteUrl);
+
+      await this.sitesProvider.checkRequiredMinimumVersion(response.config);
+
+      if (!this.loginHelper.isSSOLoginNeeded(response.code)) {
+        // No SSO, go to credentials page.
+        await this.navCtrl.push("CoreLoginCredentialsPage", {
+          siteUrl: response.siteUrl,
+          siteConfig: response.config
+        });
+      }
+    } catch (error) {
+      // Ignore errors.
+    } finally {
+      modal.dismiss();
+    }
+
+    // Now display the error.
+    error.error = this.textUtils.addTextToError(
+      error.error,
+      "<br><br>" +
+        this.translate.instant("core.login.youcanstillconnectwithcredentials")
+    );
+
+    this.urlSchemesProvider.treatHandleCustomURLError(error);
+  }
 }
