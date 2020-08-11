@@ -37,6 +37,7 @@ import { CoreCourseModulePrefetchDelegate } from "@core/course/providers/module-
 import { CoreSite } from "@classes/site";
 import { CoreDbProvider } from '../../../../providers/db';
 import { SQLiteDB, SQLiteDBTableSchema } from '@classes/sqlitedb';
+import { Strings } from '../../../../syncology/configs';
 
 /**
  * Page that displays the dashboard.
@@ -212,7 +213,7 @@ export class CoreCoursesDashboardPage implements OnDestroy {
    * Load the site name.
    */
   protected loadSiteName(): void {
-    this.siteName = this.sitesProvider.getCurrentSite().getSiteName();
+    this.siteName = Strings.APP_NAME ? Strings.APP_NAME : this.sitesProvider.getCurrentSite().getSiteName();
   }
 
   /**

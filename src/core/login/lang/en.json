@@ -115,5 +115,6 @@
     "visitchangepassword": "Do you want to visit the site to change the password?",
     "webservicesnotenabled": "Your host site may not have enabled Web services. Please contact your administrator for help.",
     "youcanstillconnectwithcredentials": "You can still connect to the site by entering your username and password.",
-    "yourenteredsite": "Connect to your site"
+    "yourenteredsite": "Connect to your site",
+    "copyright": "EduSync LMS powered by Syncology eServices."
 }

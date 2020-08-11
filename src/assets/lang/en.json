@@ -1705,6 +1705,7 @@
     "core.login.connecttoworkplaceapp": "You are trying to connect to a EduSync Workplace site. Please download the EduSync Workplace app to access this site.",
     "core.login.contactyouradministrator": "Contact your site administrator for further help.",
     "core.login.contactyouradministratorissue": "Please ask your site administrator to check the following issue: {{$a}}",
+    "core.login.copyright": "EduSync LMS powered by Syncology eServices.",
     "core.login.createaccount": "Create my new account",
     "core.login.createuserandpass": "Choose your username and password",
     "core.login.credentialsdescription": "Please provide your username and password to log in.",
