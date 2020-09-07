@@ -1795,7 +1795,7 @@
     "core.login.siteinmaintenance": "Your site is in maintenance mode",
     "core.login.sitepolicynotagreederror": "Site policy not agreed.",
     "core.login.siteurl": "Site URL",
-    "core.login.siteurlrequired": "Site URL required i.e <i>https://lms.syncology.tech</i>",
+    "core.login.siteurlrequired": "Site URL required i.e <i>https://pioneers-schools.com</i>",
     "core.login.startsignup": "Create new account",
     "core.login.stillcantconnect": "Still can't connect?",
     "core.login.supplyinfo": "More details",

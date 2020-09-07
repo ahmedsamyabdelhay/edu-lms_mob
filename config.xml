@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="38200" id="tech.syncology.edusync" ios-CFBundleVersion="0.0.1.0" version="0.0.1" versionCode="00100" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>EduSync</name>
-    <description>EduSync learning management system mobile app</description>
-    <author email="ahmed.mahmoud@syncology.tech" href="https://syncology.tech">Syncology team</author>
+<widget android-versionCode="38202" id="com.pioneers.edusync" ios-CFBundleVersion="0.0.2.0" version="0.0.2" versionCode="00200" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Pioneers Schools</name>
+    <description>Pioneers Schools learning management system mobile app</description>
+    <author email="ahmed.mahmoud@syncology.tech" href="https://syncology.tech">Syncology Team</author>
     <content src="index.html" />
     <access origin="*" />
     <access launch-external="yes" origin="tel:*" />
@@ -122,7 +122,7 @@
             <true />
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="CFBundleShortVersionString">
-            <string>0.0.1</string>
+            <string>0.0.2</string>
         </edit-config>
         <config-file parent="FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED" target="*-Info.plist">
             <string>YES</string>

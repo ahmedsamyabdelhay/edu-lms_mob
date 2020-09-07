@@ -35,12 +35,12 @@ module.exports = {
 
   // ----------------- Used Links ----------------- //
   Links: {
-    SYNCOLOGY_LMS_URL: "http://lms.syncology.tech"
+    SYNCOLOGY_LMS_URL: "https://pioneers-schools.com"
   },
 
   // ----------------- Used Strings ----------------- //
   Strings: {
-    APP_NAME: "EduSync",
-    APP_NAME_ARABIC: "اديو سينك"
+    APP_NAME: "Pioneers Schools",
+    APP_NAME_ARABIC: "بايونيرذ سكولز"
   }
 };

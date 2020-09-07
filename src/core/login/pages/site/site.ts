@@ -110,7 +110,7 @@ export class CoreLoginSitePage {
     );
 
     let url = Links.SYNCOLOGY_LMS_URL;
-
+    console.log(url, "a7la mesa");
     this.connect(
       new Event("click"),
       url
