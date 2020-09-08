@@ -4,9 +4,9 @@
     <h2 *ngIf="isDisabledInSite || !isSupportedByTheApp">{{ 'core.uhoh' | translate }}</h2>
 
     <p class="core-big" *ngIf="isDisabledInSite">{{ 'core.course.activitydisabled' | translate }}</p>
-    <p class="core-big" *ngIf="!isDisabledInSite && isSupportedByTheApp">{{ 'core.course.activitynotyetviewablesiteupgradeneeded' | translate }}</p>
+    <p class="core-big" *ngIf="!isDisabledInSite && isSupportedByTheApp">{{ ('core.course.activitynotyetviewablesiteupgradeneeded' | translate).replace('Moodle', appName).replace('moodle', appName).replace('مودل', appNameArabic).replace('موودل', appNameArabic) }}</p>
     <p class="core-big" *ngIf="!isDisabledInSite && !isSupportedByTheApp">{{ 'core.course.activitynotyetviewableremoteaddon' | translate }}</p>
-    <p *ngIf="isDisabledInSite || !isSupportedByTheApp"><strong>{{ 'core.course.askadmintosupport' | translate }}</strong></p>
+    <p *ngIf="isDisabledInSite || !isSupportedByTheApp"><strong>{{ ('core.course.askadmintosupport' | translate).replace('Moodle', appName).replace('moodle', appName).replace('مودل', appNameArabic).replace('موودل', appNameArabic) }}</strong></p>
 
     <div *ngIf="module && module.url">
         <p><strong>{{ 'core.course.useactivityonbrowser' | translate }}</strong></p>

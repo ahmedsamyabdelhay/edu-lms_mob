@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, Optional } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
 import { CoreEventsProvider } from '@providers/events';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
@@ -21,6 +21,8 @@ import { CoreCourseHelperProvider } from '../../providers/helper';
 import { CoreCourseProvider } from '../../providers/course';
 import { CoreCourseModuleHandlerButton } from '../../providers/module-delegate';
 import { CoreCourseModulePrefetchDelegate, CoreCourseModulePrefetchHandler } from '../../providers/module-prefetch-delegate';
+import { CoreDbProvider } from '../../../../providers/db';
+import { SQLiteDB } from '@classes/sqlitedb';
 
 /**
  * Component to display a module entry in a list of modules.
@@ -37,6 +39,8 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
     @Input() module: any; // The module to render.
     @Input() courseId: number; // The course the module belongs to.
     @Input() section: any; // The section the module belongs to.
+    @Input() data: any;
+    @Input() numOfKnownPosts: number;
     @Input('downloadEnabled') set enabled(value: boolean) {
         this.downloadEnabled = value;
 
@@ -57,23 +61,35 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
     spinner: boolean; // Whether to display a loading spinner.
     downloadEnabled: boolean; // Whether the download of sections and modules is enabled.
 
+    protected db: SQLiteDB;
+    protected DBNAME = 'MoodleMobile';
     protected prefetchHandler: CoreCourseModulePrefetchHandler;
     protected statusObserver;
     protected statusCalculated = false;
     protected isDestroyed = false;
+    protected isAnnoucementsAllRead = false;
 
     constructor(@Optional() protected navCtrl: NavController, protected prefetchDelegate: CoreCourseModulePrefetchDelegate,
             protected domUtils: CoreDomUtilsProvider, protected courseHelper: CoreCourseHelperProvider,
             protected eventsProvider: CoreEventsProvider, protected sitesProvider: CoreSitesProvider,
-            protected courseProvider: CoreCourseProvider) {
+            protected courseProvider: CoreCourseProvider,
+            protected events: Events,
+            protected dbProvider: CoreDbProvider) {
         this.completionChanged = new EventEmitter();
         this.statusChanged = new EventEmitter();
+        this.db = dbProvider.getDB(this.DBNAME);
+        this.events.subscribe('announcements:updated', (newData, time) => {
+            this.data = newData;
+            console.log(this.numOfKnownPosts, "eh da numOfKnownPosts")
+            console.log(newData.numberOfElements, "eh da event ya ged3an");
+        });
     }
 
     /**
      * Component being initialized.
      */
     ngOnInit(): void {
+        console.log(this.data, "eh da new module");
         // Handler data must be defined. If it isn't, set it to prevent errors.
         if (this.module && !this.module.handlerData) {
             this.module.handlerData = {};
@@ -114,6 +130,12 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
      * @param event Click event.
      */
     moduleClicked(event: Event): void {
+        if (this.module.handlerData.title === "Site announcements") {
+            this.db.insertRecord('schema_news_tracker', {key: 'numOfPosts', value: this.data.numberOfElements}).then(result => {
+                this.numOfKnownPosts = this.data.numberOfElements;
+            });
+            console.log(this.data, "eh da new module");
+        }
         if (this.module.uservisible !== false && this.module.handlerData.action) {
             this.module.handlerData.action(event, this.navCtrl, this.module, this.courseId);
         }

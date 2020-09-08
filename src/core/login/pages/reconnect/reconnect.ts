@@ -19,6 +19,7 @@ import { CoreEventsProvider } from '@providers/events';
 import { CoreSitesProvider } from '@providers/sites';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreLoginHelperProvider } from '../../providers/helper';
+import { Strings } from '../../../../syncology/configs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /**
@@ -94,7 +95,7 @@ export class CoreLoginReconnectPage {
 
             this.username = site.infos.username;
             this.siteUrl = site.infos.siteurl;
-            this.siteName = site.getSiteName();
+            this.siteName = Strings.APP_NAME ? Strings.APP_NAME : site.getSiteName();
 
             // If login was OAuth we should only reach this page if the OAuth method ID has changed.
             this.isOAuth = site.isOAuth();

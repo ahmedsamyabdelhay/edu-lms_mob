@@ -4,10 +4,7 @@
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "es2015"
-    ],
+    "lib": ["dom", "es2015"],
     "module": "es2015",
     "moduleResolution": "node",
     "sourceMap": true,
@@ -22,18 +19,13 @@
       "@components/*": ["components/*"],
       "@directives/*": ["directives/*"],
       "@pipes/*": ["pipes/*"],
-      "@singletons/*": ["singletons/*"]
+      "@singletons/*": ["singletons/*"],
+      "@syncology/*": ["syncology/*"]
     },
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "typeRoots": ["node_modules/@types"]
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"],
   "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false

@@ -12,33 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, Input, OnInit } from '@angular/core';
-import { CoreCourseProvider } from '../../providers/course';
-import { CoreCourseModuleDelegate } from '../../providers/module-delegate';
+import { Component, Input, OnInit } from "@angular/core";
+import { CoreCourseProvider } from "../../providers/course";
+import { CoreCourseModuleDelegate } from "../../providers/module-delegate";
+import { Strings } from "@syncology/configs";
 
 /**
  * Component that displays info about an unsupported module.
  */
 @Component({
-    selector: 'core-course-unsupported-module',
-    templateUrl: 'core-course-unsupported-module.html',
+  selector: "core-course-unsupported-module",
+  templateUrl: "core-course-unsupported-module.html"
 })
 export class CoreCourseUnsupportedModuleComponent implements OnInit {
-    @Input() courseId: number; // The course to module belongs to.
-    @Input() module: any; // The module to render.
+  @Input()
+  courseId: number; // The course to module belongs to.
+  @Input()
+  module: any; // The module to render.
 
-    isDisabledInSite: boolean;
-    isSupportedByTheApp: boolean;
-    moduleName: string;
+  isDisabledInSite: boolean;
+  isSupportedByTheApp: boolean;
+  moduleName: string;
+  appName = Strings.APP_NAME;
+  appNameArabic = Strings.APP_NAME_ARABIC;
 
-    constructor(private courseProvider: CoreCourseProvider, private moduleDelegate: CoreCourseModuleDelegate) { }
+  constructor(
+    private courseProvider: CoreCourseProvider,
+    private moduleDelegate: CoreCourseModuleDelegate
+  ) {}
 
-    /**
-     * Component being initialized.
-     */
-    ngOnInit(): void {
-        this.isDisabledInSite = this.moduleDelegate.isModuleDisabledInSite(this.module.modname);
-        this.isSupportedByTheApp = this.moduleDelegate.hasHandler(this.module.modname);
-        this.moduleName = this.courseProvider.translateModuleName(this.module.modname);
-    }
+  /**
+   * Component being initialized.
+   */
+  ngOnInit(): void {
+    this.isDisabledInSite = this.moduleDelegate.isModuleDisabledInSite(
+      this.module.modname
+    );
+    this.isSupportedByTheApp = this.moduleDelegate.hasHandler(
+      this.module.modname
+    );
+    this.moduleName = this.courseProvider.translateModuleName(
+      this.module.modname
+    );
+  }
 }

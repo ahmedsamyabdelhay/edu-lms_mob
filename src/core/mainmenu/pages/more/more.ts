@@ -24,6 +24,7 @@ import { CoreMainMenuProvider, CoreMainMenuCustomItem } from '../../providers/ma
 import { CoreLoginHelperProvider } from '@core/login/providers/helper';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 import { TranslateService } from '@ngx-translate/core';
+import { Strings } from '../../../../syncology/configs';
 
 /**
  * Page that displays the list of main menu options that aren't in the tabs.
@@ -124,7 +125,7 @@ export class CoreMainMenuMorePage implements OnDestroy {
         const currentSite = this.sitesProvider.getCurrentSite();
 
         this.siteInfo = currentSite.getInfo();
-        this.siteName = currentSite.getSiteName();
+        this.siteName = Strings.APP_NAME ? Strings.APP_NAME : currentSite.getSiteName();
         this.siteUrl = currentSite.getURL();
         this.logoutLabel = this.loginHelper.getLogoutLabel(currentSite);
         this.showWeb = !currentSite.isFeatureDisabled('CoreMainMenuDelegate_website');

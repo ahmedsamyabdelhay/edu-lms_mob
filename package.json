@@ -1,10 +1,10 @@
 {
-  "name": "moodlemobile",
-  "version": "3.9.2",
-  "description": "The official app for Moodle.",
+  "name": "pioneersschools",
+  "version": "0.1.2",
+  "description": "The official app for Pioneers Schools.",
   "author": {
-    "name": "Moodle Pty Ltd.",
-    "email": "mobile@moodle.com"
+    "name": "Syncology",
+    "email": "ahmed.mahmoud@syncology.tech"
   },
   "config": {
     "ionic_webpack": "./config/webpack.config.js",

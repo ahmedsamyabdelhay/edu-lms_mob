@@ -74,11 +74,9 @@ export class AddonBadgesProvider {
     getUserBadges(courseId: number, userId: number, siteId?: string): Promise<AddonBadgesUserBadge[]> {
 
         this.logger.debug('Get badges for course ' + courseId);
-
         return this.sitesProvider.getSite(siteId).then((site) => {
-
             const data = {
-                    courseid : courseId,
+                    courseid : 0,
                     userid : userId
                 },
                 preSets = {

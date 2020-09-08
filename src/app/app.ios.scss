@@ -4,7 +4,7 @@ ion-app.app-root.ios {
   }
 
   ion-searchbar.searchbar-ios .button-ios {
-      min-height: auto;
+    min-height: auto;
   }
 
   // Light buttons color.
@@ -17,12 +17,17 @@ ion-app.app-root.ios {
   }
 
   .bar-buttons core-context-menu .button-clear-ios {
-    color: $toolbar-ios-button-color;
+    color: $toolbar-text-color;
   }
 
   .item-ios ion-spinner[item-start],
   .item-ios ion-spinner[item-end] {
-    @include margin($item-ios-padding-icon-top, null, $item-ios-padding-icon-bottom, 0);
+    @include margin(
+      $item-ios-padding-icon-top,
+      null,
+      $item-ios-padding-icon-bottom,
+      0
+    );
   }
 
   .item-ios ion-icon[item-start] + .item-inner,
@@ -39,7 +44,7 @@ ion-app.app-root.ios {
 
   @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
     .core-#{$color-name}-card {
-      @extend .card-ios ;
+      @extend .card-ios;
       @extend .card-content-ios;
 
       @include darkmode() {
@@ -47,7 +52,12 @@ ion-app.app-root.ios {
       }
 
       &[icon-start] {
-        @include safe-area-padding(null, null, null, $card-ios-padding-left * 2 + 20);
+        @include safe-area-padding(
+          null,
+          null,
+          null,
+          $card-ios-padding-left * 2 + 20
+        );
 
         ion-icon {
           @include safe-area-position(null, null, null, $card-ios-padding-left);
@@ -57,25 +67,33 @@ ion-app.app-root.ios {
   }
 
   .core-avoid-header ion-content {
-      top: $navbar-ios-height;
-      height: calc(100% - #{($navbar-ios-height)});
+    top: $navbar-ios-height;
+    height: calc(100% - #{($navbar-ios-height)});
   }
 
   &.platform-cordova .core-avoid-header ion-content.statusbar-padding,
   &.platform-cordova .core-avoid-header .menu-inner > ion-content {
-      height: calc(100% - #{($navbar-ios-height + $cordova-ios-statusbar-padding)});
-      height: calc(100% - #{($navbar-ios-height)} - constant(safe-area-inset-top));
-      height: calc(100% - #{($navbar-ios-height)} - env(safe-area-inset-top));
+    height: calc(
+      100% - #{($navbar-ios-height + $cordova-ios-statusbar-padding)}
+    );
+    height: calc(
+      100% - #{($navbar-ios-height)} - constant(safe-area-inset-top)
+    );
+    height: calc(100% - #{($navbar-ios-height)} - env(safe-area-inset-top));
 
-      top: calc(#{$navbar-ios-height + $cordova-ios-statusbar-padding});
-      top: calc(#{$navbar-ios-height} + constant(safe-area-inset-top));
-      top: calc(#{$navbar-ios-height} + env(safe-area-inset-top));
+    top: calc(#{$navbar-ios-height + $cordova-ios-statusbar-padding});
+    top: calc(#{$navbar-ios-height} + constant(safe-area-inset-top));
+    top: calc(#{$navbar-ios-height} + env(safe-area-inset-top));
   }
 
-  &.platform-cordova .core-avoid-header .core-avoid-header .menu-inner > ion-content,
+  &.platform-cordova
+    .core-avoid-header
+    .core-avoid-header
+    .menu-inner
+    > ion-content,
   core-tab core-split-view .core-avoid-header .menu-inner > ion-content {
-      top: 0;
-      height: 100%;
+    top: 0;
+    height: 100%;
   }
 
   // Different levels of padding.
@@ -101,7 +119,6 @@ ion-app.app-root.ios {
     border-color: $checkbox-ios-icon-border-color-off;
     background-color: $checkbox-ios-background-color-off;
   }
-
 
   .action-sheet-ios {
     .action-sheet-title {

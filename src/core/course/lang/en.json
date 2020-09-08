@@ -1,9 +1,9 @@
 {
     "activitydisabled": "Your organisation has disabled this activity in the mobile app.",
     "activitynotyetviewableremoteaddon": "Your organisation installed a plugin that is not yet supported.",
-    "activitynotyetviewablesiteupgradeneeded": "Your organisation's Moodle installation needs to be updated.",
+    "activitynotyetviewablesiteupgradeneeded": "Your organisation's EduSync installation needs to be updated.",
     "allsections": "All sections",
-    "askadmintosupport": "Contact the site administrator and tell them you want to use this activity with the Moodle Mobile app.",
+    "askadmintosupport": "Contact the site administrator and tell them you want to use this activity with the EduSync Mobile app.",
     "availablespace": " You currently have about {{available}} free space.",
     "cannotdeletewhiledownloading": "Files cannot be deleted while the activity is being downloaded. Please wait for the download to finish.",
     "confirmdeletemodulefiles": "Are you sure you want to delete these files?",

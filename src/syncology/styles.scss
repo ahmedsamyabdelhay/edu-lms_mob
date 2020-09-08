@@ -1,0 +1,245 @@
+@import "./colors";
+
+#copyrightWrapper {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  p {
+    width: 100%;
+    text-align: center;
+    font-size: 0.75em;
+    color: $orange;
+  }
+}
+
+.core-load-site-logo {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+}
+
+.animated-icon {
+  width: 60px;
+  height: 42px;
+  margin-right: 0 !important;
+  margin-top: 15px !important;
+  max-width: 60px !important;
+  max-height: 42px !important;
+}
+
+.animated-icon.idle {
+  width: 42px !important;
+  height: 36px !important;
+  margin-top: 10px !important;
+}
+
+#core-course-module-1 > .item-inner,
+#core-courses-list-main .item-block .item-inner {
+  border-bottom: 0 !important;
+}
+
+#core-course-module-1,
+#core-courses-list-main .core-course-module .item-inner {
+  border-bottom: 0.55px solid $white !important;
+}
+
+#core-courses-list-main .core-course-general .item-inner {
+  border-bottom: 0 !important;
+}
+
+#core-courses-list-main .core-course-main-section,
+#core-courses-list-main .core-course-subsection .item-inner,
+#core-courses-list-main .core-course-general {
+  border-bottom: 1px solid $white !important;
+}
+
+.vertical-container {
+  height: 100%;
+  position: relative;
+}
+
+.vertical-container-inner {
+  position: absolute;
+  top: 25%;
+}
+
+ion-item-divider,
+.item.item-divider.item-ios.item-divider-ios,
+.item.item-divider.item-md.item-divider-md,
+.item-divider-md,
+.item-divider-ios {
+  background-color: $dark-blue !important;
+  background: $dark-blue !important;
+  h2 {
+    color: #fe8802 !important;
+  }
+  * {
+    background-color: transparent !important;
+    background: transparent !important;
+    font-weight: bold;
+  }
+}
+
+.core-sitehome-news {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: #fe8802 !important;
+  height: 15vh;
+  * {
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+  #core-course-module-1 {
+    border-bottom: 0 !important;
+  }
+  ion-item {
+    padding-left: 0 !important;
+    justify-content: center !important;
+    align-items: center !important;
+    ion-icon {
+      margin: 0 !important;
+      font-size: 2em;
+      color: #ffffff !important;
+      transform-origin: top;
+    }
+    .item-inner {
+      display: flex !important;
+      flex: none !important;
+      align-self: inherit !important;
+      justify-content: center;
+      align-items: center;
+      core-format-text {
+        font-size: 3rem;
+        font-weight: bold;
+        padding-top: 0 !important;
+        color: #ffffff !important;
+      }
+    }
+  }
+}
+
+ion-app.app-root core-course-module .core-module-title core-format-text {
+  padding-top: 0px !important;
+}
+
+ion-app.app-root core-course-format {
+  core-dynamic-component
+    > section:first-child
+    > core-course-module:nth-child(2)
+    .no-overflow {
+    padding: 0 5%;
+    p {
+      text-align: center !important;
+    }
+  }
+  .item-inner {
+    border-bottom: 0 !important;
+  }
+  core-dynamic-component > section:first-child ion-item {
+    padding-left: 0 !important;
+    .item-inner {
+      border-bottom: 0 !important;
+      .core-module-title {
+        .no-overflow {
+          .core-adapted-img-container {
+            margin: 0 !important;
+            img {
+              margin: 0 !important;
+              width: 100% !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .absolute-position-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 1000px;
+    box-shadow: 0 0 10px #fe8802 !important;
+  }
+
+  .core-format-text-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #2062c2;
+    border-radius: 1000px;
+    padding: 5px 20%;
+    core-format-text,
+    p {
+      width: 100% !important;
+      color: #fe8802 !important;
+      font-weight: bold;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    p {
+      padding-left: 0 !important;
+    }
+  }
+
+  .core-format-text-overlay {
+    position: absolute;
+    top: 0;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sub-section-module ion-item {
+    padding-left: 0 !important;
+    p {
+      text-align: center;
+    }
+    .no-overflow .editor-indent {
+      margin-left: 0 !important;
+    }
+    ol {
+      padding-left: 15% !important;
+      padding-right: 15% !important;
+    }
+    .core-module-icon {
+      margin-right: 0 !important;
+      margin-left: 10% !important;
+    }
+    .core-module-description.ng-star-inserted p {
+      text-align: start;
+    }
+  }
+
+  .sub-section {
+    ion-item {
+      padding: 0 !important;
+      p {
+        text-align: center;
+      }
+      .core-module-icon {
+        margin-right: 0 !important;
+        margin-left: 5% !important;
+      }
+    }
+    ion-item:first-child {
+      .item-inner {
+        padding-right: 0 !important;
+        ion-label {
+          margin-right: 0 !important;
+        }
+        img {
+          padding-left: 4%;
+        }
+      }
+    }
+  }
+}
