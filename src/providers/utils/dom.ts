@@ -916,6 +916,16 @@ export class CoreDomUtilsProvider {
   }
 
   /**
+     * Check whether an error is an error caused because the user canceled a showConfirm.
+     *
+     * @param error Error to check.
+     * @return Whether it's a canceled error.
+     */
+    isCanceledError(error: any): boolean {
+      return error && error.coreCanceled;
+  }
+
+  /**
    * Wait an element to exists using the findFunction.
    *
    * @param findFunction The function used to find the element.

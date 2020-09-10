@@ -81,8 +81,10 @@
               </div>
               <div class="core-format-text-overlay">
                 <ion-row>
-                  <ion-col col-2 align-self-stretch>
-                    <img class="section-image-1" [src]="section.img1" />
+                  <ion-col col-2>
+                    <div class="section-image-container">
+                      <img class="section-image-1" [src]="section.img1" />
+                    </div>
                   </ion-col>
                   <ion-col col-6>
                   </ion-col>
@@ -90,8 +92,10 @@
                     <!-- Section download. -->
                     <ng-container *ngTemplateOutlet="sectionDownloadTemplate; context: {section: section}"></ng-container>
                   </ion-col>
-                  <ion-col col-2 align-self-stretch>
-                    <img class="section-image-2" [src]="section.img2" />
+                  <ion-col col-2>
+                    <div class="section-image-container">
+                      <img class="section-image-2" [src]="section.img2" />
+                    </div>
                   </ion-col>
                 </ion-row>
               </div>

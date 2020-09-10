@@ -196,6 +196,22 @@ ion-app.app-root core-course-format {
     background-color: transparent;
     width: 100%;
     height: 100%;
+
+    ion-row {
+      height: 100%;
+      ion-col {
+        height: 100%;
+        .section-image-container {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img {
+            height: 100%;
+          }
+        }
+      }
+    }
   }
 
   .sub-section-module ion-item {
