@@ -93,7 +93,7 @@ ion-item-divider,
     background-color: transparent !important;
     background: transparent !important;
   }
-  #core-course-module-1 {
+  #core-course-module-1, .item-inner {
     border-bottom: 0 !important;
   }
   ion-item {
@@ -120,10 +120,6 @@ ion-item-divider,
       }
     }
   }
-}
-
-ion-app.app-root core-course-module .core-module-title core-format-text {
-  padding-top: 0px !important;
 }
 
 ion-app.app-root core-course-format {

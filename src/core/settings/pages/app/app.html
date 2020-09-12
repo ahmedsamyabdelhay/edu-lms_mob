@@ -16,10 +16,6 @@
                 <ion-icon name="stats" item-start></ion-icon>
                 <h2>{{ 'core.settings.spaceusage' | translate }}</h2>
             </a>
-            <a ion-item (click)="openHandler('CoreSettingsSynchronizationPage')" [title]="'core.settings.synchronization' | translate" [class.core-split-item-selected]="'CoreSettingsSynchronizationPage' == selectedPage" detail-push>
-                <ion-icon name="sync" item-start></ion-icon>
-                <h2>{{ 'core.settings.synchronization' | translate }}</h2>
-            </a>
             <a ion-item *ngIf="isIOS" (click)="openHandler('CoreSharedFilesListPage', {manage: true})" [title]="'core.sharedfiles.sharedfiles' | translate" [class.core-split-item-selected]="'CoreSharedFilesListPage' == selectedPage" detail-push>
                 <ion-icon name="folder" item-start></ion-icon>
                 <h2>{{ 'core.sharedfiles.sharedfiles' | translate }}</h2>

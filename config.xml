@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="39212" id="com.pioneers.edusync" ios-CFBundleVersion="0.1.2.0" version="0.1.2" versionCode="00120" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="39214" id="com.pioneers.edusync" ios-CFBundleVersion="0.1.4.0" version="0.1.4" versionCode="00140" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Pioneers Schools</name>
     <description>Pioneers Schools official app</description>
     <author email="ahmed.mahmoud@syncology.tech" href="https://syncology.tech">Syncology team</author>
@@ -266,7 +266,7 @@
             <true />
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="CFBundleShortVersionString">
-            <string>0.1.2</string>
+            <string>0.1.4</string>
         </edit-config>
         <config-file parent="FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED" target="*-Info.plist">
             <string>YES</string>

@@ -5,9 +5,6 @@
 </ion-header>
 <ion-content>
     <core-loading [hideUntil]="loaded">
-        <a *ngIf="error" ion-item text-wrap [href]="licensesUrl" core-link auto-login="no">
-            {{ 'core.settings.opensourcelicenses' | translate }}
-        </a>
 
         <ng-container *ngIf="!error">
             <ion-item *ngFor="let license of licenses" text-wrap>
