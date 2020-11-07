@@ -17,8 +17,8 @@ export class CoreConfigConstants {
     static app_id = 'com.pioneers.edusync';
     static appname = 'Pioneers Mobile';
     static desktopappname = 'Pioneers Desktop';
-    static versioncode = 14;
-    static versionname = '0.1.4';
+    static versioncode = 16;
+    static versionname = '0.1.6';
     static cache_update_frequency_usually = 420000;
     static cache_update_frequency_often = 1200000;
     static cache_update_frequency_sometimes = 3600000;
@@ -120,6 +120,6 @@ export class CoreConfigConstants {
         mac: 'id1255924440',
         linux: 'https://download.moodle.org/desktop/download.php?platform=linux&arch=64'
     };
-    static compilationtime = 1599940854948;
-    static lastcommit = '878dfe0834acfa24a3941134af74da71c186f329';
+    static compilationtime = 1603796743080;
+    static lastcommit = '6b6eb967a3d105e3623dc5f0a25fa172140d76f4';
 }

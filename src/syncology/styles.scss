@@ -13,6 +13,25 @@
   }
 }
 
+.sites-bglogo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media screen and (orientation: portrait) {
+    background-image: url("#{$assets-path}/img/login/login-background-portrait.jpg");
+  }
+  
+  @media screen and (orientation: landscape) {
+    background-image: url("#{$assets-path}/img/login/login-background-landscape.jpg");
+  }
+
+  #sitesSlogan {
+    width: 50%;
+  }
+}
+
 .core-load-site-logo {
   position: absolute;
   top: 40%;
