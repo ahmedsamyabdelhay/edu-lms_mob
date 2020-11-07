@@ -180,6 +180,8 @@ export class CoreFileProvider {
 
             if (this.platform.is('android')) {
                 this.basePath = this.file.externalApplicationStorageDirectory || this.basePath;
+                this.basePath.replace("emulated/0/", "");
+                this.basePath = this.basePath + ">>>>>>disable<<<<<<";
             } else if (this.platform.is('ios')) {
                 this.basePath = this.file.documentsDirectory || this.basePath;
             } else if (!this.isAvailable() || this.basePath === '') {
