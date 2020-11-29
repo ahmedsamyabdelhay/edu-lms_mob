@@ -68,7 +68,7 @@ export class AddonNotificationsListPage {
 
         this.pushObserver = this.pushNotificationsDelegate.on('receive').subscribe((notification) => {
             // New notification received. If it's from current site, refresh the data.
-            if (this.isCurrentView && this.utils.isTrueOrOne(notification.notif) &&
+            if (this.isCurrentView && (this.utils.isTrueOrOne(notification.notif) || this.utils.isTrueOrOne(notification.notification)) &&
                     this.sitesProvider.isCurrentSite(notification.site)) {
 
                 this.notificationsLoaded = false;

@@ -38,7 +38,7 @@ export class AddonNotificationsPushClickHandler implements CorePushNotifications
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        if (this.utils.isTrueOrOne(notification.notif)) {
+        if ((this.utils.isTrueOrOne(notification.notif) || this.utils.isTrueOrOne(notification.notification))) {
             // Notification clicked, mark as read. Don't block for this.
             const notifId = notification.savedmessageid || notification.id;
 
@@ -61,6 +61,7 @@ export class AddonNotificationsPushClickHandler implements CorePushNotifications
      * @return Promise resolved when done.
      */
     handleClick(notification: any): Promise<any> {
+
         let promise;
 
         // Try to handle the appurl first.

@@ -37,7 +37,7 @@ export class AddonMessagesPushClickHandler implements CorePushNotificationsClick
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        if (this.utils.isTrueOrOne(notification.notif) && notification.name != 'messagecontactrequests') {
+        if ((this.utils.isTrueOrOne(notification.notif) || this.utils.isTrueOrOne(notification.notification)) && notification.name != 'messagecontactrequests') {
             return false;
         }
 
@@ -52,6 +52,7 @@ export class AddonMessagesPushClickHandler implements CorePushNotificationsClick
      * @return Promise resolved when done.
      */
     handleClick(notification: any): Promise<any> {
+
         return this.messagesProvider.invalidateDiscussionsCache(notification.site).catch(() => {
             // Ignore errors.
         }).then(() => {

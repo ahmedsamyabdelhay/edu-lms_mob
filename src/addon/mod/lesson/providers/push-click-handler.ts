@@ -37,7 +37,7 @@ export class AddonModLessonPushClickHandler implements CorePushNotificationsClic
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        if (this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_lesson' &&
+        if ((this.utils.isTrueOrOne(notification.notif) || this.utils.isTrueOrOne(notification.notification)) && (notification.moodlecomponent == 'mod_lesson' || notification.component == 'mod_lesson') &&
                 notification.name == 'graded_essay') {
 
             return this.gradesProvider.isPluginEnabledForCourse(Number(notification.courseid), notification.site);
@@ -53,6 +53,7 @@ export class AddonModLessonPushClickHandler implements CorePushNotificationsClic
      * @return Promise resolved when done.
      */
     handleClick(notification: any): Promise<any> {
+
         const data = notification.customdata || {},
             courseId = Number(notification.courseid),
             moduleId = Number(data.cmid);

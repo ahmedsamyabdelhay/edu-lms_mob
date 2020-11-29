@@ -37,7 +37,7 @@ export class AddonCompetencyPushClickHandler implements CorePushNotificationsCli
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        if (this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'moodle' &&
+        if ((this.utils.isTrueOrOne(notification.notif) || this.utils.isTrueOrOne(notification.notification)) && (notification.moodlecomponent == 'moodle' || notification.component == 'moodle') &&
                 (notification.name == 'competencyplancomment' || notification.name == 'competencyusercompcomment')) {
             // If all competency features are disabled, don't handle the click.
             return this.competencyProvider.allCompetenciesDisabled(notification.site).then((disabled) => {
@@ -55,6 +55,7 @@ export class AddonCompetencyPushClickHandler implements CorePushNotificationsCli
      * @return Promise resolved when done.
      */
     handleClick(notification: any): Promise<any> {
+
         const contextUrlParams = this.urlUtils.extractUrlParams(notification.contexturl);
 
         if (notification.name == 'competencyplancomment') {

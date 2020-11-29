@@ -39,7 +39,7 @@ export class AddonBadgesPushClickHandler implements CorePushNotificationsClickHa
     handles(notification: any): boolean | Promise<boolean> {
         const data = notification.customdata || {};
 
-        if (this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'moodle' &&
+        if ((this.utils.isTrueOrOne(notification.notif) || this.utils.isTrueOrOne(notification.notification)) && (notification.moodlecomponent == 'moodle' || notification.component == 'moodle') &&
                 (notification.name == 'badgerecipientnotice' || (notification.name == 'badgecreatornotice' && data.hash))) {
             return this.badgesProvider.isPluginEnabled(notification.site);
         }

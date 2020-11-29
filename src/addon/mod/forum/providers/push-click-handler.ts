@@ -38,7 +38,7 @@ export class AddonModForumPushClickHandler implements CorePushNotificationsClick
      * @return Whether the notification click is handled by this handler
      */
     handles(notification: any): boolean | Promise<boolean> {
-        return this.utils.isTrueOrOne(notification.notif) && notification.moodlecomponent == 'mod_forum' &&
+        return (this.utils.isTrueOrOne(notification.notif) || this.utils.isTrueOrOne(notification.notification)) && (notification.moodlecomponent == 'mod_forum' || notification.component == 'mod_forum') &&
                 notification.name == 'posts';
     }
 
@@ -49,6 +49,7 @@ export class AddonModForumPushClickHandler implements CorePushNotificationsClick
      * @return Promise resolved when done.
      */
     handleClick(notification: any): Promise<any> {
+
         const contextUrlParams = this.urlUtils.extractUrlParams(notification.contexturl),
             data = notification.customdata || {},
             pageParams: any = {
