@@ -38,10 +38,10 @@
             <ion-icon name="globe" item-start aria-hidden="true"></ion-icon>
             <h2>{{ 'core.mainmenu.website' | translate }}</h2>
         </a>
-        <a *ngIf="showHelp" ion-item [href]="docsUrl" core-link autoLogin="no" title="{{ 'core.mainmenu.help' | translate }}">
+        <!-- <a *ngIf="showHelp" ion-item [href]="docsUrl" core-link autoLogin="no" title="{{ 'core.mainmenu.help' | translate }}">
             <ion-icon name="help-buoy" item-start aria-hidden="true"></ion-icon>
             <h2>{{ 'core.mainmenu.help' | translate }}</h2>
-        </a>
+        </a> -->
         <a ion-item (click)="openSitePreferences()" title="{{ 'core.settings.preferences' | translate }}">
             <core-icon name="fa-wrench" item-start></core-icon>
             <h2>{{ 'core.settings.preferences' | translate }}</h2>

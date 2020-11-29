@@ -158,7 +158,12 @@ export class CoreMainMenuPage implements OnDestroy {
 
                 tab ? tab.hide = false : null;
                 handler.hide = false;
-
+                if (tab && (tab.title === "addon.files.files" || tab.title === "core.tag.tags" || tab.title === "addon.blog.siteblogheading")) {
+                    continue;
+                }
+                if (handler && (handler.title === "addon.files.files" || handler.title === "core.tag.tags" || handler.title === "addon.blog.siteblogheading")) {
+                    continue;
+                }
                 newTabs.push(tab || handler);
             }
 
@@ -177,7 +182,10 @@ export class CoreMainMenuPage implements OnDestroy {
 
                     if (!isVisible) {
                         oldTab.hide = true;
-                        newTabs.push(oldTab);
+                        if (oldTab && (oldTab.title === "addon.files.files" || oldTab.title === "core.tag.tags" || oldTab.title === "addon.blog.siteblogheading")) {
+                        } else {
+                            newTabs.push(oldTab);
+                        }
                     }
                 }
             }

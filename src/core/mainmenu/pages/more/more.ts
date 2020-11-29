@@ -111,7 +111,7 @@ export class CoreMainMenuMorePage implements OnDestroy {
 
             // Get only the handlers that don't appear in the main view.
             this.handlers = this.allHandlers.filter((handler) => {
-                return mainHandlers.indexOf(handler) == -1;
+                return mainHandlers.indexOf(handler) == -1 && handler.title !== "addon.files.files" && handler.title !== "core.tag.tags" && handler.title !== "addon.blog.siteblogheading";
             });
 
             this.handlersLoaded = this.menuDelegate.areHandlersLoaded();
