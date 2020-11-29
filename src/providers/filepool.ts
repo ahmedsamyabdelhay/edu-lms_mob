@@ -1292,39 +1292,44 @@ export class CoreFilepoolProvider {
                 const links = this.createComponentLinks(component, componentId);
 
                 return this.hasFileInPool(siteId, fileId).then((fileObject) => {
+                    // The file is outdated, force the download and update it.
+                    this.notifyFileDownloading(siteId, fileId, links);
+                    alreadyDownloaded = false;
 
-                    if (typeof fileObject === 'undefined') {
-                        // We do not have the file, download and add to pool.
-                        this.notifyFileDownloading(siteId, fileId, links);
-                        alreadyDownloaded = false;
+                    return this.downloadForPoolByUrl(siteId, fileUrl, options, filePath, onProgress, fileObject);
 
-                        return this.downloadForPoolByUrl(siteId, fileUrl, options, filePath, onProgress);
+                    // if (typeof fileObject === 'undefined') {
+                    //     // We do not have the file, download and add to pool.
+                    //     this.notifyFileDownloading(siteId, fileId, links);
+                    //     alreadyDownloaded = false;
 
-                    } else if (this.isFileOutdated(fileObject, options.revision, options.timemodified) &&
-                            this.appProvider.isOnline() && !ignoreStale) {
-                        // The file is outdated, force the download and update it.
-                        this.notifyFileDownloading(siteId, fileId, links);
-                        alreadyDownloaded = false;
+                    //     return this.downloadForPoolByUrl(siteId, fileUrl, options, filePath, onProgress);
 
-                        return this.downloadForPoolByUrl(siteId, fileUrl, options, filePath, onProgress, fileObject);
-                    }
+                    // } else if (this.isFileOutdated(fileObject, options.revision, options.timemodified) &&
+                    //         this.appProvider.isOnline() && !ignoreStale) {
+                    //     // The file is outdated, force the download and update it.
+                    //     this.notifyFileDownloading(siteId, fileId, links);
+                    //     alreadyDownloaded = false;
 
-                    // Everything is fine, return the file on disk.
-                    if (filePath) {
-                        promise = this.getInternalUrlByPath(filePath);
-                    } else {
-                        promise = this.getInternalUrlById(siteId, fileId);
-                    }
+                    //     return this.downloadForPoolByUrl(siteId, fileUrl, options, filePath, onProgress, fileObject);
+                    // }
 
-                    return promise.then((response) => {
-                        return response;
-                    }, () => {
-                        // The file was not found in the pool, weird.
-                        this.notifyFileDownloading(siteId, fileId, links);
-                        alreadyDownloaded = false;
+                    // // Everything is fine, return the file on disk.
+                    // if (filePath) {
+                    //     promise = this.getInternalUrlByPath(filePath);
+                    // } else {
+                    //     promise = this.getInternalUrlById(siteId, fileId);
+                    // }
 
-                        return this.downloadForPoolByUrl(siteId, fileUrl, options, filePath, onProgress, fileObject);
-                    });
+                    // return promise.then((response) => {
+                    //     return response;
+                    // }, () => {
+                    //     // The file was not found in the pool, weird.
+                    //     this.notifyFileDownloading(siteId, fileId, links);
+                    //     alreadyDownloaded = false;
+
+                    //     return this.downloadForPoolByUrl(siteId, fileUrl, options, filePath, onProgress, fileObject);
+                    // });
 
                 }, () => {
                     // The file is not in the pool just yet.
@@ -1858,40 +1863,44 @@ export class CoreFilepoolProvider {
             return this.hasFileInPool(siteId, fileId).then((entry) => {
                 let response;
 
-                if (typeof entry === 'undefined') {
-                    // We do not have the file, add it to the queue, and return real URL.
-                    addToQueue(fileUrl);
-                    response = fileUrl;
+                // The file is outdated, we add to the queue and return real URL.
+                addToQueue(fileUrl);
+                response = fileUrl;
 
-                } else if (this.isFileOutdated(entry, revision, timemodified) && this.appProvider.isOnline()) {
-                    // The file is outdated, we add to the queue and return real URL.
-                    addToQueue(fileUrl);
-                    response = fileUrl;
-                } else {
-                    // We found the file entry, now look for the file on disk.
-                    if (mode === 'src') {
-                        response = this.getInternalSrcById(siteId, fileId);
-                    } else {
-                        response = this.getInternalUrlById(siteId, fileId);
-                    }
+                // if (typeof entry === 'undefined') {
+                //     // We do not have the file, add it to the queue, and return real URL.
+                //     addToQueue(fileUrl);
+                //     response = fileUrl;
 
-                    response = response.then((internalUrl) => {
-                        // The file is on disk.
-                        return internalUrl;
-                    }).catch(() => {
-                        // We could not retrieve the file, delete the entries associated with that ID.
-                        this.logger.debug('File ' + fileId + ' not found on disk');
-                        this.removeFileById(siteId, fileId);
-                        addToQueue(fileUrl);
+                // } else if (this.isFileOutdated(entry, revision, timemodified) && this.appProvider.isOnline()) {
+                //     // The file is outdated, we add to the queue and return real URL.
+                //     addToQueue(fileUrl);
+                //     response = fileUrl;
+                // } else {
+                //     // We found the file entry, now look for the file on disk.
+                //     if (mode === 'src') {
+                //         response = this.getInternalSrcById(siteId, fileId);
+                //     } else {
+                //         response = this.getInternalUrlById(siteId, fileId);
+                //     }
 
-                        if (this.appProvider.isOnline()) {
-                            // We still have a chance to serve the right content.
-                            return fileUrl;
-                        }
+                //     response = response.then((internalUrl) => {
+                //         // The file is on disk.
+                //         return internalUrl;
+                //     }).catch(() => {
+                //         // We could not retrieve the file, delete the entries associated with that ID.
+                //         this.logger.debug('File ' + fileId + ' not found on disk');
+                //         this.removeFileById(siteId, fileId);
+                //         addToQueue(fileUrl);
 
-                        return Promise.reject(null);
-                    });
-                }
+                //         if (this.appProvider.isOnline()) {
+                //             // We still have a chance to serve the right content.
+                //             return fileUrl;
+                //         }
+
+                //         return Promise.reject(null);
+                //     });
+                // }
 
                 return response;
             }, () => {
@@ -2790,20 +2799,20 @@ export class CoreFilepoolProvider {
             // File not in pool.
         }).then((entry: CoreFilepoolFileEntry) => {
 
-            if (entry && !options.isexternalfile && !this.isFileOutdated(entry, options.revision, options.timemodified)) {
-                // We have the file, it is not stale, we can update links and remove from queue.
-                this.logger.debug('Queued file already in store, ignoring...');
-                this.addFileLinks(siteId, fileId, links).catch(() => {
-                    // Ignore errors.
-                });
-                this.removeFromQueue(siteId, fileId).catch(() => {
-                    // Ignore errors.
-                }).finally(() => {
-                    this.treatQueueDeferred(siteId, fileId, true);
-                });
+            // if (entry && !options.isexternalfile && !this.isFileOutdated(entry, options.revision, options.timemodified)) {
+            //     // We have the file, it is not stale, we can update links and remove from queue.
+            //     this.logger.debug('Queued file already in store, ignoring...');
+            //     this.addFileLinks(siteId, fileId, links).catch(() => {
+            //         // Ignore errors.
+            //     });
+            //     this.removeFromQueue(siteId, fileId).catch(() => {
+            //         // Ignore errors.
+            //     }).finally(() => {
+            //         this.treatQueueDeferred(siteId, fileId, true);
+            //     });
 
-                return;
-            }
+            //     return;
+            // }
 
             // The file does not exist, or is stale, ... download it.
             const onProgress = this.getQueueOnProgress(siteId, fileId);
