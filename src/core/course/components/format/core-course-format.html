@@ -39,9 +39,12 @@
                     <ng-container *ngIf="sections.length > 2">
                         <ng-container *ngTemplateOutlet="sectionTemplate; context: {section: sections[2]}"></ng-container>
                     </ng-container>
+                    <ng-container *ngIf="sections.length > 3">
+                      <ng-container *ngTemplateOutlet="sectionTemplate; context: {section: sections[3]}"></ng-container>
+                  </ng-container>
 
                     <ion-list *ngFor="let section of sections; index as i">
-                        <ng-container *ngIf="i > 2 && section.summary && section.summary != '' && i <= showSectionId">
+                        <ng-container *ngIf="i > 3 && section.summary && section.summary != '' && i <= showSectionId">
                             <ng-container *ngTemplateOutlet="sectionTemplate; context: {section: section}"></ng-container>
                         </ng-container>
                     </ion-list>

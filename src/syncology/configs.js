@@ -35,12 +35,12 @@ module.exports = {
 
   // ----------------- Used Links ----------------- //
   Links: {
-    SYNCOLOGY_LMS_URL: "https://pioneers-schools.com"
+    SYNCOLOGY_LMS_URL: "https://<school_url>"
   },
 
   // ----------------- Used Strings ----------------- //
   Strings: {
-    APP_NAME: "Pioneers Schools",
+    APP_NAME: "<schoold_app_name_capital_letters_with_spaces>",
     APP_NAME_ARABIC: "بايونيرذ سكولز"
   }
 };

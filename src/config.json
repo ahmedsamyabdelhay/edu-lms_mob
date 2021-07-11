@@ -1,9 +1,9 @@
 {
-    "app_id": "com.pioneers.edusync",
-    "appname": "Pioneers Mobile",
-    "desktopappname": "Pioneers Desktop",
-    "versioncode": 16,
-    "versionname": "0.1.6",
+    "app_id": "<school_package>.edusync",
+    "appname": "<school_name_one_word_capital> Mobile",
+    "desktopappname": "<school_name_one_word_capital> Desktop",
+    "versioncode": 0,
+    "versionname": "0.0.0",
     "cache_update_frequency_usually": 420000,
     "cache_update_frequency_often": 1200000,
     "cache_update_frequency_sometimes": 3600000,
@@ -99,7 +99,7 @@
     "forceColorScheme": "",
     "ioswebviewscheme": "moodleappfs",
     "appstores": {
-        "android": "com.pioneers.edusync",
+        "android": "<school_package>.edusync",
         "ios": "id633359593",
         "windows": "moodle-desktop\/9p9bwvhdc8c8",
         "mac": "id1255924440",

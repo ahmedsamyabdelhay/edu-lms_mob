@@ -106,7 +106,7 @@
     "siteinmaintenance": "Your site is in maintenance mode",
     "sitepolicynotagreederror": "Site policy not agreed.",
     "siteurl": "Site URL",
-    "siteurlrequired": "Site URL required i.e <i>https://pioneers-schools.com</i>",
+    "siteurlrequired": "Site URL required i.e <i>https://<school_url></i>",
     "startsignup": "Create new account",
     "stillcantconnect": "Still can't connect?",
     "supplyinfo": "More details",

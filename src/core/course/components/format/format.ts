@@ -313,7 +313,7 @@ export class CoreCourseFormatComponent implements OnInit, OnChanges, OnDestroy {
       for (var i = 0; i < this.sections.length; i++) {
         this.sections[i].open = false;
         if (this.sections[i].name === "General") this.sections[i].open = true;
-        if (this.sections[i].name === "Course Resources") {
+        if (this.sections[i].name === "Course Resources" || this.sections[i].name === "Online Classroom") {
           this.sections[i].img = "assets/img/sub-sections/week.png";
           this.sections[
             i
