@@ -35,12 +35,12 @@ module.exports = {
 
   // ----------------- Used Links ----------------- //
   Links: {
-    SYNCOLOGY_LMS_URL: "https://<school_url>"
+    SYNCOLOGY_LMS_URL: "https://edusync.syncology.tech"
   },
 
   // ----------------- Used Strings ----------------- //
   Strings: {
-    APP_NAME: "<schoold_app_name_capital_letters_with_spaces>",
+    APP_NAME: "EduSync Mobile",
     APP_NAME_ARABIC: "بايونيرذ سكولز"
   }
 };
