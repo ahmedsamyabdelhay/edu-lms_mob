@@ -1,7 +1,7 @@
 {
-    "app_id": "<school_package>.edusync",
-    "appname": "<school_name_one_word_capital> Mobile",
-    "desktopappname": "<school_name_one_word_capital> Desktop",
+    "app_id": "tech.syncology.edusync",
+    "appname": "EduSync Mobile",
+    "desktopappname": "EduSync Desktop",
     "versioncode": 0,
     "versionname": "0.0.0",
     "cache_update_frequency_usually": 420000,
@@ -99,7 +99,7 @@
     "forceColorScheme": "",
     "ioswebviewscheme": "moodleappfs",
     "appstores": {
-        "android": "<school_package>.edusync",
+        "android": "tech.syncology.edusync",
         "ios": "id633359593",
         "windows": "moodle-desktop\/9p9bwvhdc8c8",
         "mac": "id1255924440",
