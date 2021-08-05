@@ -1,7 +1,7 @@
 {
-  "name": "<school_name_small_letters_no_spaces>",
+  "name": "edusyncmobile",
   "version": "0.0.0",
-  "description": "The official app for <schoold_app_name_capital_letters_with_spaces>.",
+  "description": "The official app for EduSync Mobile.",
   "author": {
     "name": "Syncology",
     "email": "ahmed.mahmoud@syncology.tech"

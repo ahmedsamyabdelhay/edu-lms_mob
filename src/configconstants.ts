@@ -14,9 +14,9 @@
 
 // tslint:disable: variable-name
 export class CoreConfigConstants {
-    static app_id = '<school_package>.edusync';
-    static appname = '<school_name_one_word_capital> Mobile';
-    static desktopappname = '<school_name_one_word_capital> Desktop';
+    static app_id = 'tech.syncology.edusync';
+    static appname = 'EduSync Mobile';
+    static desktopappname = 'EduSync Desktop';
     static versioncode = 0;
     static versionname = '0.0.0';
     static cache_update_frequency_usually = 420000;
@@ -114,7 +114,7 @@ export class CoreConfigConstants {
     static forceColorScheme = '';
     static ioswebviewscheme = 'moodleappfs';
     static appstores: any = {
-        android: '<school_package>.edusync',
+        android: 'tech.syncology.edusync',
         ios: 'id633359593',
         windows: 'moodle-desktop/9p9bwvhdc8c8',
         mac: 'id1255924440',
