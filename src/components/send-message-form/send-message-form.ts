@@ -48,6 +48,9 @@ export class CoreSendMessageFormComponent implements OnInit {
 
     protected sendOnEnter: boolean;
 
+                  // Add Web Project URL Here
+    baseApiUrl = 'http://192.168.0.143/shahid-edusync-lms' + '/message/attachment.php';
+
     constructor(protected utils: CoreUtilsProvider,
             protected textUtils: CoreTextUtilsProvider,
             configProvider: CoreConfigProvider,
@@ -70,6 +73,56 @@ export class CoreSendMessageFormComponent implements OnInit {
 
     ngOnInit(): void {
         this.showKeyboard = this.utils.isTrueOrOne(this.showKeyboard);
+    }
+
+    loadImageFromDevice(event) {
+        
+        const file = event.target.files[0];
+
+        var data = new FormData();
+
+        data.append('file', file, file.name);
+
+        var xhr = new (<any>window).XMLHttpRequest();
+        
+        xhr.open('POST', this.baseApiUrl, true);  
+        
+        (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "";
+
+        if(event.target.files[0].size > 40000000) {
+
+            (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Exceeded file limit. Files must be 40MB! Please try again.";
+       
+        } else {
+
+            xhr.onload = function () {
+                
+                var response = JSON.parse(xhr.responseText);
+                
+                if(xhr.status === 200 && response.status == 'ok') {
+                    
+                    console.log(response.data);
+
+                    let textarea = (<HTMLInputElement>document.getElementById('message-textarea'));
+                    textarea.value = response.data;
+
+                } else if(response.status == 'save_err') {
+                    
+                    (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Unable to Save file! Please try again.";
+                
+                } else if(response.status == 'type_err') {
+
+                    (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Only jpg, png, jpeg, gif, pdf, doc, docx, mp4, txt, zip files are allowed! Please try again.";
+
+                } else {
+                
+                    (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Some problem occured! Please try again.";
+                }
+            };
+            
+            xhr.send(data);
+            
+        }
     }
 
     /**
