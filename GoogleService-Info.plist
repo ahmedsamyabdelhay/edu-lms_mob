@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>122382073044-o8g97gmmknpbqlgoc1746sob66qj67ja.apps.googleusercontent.com</string>
+	<string>379237866173-j1qgl79j7qnet5vhs43d6lipv2ov6ku4.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.122382073044-o8g97gmmknpbqlgoc1746sob66qj67ja</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>122382073044-tk5ermc1ou231m2kcnigrlaecv29lr6i.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.379237866173-j1qgl79j7qnet5vhs43d6lipv2ov6ku4</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCqRCJIyIafxOsjNh7SrOjmZF7_FVsgkHw</string>
+	<string>AIzaSyAcsFQqNgOSVTvjC8qlmOUVQyN29vsskug</string>
 	<key>GCM_SENDER_ID</key>
-	<string>122382073044</string>
+	<string>379237866173</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string><school_package>.edusync</string>
+	<string>com.ramsis.edusync</string>
 	<key>PROJECT_ID</key>
-	<string>edusync-b2086</string>
+	<string>edusync-e40d8</string>
 	<key>STORAGE_BUCKET</key>
-	<string>edusync-b2086.appspot.com</string>
+	<string>edusync-e40d8.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:122382073044:ios:422922a2e5370afb960f41</string>
-	<key>DATABASE_URL</key>
-	<string>https://edusync-b2086.firebaseio.com</string>
+	<string>1:379237866173:ios:4bbcdc00bfbe528ba2f5d4</string>
 </dict>
 </plist>

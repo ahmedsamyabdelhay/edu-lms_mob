@@ -1,7 +1,7 @@
 {
-  "name": "<school_name_small_letters_no_spaces>",
-  "version": "0.0.0",
-  "description": "The official app for <schoold_app_name_capital_letters_with_spaces>.",
+  "name": "ramsisschool",
+  "version": "0.0.1",
+  "description": "The official app for Rmasis School.",
   "author": {
     "name": "Syncology",
     "email": "ahmed.mahmoud@syncology.tech"
@@ -86,7 +86,6 @@
     "chart.js": "2.9.3",
     "com-darryncampbell-cordova-plugin-intent": "1.3.0",
     "cordova": "9.0.0",
-    "cordova-android": "^8.1.0",
     "cordova-android-support-gradle-release": "3.0.1",
     "cordova-clipboard": "1.3.0",
     "cordova-ios": "^5.1.1",
@@ -144,6 +143,7 @@
     "@types/node": "8.10.59",
     "@types/promise.prototype.finally": "2.0.4",
     "acorn": "^5.7.4",
+    "cordova-android": "^8.1.0",
     "electron-builder-lib": "20.23.1",
     "electron-rebuild": "1.10.0",
     "gulp": "4.0.2",

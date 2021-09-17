@@ -14,11 +14,11 @@
 
 // tslint:disable: variable-name
 export class CoreConfigConstants {
-    static app_id = '<school_package>.edusync';
-    static appname = '<school_name_one_word_capital> Mobile';
-    static desktopappname = '<school_name_one_word_capital> Desktop';
-    static versioncode = 0;
-    static versionname = '0.0.0';
+    static app_id = 'com.ramsis.edusync';
+    static appname = 'Ramsis Mobile';
+    static desktopappname = 'Ramsis Desktop';
+    static versioncode = 1;
+    static versionname = '0.0.1';
     static cache_update_frequency_usually = 420000;
     static cache_update_frequency_often = 1200000;
     static cache_update_frequency_sometimes = 3600000;
@@ -114,12 +114,12 @@ export class CoreConfigConstants {
     static forceColorScheme = '';
     static ioswebviewscheme = 'moodleappfs';
     static appstores: any = {
-        android: '<school_package>.edusync',
+        android: 'com.ramsis.edusync',
         ios: 'id633359593',
         windows: 'moodle-desktop/9p9bwvhdc8c8',
         mac: 'id1255924440',
         linux: 'https://download.moodle.org/desktop/download.php?platform=linux&arch=64'
     };
-    static compilationtime = 1608921156178;
-    static lastcommit = '97d4d8e5881973e06194a821fbcb07127c7d7a0d';
+    static compilationtime = 1627323373746;
+    static lastcommit = 'c664905c1dfca19c788f4e9b41f10f710d62dc25';
 }

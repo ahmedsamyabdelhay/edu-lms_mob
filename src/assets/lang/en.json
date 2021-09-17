@@ -1833,7 +1833,7 @@
     "core.login.siteinmaintenance": "Your site is in maintenance mode",
     "core.login.sitepolicynotagreederror": "Site policy not agreed.",
     "core.login.siteurl": "Site URL",
-    "core.login.siteurlrequired": "Site URL required i.e <i>https://<school_url></i>",
+    "core.login.siteurlrequired": "Site URL required i.e <i>https://ramsis-school.com</i>",
     "core.login.startsignup": "Create new account",
     "core.login.stillcantconnect": "Still can't connect?",
     "core.login.supplyinfo": "More details",
