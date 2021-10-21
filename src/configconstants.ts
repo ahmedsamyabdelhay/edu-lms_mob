@@ -93,7 +93,7 @@ export class CoreConfigConstants {
         93.75
 ];
     static customurlscheme = 'edusyncmobile';
-    static siteurl = '';
+    static siteurl = 'http://34.127.20.20/';
     static sitename = '';
     static multisitesdisplay = '';
     static onlyallowlistedsites = false;
@@ -120,6 +120,6 @@ export class CoreConfigConstants {
         mac: 'id1255924440',
         linux: 'https://download.moodle.org/desktop/download.php?platform=linux&arch=64'
     };
-    static compilationtime = 1608921156178;
-    static lastcommit = '97d4d8e5881973e06194a821fbcb07127c7d7a0d';
+    static compilationtime = 1634803407929;
+    static lastcommit = '53d95008332a97cb07ec39f8ed21874ec0398da6';
 }
