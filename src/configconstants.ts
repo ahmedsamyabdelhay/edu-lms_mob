@@ -93,7 +93,7 @@ export class CoreConfigConstants {
         93.75
 ];
     static customurlscheme = 'edusyncmobile';
-    static siteurl = '';
+    static siteurl = 'http://34.127.20.20/';
     static sitename = '';
     static multisitesdisplay = '';
     static onlyallowlistedsites = false;

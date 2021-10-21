@@ -49,7 +49,7 @@ export class CoreSendMessageFormComponent implements OnInit {
     protected sendOnEnter: boolean;
 
                   // Add Web Project URL Here
-    baseApiUrl = 'http://192.168.0.143/shahid-edusync-lms' + '/message/attachment.php';
+    baseApiUrl = 'http://34.127.20.20/' + '/message/attachment.php';
 
     constructor(protected utils: CoreUtilsProvider,
             protected textUtils: CoreTextUtilsProvider,
@@ -95,6 +95,18 @@ export class CoreSendMessageFormComponent implements OnInit {
        
         } else {
 
+            xhr.upload.addEventListener("progress", function (event) { 
+                    
+                if (event.lengthComputable) {
+                    var percent = (event.loaded / event.total * 100 | 0);
+
+                    (<HTMLInputElement>document.getElementById('meter')).style.width = percent + '%';
+
+                    console.log(percent);
+                }
+
+            });
+
             xhr.onload = function () {
                 
                 var response = JSON.parse(xhr.responseText);
@@ -106,14 +118,12 @@ export class CoreSendMessageFormComponent implements OnInit {
                     let textarea = (<HTMLInputElement>document.getElementById('message-textarea'));
                     textarea.value = response.data;
 
+                    (<HTMLInputElement>document.getElementById('meter')).style.display = "none";
+
                 } else if(response.status == 'save_err') {
                     
                     (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Unable to Save file! Please try again.";
                 
-                } else if(response.status == 'type_err') {
-
-                    (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Only jpg, png, jpeg, gif, pdf, doc, docx, mp4, txt, zip files are allowed! Please try again.";
-
                 } else {
                 
                     (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Some problem occured! Please try again.";
