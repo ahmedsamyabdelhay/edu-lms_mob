@@ -172,6 +172,66 @@ export class CoreSendMessageFormComponent implements OnInit {
         };
     };
 
+    loadImageFromDevice(event) {
+        
+        const file = event.target.files[0];
+
+        var data = new FormData();
+
+        data.append('file', file, file.name);
+
+        var xhr = new (<any>window).XMLHttpRequest();
+        
+        xhr.open('POST', this.baseApiUrl, true);  
+        
+        (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "";
+
+        if(event.target.files[0].size > 40000000) {
+
+            (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Exceeded file limit. Files must be 40MB! Please try again.";
+       
+        } else {
+
+            xhr.upload.addEventListener("progress", function (event) { 
+                    
+                if (event.lengthComputable) {
+                    var percent = (event.loaded / event.total * 100 | 0);
+
+                    (<HTMLInputElement>document.getElementById('meter')).style.width = percent + '%';
+
+                    console.log(percent);
+                }
+
+            });
+
+            xhr.onload = function () {
+                
+                var response = JSON.parse(xhr.responseText);
+                
+                if(xhr.status === 200 && response.status == 'ok') {
+                    
+                    console.log(response.data);
+
+                    let textarea = (<HTMLInputElement>document.getElementById('message-textarea'));
+                    textarea.value = response.data;
+
+                    (<HTMLInputElement>document.getElementById('meter')).style.display = "none";
+
+                } else if(response.status == 'save_err') {
+                    
+                    (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Unable to Save file! Please try again.";
+                
+                } else {
+                
+                    (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Some problem occured! Please try again.";
+                }
+            };
+            
+            xhr.send(data);
+            
+        }
+    }
+
     /**
      * Form submitted.
      *
