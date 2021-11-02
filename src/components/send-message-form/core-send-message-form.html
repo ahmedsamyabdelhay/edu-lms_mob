@@ -9,7 +9,7 @@
     <label for="file">
         <img src="https://img.icons8.com/ios/452/attach.png" alt="" style="width: 30px;">
     </label>
-    <input type="file" namename="file" id="file" (change)="loadImageFromDevice($event)" style="opacity: 0;width: 0;height: 0;">
+    <input type="file" name="file[]" id="file" (change)="getFiles($event)" style="opacity: 0;width: 0;height: 0;" multiple>
     
     <ion-buttons end>
         <button ion-button icon-only clear="true" type="submit" [attr.aria-label]="'core.send' | translate" [core-suppress-events] (onClick)="submitForm($event)">

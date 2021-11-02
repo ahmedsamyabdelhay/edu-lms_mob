@@ -49,7 +49,7 @@ export class CoreSendMessageFormComponent implements OnInit {
     protected sendOnEnter: boolean;
 
                   // Add Web Project URL Here
-    baseApiUrl = 'http://34.127.20.20/' + '/message/attachment.php';
+    baseApiUrl = 'http://192.168.0.174/shahid-edusync-lms/' + '/message/attachment.php';
 
     constructor(protected utils: CoreUtilsProvider,
             protected textUtils: CoreTextUtilsProvider,
@@ -74,6 +74,103 @@ export class CoreSendMessageFormComponent implements OnInit {
     ngOnInit(): void {
         this.showKeyboard = this.utils.isTrueOrOne(this.showKeyboard);
     }
+
+    getFiles(event) {
+        const files = event.target.files;
+    
+        this.uploadFile(files);
+    }
+
+    uploadFile(files) {
+
+        const API_ENDPOINT = this.baseApiUrl;
+        
+        const request = new (<any>window).XMLHttpRequest();
+        
+        const formData = new (<any>window).FormData();
+      
+        formData.processData = false;
+        formData.contentType = false;
+        formData.cache = false;
+
+        request.open("POST", API_ENDPOINT, true);
+
+        (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "";
+
+        request.upload.addEventListener("progress", function (event) { 
+                
+            if (event.lengthComputable) {
+                var percent = (event.loaded / event.total * 100 | 0);
+
+                (<HTMLInputElement>document.getElementById('meter')).style.width = percent + '%';
+
+                console.log(percent);
+            }
+
+        });
+
+        request.onreadystatechange = () => {
+          if (request.readyState === 4 && request.status === 200) {
+            console.log(request.responseText);
+          }
+        };
+
+        // Size in Bytes
+        var sizeLimit = 40000000;
+
+        // Size for Error Text
+        var sizeText = '40';
+
+        // Total Number of Files
+        var totalFile = '10';
+
+        if(files.length > totalFile) {
+
+            (<HTMLInputElement>document.getElementById("message-response")).innerHTML = "Exceeded Total file limit. Only " + totalFile + " Files Allowed! Please try again.";
+            
+        } else {
+    
+            for (let i = 0; i < files.length; i++) {
+                
+                if(files[i].size > sizeLimit) {
+
+                    (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Exceeded file limit. Files must be " + sizeText + "MB! Please try again.";
+
+                    break;
+                    
+                } else {
+
+                    formData.append('files[]', files[i], files[i].name)
+                }
+            }
+        }
+
+        request.send(formData);
+        
+        request.onload = function () {
+
+            var response = JSON.parse(request.responseText);
+
+            if(request.status === 200) {
+                
+                console.log(response);
+
+                let textarea = (<HTMLInputElement>document.getElementById('message-textarea'));
+                textarea.value = response;
+
+                (<HTMLInputElement>document.getElementById('meter')).style.display = "none";
+
+            } else if(response.data == 'save_err') {
+                    
+                (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Unable to Save file! Please try again.";
+                
+            } else {
+                
+                (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Some problem occured! Please try again.";
+                
+            }
+        };
+    };
 
     loadImageFromDevice(event) {
         
