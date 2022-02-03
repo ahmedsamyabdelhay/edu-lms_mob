@@ -22,6 +22,7 @@ import { CoreTextUtilsProvider } from '@providers/utils/text';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { CoreConstants } from '@core/constants';
 
+
 /**
  * Component to display a "send message form".
  *
@@ -49,7 +50,7 @@ export class CoreSendMessageFormComponent implements OnInit {
     protected sendOnEnter: boolean;
 
                   // Add Web Project URL Here
-    baseApiUrl = 'http://192.168.0.174/shahid-edusync-lms/' + '/message/attachment.php';
+    baseApiUrl = 'https://edusync.syncology.tech/' + '/message/attachment.php';
 
     constructor(protected utils: CoreUtilsProvider,
             protected textUtils: CoreTextUtilsProvider,
@@ -84,7 +85,6 @@ export class CoreSendMessageFormComponent implements OnInit {
     uploadFile(files) {
 
         const API_ENDPOINT = this.baseApiUrl;
-        
         const request = new (<any>window).XMLHttpRequest();
         
         const formData = new (<any>window).FormData();
@@ -146,7 +146,7 @@ export class CoreSendMessageFormComponent implements OnInit {
         }
 
         request.send(formData);
-        
+       
         request.onload = function () {
 
             var response = JSON.parse(request.responseText);
@@ -180,20 +180,27 @@ export class CoreSendMessageFormComponent implements OnInit {
     submitForm($event: Event): void {
         $event.preventDefault();
         $event.stopPropagation();
-
+        let textarea = (<HTMLInputElement>document.getElementById('message-textarea'));
+        this.message = textarea.value;
         let value = this.message.trim();
+        //this.message = ''; // Reset the form.
 
         if (!value) {
             // Silent error.
             return;
         }
 
-        this.message = ''; // Reset the form.
+        
 
         this.domUtils.triggerFormSubmittedEvent(this.formElement, false, this.sitesProvider.getCurrentSiteId());
 
         value = this.textUtils.replaceNewLines(value, '<br>');
         this.onSubmit.emit(value);
+
+        setTimeout(function(){
+            let textarea = (<HTMLInputElement>document.getElementById('message-textarea'));
+            textarea.value = '';
+        }, 350);
     }
 
     /**
