@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:122382073044:android:4090ea976bf25c0e960f41",
         "android_client_info": {
-          "package_name": "<school_package>.edusync"
+          "package_name": "tech.syncology.edusync"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "122382073044-tk5ermc1ou231m2kcnigrlaecv29lr6i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "<school_package>.edusync",
+            "package_name": "tech.syncology.edusync",
             "certificate_hash": "ae9d0aebe9ead1f764ba1fcba5fd40018c382b6f"
           }
         },
