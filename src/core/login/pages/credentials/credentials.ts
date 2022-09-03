@@ -38,6 +38,7 @@ export class CoreLoginCredentialsPage {
     @ViewChild('credentialsForm') formElement: ElementRef;
 
     credForm: FormGroup;
+    urlPath: string;
     siteUrl: string;
     siteChecked = false;
     siteName: string;
@@ -68,6 +69,7 @@ export class CoreLoginCredentialsPage {
             private eventsProvider: CoreEventsProvider) {
 
         this.siteUrl = navParams.get('siteUrl');
+        this.urlPath = navParams.get('urlPath');
         this.siteName = navParams.get('siteName') || null;
         this.logoUrl = navParams.get('logoUrl') || null;
         this.siteConfig = navParams.get('siteConfig');

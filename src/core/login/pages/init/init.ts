@@ -62,10 +62,11 @@ export class CoreLoginInitPage {
                             // Site doesn't exist.
                             return this.loadPage();
                         });
-                    } else {
-                        // No site to load, open the page.
-                        return this.loginHelper.goToNoSitePage(this.navCtrl, redirectData.page, redirectData.params);
                     }
+                    // else {
+                    //     // No site to load, open the page.
+                    //     return this.loginHelper.goToNoSitePage(this.navCtrl, redirectData.page, redirectData.params);
+                    // }
                 }
             }
 

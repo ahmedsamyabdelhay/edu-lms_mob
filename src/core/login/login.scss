@@ -16,22 +16,150 @@ $core-dark-login-loading-color: $core-dark-text-color !default;
 ion-app.app-root page-core-login-credentials,
 ion-app.app-root page-core-login-reconnect,
 ion-app.app-root page-core-login-site {
+    .school-logo-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 30vh;
+        img {
+            height: 20vh;
+            filter: drop-shadow(10px 10px 10px rgba(0,0,0,0.6));
+        }
+    }
+
+    @keyframes example {
+        from {top: 110vh;}
+        to {top: 30vh;}
+    }
+    .form-wrapper {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 110vh;
+        border-top: 5px solid #2196F3;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        background-color: #0D51A6;
+        filter: drop-shadow(10px 10px 10px rgba(0,0,0,1));
+        animation-name: example;
+        animation-duration: 0.5s;
+        animation-delay: 1s;
+        animation-fill-mode: forwards;
+        form {
+            height: 100% !important;
+            padding-top: 7.5vh;
+            ion-list {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                margin: 0;
+                ion-item {
+                    margin-bottom: 0 !important;
+                    border: 1px solid #0D51A6;
+                    border-radius: 10px;
+                    ion-thumbnail {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 !important;
+                        border-right: 1px solid #0D51A6;
+                        background-color: #F2F6FA;
+                        ion-icon {
+                            font-size: xx-large;
+                            color: #0D51A6 !important;
+                        }
+                    }
+        
+                    .item-inner {
+                        padding: 0 !important;
+                        .input-wrapper {
+                            padding: 0 !important;
+        
+                            ion-input {
+                                height: 100%;
+                                input {
+                                    width: 100%;
+                                    height: 100%;
+                                    margin: 0 !important;
+                                    padding-left: 5px;
+                                    padding-right: 5px;
+                                    color: black;
+                                    font-size: 0.8em;
+                                }
+                            }
+        
+                            core-show-password {
+                                height: 100%;
+                                a {
+                                    height: 100%;
+                                    padding: 0;
+                                    span {
+                                        ion-icon {
+                                            color: #0D51A6;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+        
+                ion-item:first-child {
+                    border-bottom: 0;
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+        
+                ion-item:nth-child(2) {
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+                }
+        
+                ion-input {
+                    background-color: white;
+                }
+        
+                .submit-button-wrapper {
+                    width: 100%;
+                    padding-top: 20px;
+
+                    button {
+                        background-color: white;
+                        color: #0D51A6;
+                        font-weight: bolder;
+                        border-radius: 10px !important;
+                    }
+                }
+
+                .form-footer-wrapper {
+                    padding-top: 40px;
+                    img {
+                        height: 150px;
+                    }
+                    @media screen and (orientation: landscape) {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
     .scroll-content {
-      background-image: url("#{$assets-path}/img/login/login-background-portrait.jpg");
+      background-image: url("#{$assets-path}/img/background.png");
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
       color: $core-login-page-text-color;
+      overflow-y: hidden;
       padding: 0 !important;
         ion-item {
             padding: 0 !important;
         }
         @media screen and (orientation: landscape) {
-            background-image: url("#{$assets-path}/img/login/login-background-landscape.jpg");
+            background-image: url("#{$assets-path}/img/background.png");
         }
 
         @include darkmode() {
-          background-image: url("#{$assets-path}/img/login/login-background-portrait.jpg");
+          background-image: url("#{$assets-path}/img/background.png");
           background-size: cover;
           background-repeat: no-repeat;
           background-position: center;
@@ -101,71 +229,6 @@ ion-app.app-root page-core-login-site {
 
             @include darkmode() {
                 background: transparent;
-            }
-        }
-    }
-
-    .core-login-site-logo {
-        overflow-y: hidden;
-        position: relative;
-        height: 30%;
-        margin-top: 0px;
-        margin-bottom: 5%;
-        @media screen and (orientation: landscape) {
-          margin-bottom: 10px;
-        }
-
-        .left-top {
-            background-image: url("#{$assets-path}/img/login/left-portrait.png");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: left center;
-            height: 100%;
-            width: 25%;
-            position: absolute;
-            top: 20%;
-            left: 0;
-            @media screen and (orientation: landscape) {
-                background-image: url("#{$assets-path}/img/login/left-landscape.png");
-                top: 0;
-            }
-        }
-
-        .center-top-wrapper {
-            width: 100%;
-            height: 50%;
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            
-            .center-top {
-               @media screen and (orientation: landscape) {
-                width: 50%;
-               }
-            }
-       }
-
-        .right-top {
-            background-image: url("#{$assets-path}/img/login/right-portrait.png");
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: right center;
-            height: 100%;
-            width: 25%;
-            position: absolute;
-            top: 20%;
-            right: 0;
-            @media screen and (orientation: landscape) {
-                background-image: url("#{$assets-path}/img/login/right-landscape.png");
-                top: 0;
-            }
-        }
-
-        .logo-top {
-            width: 50%;
-            height: 80%;
-            @media screen and (orientation: landscape) {
-                width: 20%;
             }
         }
     }

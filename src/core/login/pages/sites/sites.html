@@ -2,7 +2,27 @@
 
 </ion-header>
 <ion-content>
-    <div class="sites-bglogo">
-        <img id="sitesSlogan" src="assets/img/slogan.gif" />
+    <div class="core-bglogo">
+        <div class="core-sites-fixed">
+            <ion-grid no-padding>
+            <ion-row align-items-center justify-content-center>
+                <div class="core-sites-image-row">
+                    <button (click)="connectToUrl('national')" class="transparent-button">
+                        <img src="assets/img/national.png" />
+                    </button>
+                    <button (click)="connectToUrl('british')" class="transparent-button">
+                        <img src="assets/img/british.png" />
+                    </button>
+                </div>
+            </ion-row>
+            <ion-row align-items-center justify-content-center>
+                <div class="core-sites-image-row">
+                    <button (click)="connectToUrl('american')" class="transparent-button">
+                        <img src="assets/img/american.png" />
+                    </button>
+                </div>
+            </ion-row>
+            </ion-grid>
+        </div>
     </div>
 </ion-content>
