@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "379237866173",
-    "project_id": "edusync-e40d8",
-    "storage_bucket": "edusync-e40d8.appspot.com"
+    "project_number": "79184349345",
+    "project_id": "edusync-300906",
+    "storage_bucket": "edusync-300906.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:379237866173:android:1332ed97d6beec5ca2f5d4",
+        "mobilesdk_app_id": "1:79184349345:android:c4392ac6ca70cd53c308e0",
         "android_client_info": {
-          "package_name": "com.ramsis.edusync"
+          "package_name": "com.future.edusync"
         }
       },
       "oauth_client": [
         {
-          "client_id": "379237866173-5n8oqmh08v3to0k5ud58idkbtcg3m56a.apps.googleusercontent.com",
+          "client_id": "79184349345-8lt1934n3paktgspas21m6o2ppvs591k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDwkroAURH8gY8nSfwdvqD9arxwWb2DKpc"
+          "current_key": "AIzaSyCdbft1poVUxmGa43VJWoiU8gCtvsZWKbU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "379237866173-5n8oqmh08v3to0k5ud58idkbtcg3m56a.apps.googleusercontent.com",
+              "client_id": "79184349345-8lt1934n3paktgspas21m6o2ppvs591k.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

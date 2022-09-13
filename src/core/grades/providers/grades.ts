@@ -212,13 +212,10 @@ export class CoreGradesProvider {
             const preSets = {
                 cacheKey: this.getCoursesGradesCacheKey()
             };
-            console.log(userId, "hot damn shit");
             return site.read('gradereport_overview_get_course_grades', data, preSets).then((data) => {
-                console.log(data, "shit 1");
                 if (data && data.grades) {
                     return data.grades;
                 }
-                console.log(data, "shit 2");
                 return Promise.reject(null);
             });
         });

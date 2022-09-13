@@ -49,7 +49,7 @@ export class CoreSendMessageFormComponent implements OnInit {
     protected sendOnEnter: boolean;
 
                   // Add Web Project URL Here
-    baseApiUrl = 'http://192.168.0.174/shahid-edusync-lms/' + '/message/attachment.php';
+    baseApiUrl = 'http://34.148.80.246//' + '/message/attachment.php';
 
     constructor(protected utils: CoreUtilsProvider,
             protected textUtils: CoreTextUtilsProvider,
@@ -77,18 +77,18 @@ export class CoreSendMessageFormComponent implements OnInit {
 
     getFiles(event) {
         const files = event.target.files;
-    
+
         this.uploadFile(files);
     }
 
     uploadFile(files) {
 
         const API_ENDPOINT = this.baseApiUrl;
-        
+
         const request = new (<any>window).XMLHttpRequest();
-        
+
         const formData = new (<any>window).FormData();
-      
+
         formData.processData = false;
         formData.contentType = false;
         formData.cache = false;
@@ -97,8 +97,8 @@ export class CoreSendMessageFormComponent implements OnInit {
 
         (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "";
 
-        request.upload.addEventListener("progress", function (event) { 
-                
+        request.upload.addEventListener("progress", function (event) {
+
             if (event.lengthComputable) {
                 var percent = (event.loaded / event.total * 100 | 0);
 
@@ -127,17 +127,17 @@ export class CoreSendMessageFormComponent implements OnInit {
         if(files.length > totalFile) {
 
             (<HTMLInputElement>document.getElementById("message-response")).innerHTML = "Exceeded Total file limit. Only " + totalFile + " Files Allowed! Please try again.";
-            
+
         } else {
-    
+
             for (let i = 0; i < files.length; i++) {
-                
+
                 if(files[i].size > sizeLimit) {
 
                     (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Exceeded file limit. Files must be " + sizeText + "MB! Please try again.";
 
                     break;
-                    
+
                 } else {
 
                     formData.append('files[]', files[i], files[i].name)
@@ -146,13 +146,13 @@ export class CoreSendMessageFormComponent implements OnInit {
         }
 
         request.send(formData);
-        
+
         request.onload = function () {
 
             var response = JSON.parse(request.responseText);
 
             if(request.status === 200) {
-                
+
                 console.log(response);
 
                 let textarea = (<HTMLInputElement>document.getElementById('message-textarea'));
@@ -161,19 +161,19 @@ export class CoreSendMessageFormComponent implements OnInit {
                 (<HTMLInputElement>document.getElementById('meter')).style.display = "none";
 
             } else if(response.data == 'save_err') {
-                    
+
                 (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Unable to Save file! Please try again.";
-                
+
             } else {
-                
+
                 (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Some problem occured! Please try again.";
-                
+
             }
         };
     };
 
     loadImageFromDevice(event) {
-        
+
         const file = event.target.files[0];
 
         var data = new FormData();
@@ -181,19 +181,19 @@ export class CoreSendMessageFormComponent implements OnInit {
         data.append('file', file, file.name);
 
         var xhr = new (<any>window).XMLHttpRequest();
-        
-        xhr.open('POST', this.baseApiUrl, true);  
-        
+
+        xhr.open('POST', this.baseApiUrl, true);
+
         (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "";
 
         if(event.target.files[0].size > 40000000) {
 
             (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Exceeded file limit. Files must be 40MB! Please try again.";
-       
+
         } else {
 
-            xhr.upload.addEventListener("progress", function (event) { 
-                    
+            xhr.upload.addEventListener("progress", function (event) {
+
                 if (event.lengthComputable) {
                     var percent = (event.loaded / event.total * 100 | 0);
 
@@ -205,11 +205,11 @@ export class CoreSendMessageFormComponent implements OnInit {
             });
 
             xhr.onload = function () {
-                
+
                 var response = JSON.parse(xhr.responseText);
-                
+
                 if(xhr.status === 200 && response.status == 'ok') {
-                    
+
                     console.log(response.data);
 
                     let textarea = (<HTMLInputElement>document.getElementById('message-textarea'));
@@ -218,17 +218,17 @@ export class CoreSendMessageFormComponent implements OnInit {
                     (<HTMLInputElement>document.getElementById('meter')).style.display = "none";
 
                 } else if(response.status == 'save_err') {
-                    
+
                     (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Unable to Save file! Please try again.";
-                
+
                 } else {
-                
+
                     (<HTMLInputElement>document.getElementById('message-response')).innerHTML = "Some problem occured! Please try again.";
                 }
             };
-            
+
             xhr.send(data);
-            
+
         }
     }
 

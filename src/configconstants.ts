@@ -14,11 +14,11 @@
 
 // tslint:disable: variable-name
 export class CoreConfigConstants {
-    static app_id = 'com.ramsis.edusync';
-    static appname = 'Ramsis Mobile';
-    static desktopappname = 'Ramsis Desktop';
-    static versioncode = 1;
-    static versionname = '0.0.1';
+    static app_id = 'com.future.edusync';
+    static appname = 'Future-Schools Mobile';
+    static desktopappname = 'Future-Schools Desktop';
+    static versioncode = 5;
+    static versionname = '0.0.5';
     static cache_update_frequency_usually = 420000;
     static cache_update_frequency_often = 1200000;
     static cache_update_frequency_sometimes = 3600000;
@@ -92,8 +92,8 @@ export class CoreConfigConstants {
         75.89,
         93.75
 ];
-    static customurlscheme = 'edusyncmobile';
-    static siteurl = 'http://34.127.20.20/';
+    static customurlscheme = 'futureschoolsmobile';
+    static siteurl = 'https://future-schools.co/';
     static sitename = '';
     static multisitesdisplay = '';
     static onlyallowlistedsites = false;
@@ -114,12 +114,12 @@ export class CoreConfigConstants {
     static forceColorScheme = '';
     static ioswebviewscheme = 'moodleappfs';
     static appstores: any = {
-        android: 'com.ramsis.edusync',
+        android: 'com.future.edusync',
         ios: 'id633359593',
         windows: 'moodle-desktop/9p9bwvhdc8c8',
         mac: 'id1255924440',
         linux: 'https://download.moodle.org/desktop/download.php?platform=linux&arch=64'
     };
-    static compilationtime = 1662222301912;
-    static lastcommit = 'd341a223b87f1c051fc4d01f5f3f20e720f04867';
+    static compilationtime = 1663086424445;
+    static lastcommit = '3ae76b48c9481178462a1c806de010af2fbbdb6d';
 }

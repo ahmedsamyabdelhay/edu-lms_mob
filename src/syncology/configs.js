@@ -35,12 +35,12 @@ module.exports = {
 
   // ----------------- Used Links ----------------- //
   Links: {
-    SYNCOLOGY_LMS_URL: "https://ramsis-school.com"
+    SYNCOLOGY_LMS_URL: "https://future-schools.co"
   },
 
   // ----------------- Used Strings ----------------- //
   Strings: {
-    APP_NAME: "Rmasis School",
+    APP_NAME: "Future Schools",
     APP_NAME_ARABIC: "بايونيرذ سكولز"
   }
 };

@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>379237866173-j1qgl79j7qnet5vhs43d6lipv2ov6ku4.apps.googleusercontent.com</string>
+	<string>79184349345-n6l4eeh46nh4p488hifumtn3tfqukicg.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.379237866173-j1qgl79j7qnet5vhs43d6lipv2ov6ku4</string>
+	<string>com.googleusercontent.apps.79184349345-n6l4eeh46nh4p488hifumtn3tfqukicg</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAcsFQqNgOSVTvjC8qlmOUVQyN29vsskug</string>
+	<string>AIzaSyAQCKvmbES-e-qPKIqZGYhbD4lFI3jsbQ8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>379237866173</string>
+	<string>79184349345</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.ramsis.edusync</string>
+	<string>com.future.edusync</string>
 	<key>PROJECT_ID</key>
-	<string>edusync-e40d8</string>
+	<string>edusync-300906</string>
 	<key>STORAGE_BUCKET</key>
-	<string>edusync-e40d8.appspot.com</string>
+	<string>edusync-300906.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:379237866173:ios:4bbcdc00bfbe528ba2f5d4</string>
+	<string>1:79184349345:ios:7c01ca35a9c2f4b0c308e0</string>
 </dict>
 </plist>
