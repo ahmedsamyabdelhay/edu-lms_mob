@@ -129,7 +129,7 @@ fs.readFile(path.join(__dirname, 'config.json'), 'utf8', (err, data) => {
 
     // Default values.
     var ssoScheme = 'edusync',
-        appId = 'tech.syncology.edusync';
+        appId = 'com.future.edusync';
 
     if (!err) {
         try {

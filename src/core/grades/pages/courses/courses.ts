@@ -70,11 +70,8 @@ export class CoreGradesCoursesPage {
      * @return Resolved when done.
      */
     fetchData(): Promise<any> {
-        console.log(this.userId, "pre hot damn shit");
         return this.gradesProvider.getCoursesGrades(undefined, this.userId).then((grades) => {
-            console.log(grades, "shit 3")
             return this.gradesHelper.getGradesCourseData(grades).then((grades) => {
-                console.log(grades, "shit 4")
                this.grades = grades;
             });
         }).catch((error) => {

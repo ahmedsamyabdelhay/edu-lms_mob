@@ -1,7 +1,7 @@
 {
-  "name": "ramsisschool",
-  "version": "0.0.1",
-  "description": "The official app for Rmasis School.",
+  "name": "futureschools",
+  "version": "0.0.5",
+  "description": "The official app for Future-Schools LMS.",
   "author": {
     "name": "Syncology",
     "email": "ahmed.mahmoud@syncology.tech"

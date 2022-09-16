@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="39201" id="com.ramsis.edusync" ios-CFBundleVersion="0.0.0.1" version="0.0.1" versionCode="00001" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Rmasis School</name>
-    <description>Rmasis School official app</description>
+<widget android-versionCode="39205" id="com.future.edusync" ios-CFBundleVersion="0.0.5.0" version="0.0.5" versionCode="00050" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Future-Schools</name>
+    <description>Future-Schools LMS official app</description>
     <author email="ahmed.mahmoud@syncology.tech" href="https://syncology.tech">Syncology team</author>
     <content src="index.html" />
     <access origin="*" />
@@ -41,7 +41,7 @@
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="android-minSdkVersion" value="19" />
-    <preference name="android-targetSdkVersion" value="29" />
+    <preference name="android-targetSdkVersion" value="30" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="CustomURLSchemePluginClearsAndroidIntent" value="true" />
     <preference name="iosPersistentFileLocation" value="Compatibility" />
@@ -267,7 +267,7 @@
             <true />
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="CFBundleShortVersionString">
-            <string>0.0.1</string>
+            <string>0.0.5</string>
         </edit-config>
         <config-file parent="FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED" target="*-Info.plist">
             <string>YES</string>

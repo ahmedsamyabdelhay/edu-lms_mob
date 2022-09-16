@@ -6,9 +6,9 @@
 <form #messageForm>
     <textarea id="message-textarea" class="core-send-message-input" [core-auto-focus]="showKeyboard" [placeholder]="placeholder" rows="1" core-auto-rows [(ngModel)]="message" name="message" (onResize)="textareaResized()" (keydown.enter)="enterClicked($event)" (keydown.control.enter)="enterClicked($event, 'control')" (keydown.meta.enter)="enterClicked($event, 'meta')" aria-multiline="true"></textarea>
     
-    <label for="file">
+    <!-- <label for="file">
         <img src="https://img.icons8.com/ios/452/attach.png" alt="" style="width: 30px;">
-    </label>
+    </label>-->
     <input type="file" name="file[]" id="file" (change)="getFiles($event)" style="opacity: 0;width: 0;height: 0;" multiple>
     
     <ion-buttons end>
