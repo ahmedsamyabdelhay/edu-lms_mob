@@ -21,6 +21,9 @@ import { CoreBlockComponent } from './block/block';
 import { CoreBlockOnlyTitleComponent } from './only-title-block/only-title-block';
 import { CoreBlockPreRenderedComponent } from './pre-rendered-block/pre-rendered-block';
 import { CoreBlockCourseBlocksComponent } from './course-blocks/course-blocks';
+import { ChilddetailComponent } from './childdetail/childdetail';
+import { MychildrenComponent } from './mychildren/mychildren';
+
 import { CoreComponentsModule } from '@components/components.module';
 
 @NgModule({
@@ -28,7 +31,9 @@ import { CoreComponentsModule } from '@components/components.module';
         CoreBlockComponent,
         CoreBlockOnlyTitleComponent,
         CoreBlockPreRenderedComponent,
-        CoreBlockCourseBlocksComponent
+        CoreBlockCourseBlocksComponent,
+        ChilddetailComponent,
+        MychildrenComponent
     ],
     imports: [
         CommonModule,
@@ -43,12 +48,15 @@ import { CoreComponentsModule } from '@components/components.module';
         CoreBlockComponent,
         CoreBlockOnlyTitleComponent,
         CoreBlockPreRenderedComponent,
-        CoreBlockCourseBlocksComponent
+        CoreBlockCourseBlocksComponent,
+        ChilddetailComponent,
+        MychildrenComponent
     ],
     entryComponents: [
         CoreBlockOnlyTitleComponent,
         CoreBlockPreRenderedComponent,
-        CoreBlockCourseBlocksComponent
+        CoreBlockCourseBlocksComponent,
+        ChilddetailComponent
     ]
 })
 export class CoreBlockComponentsModule {}
