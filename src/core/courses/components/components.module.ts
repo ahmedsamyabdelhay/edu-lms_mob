@@ -26,6 +26,8 @@ import { CoreCoursesMyCoursesComponent } from "./my-courses/my-courses";
 import { CoreSiteHomeNewsComponent } from "./news/news";
 import { CoreDashboardAnnouncementComponent } from "./announcements/announcements";
 import { CoreCourseComponentsModule } from "@core/course/components/components.module";
+import { ChilddetailComponent } from "./childdetail/childdetail";
+import { MychildrenComponent } from "./mychildren/mychildren";
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { CoreCourseComponentsModule } from "@core/course/components/components.m
     CoreCoursesCourseOptionsMenuComponent,
     CoreCoursesMyCoursesComponent,
     CoreSiteHomeNewsComponent,
-    CoreDashboardAnnouncementComponent
+    CoreDashboardAnnouncementComponent,
+    ChilddetailComponent,
+    MychildrenComponent
   ],
   imports: [
     CommonModule,
@@ -52,8 +56,13 @@ import { CoreCourseComponentsModule } from "@core/course/components/components.m
     CoreCoursesCourseOptionsMenuComponent,
     CoreCoursesMyCoursesComponent,
     CoreSiteHomeNewsComponent,
-    CoreDashboardAnnouncementComponent
+    CoreDashboardAnnouncementComponent,
+    ChilddetailComponent,
+    MychildrenComponent
   ],
-  entryComponents: [CoreCoursesCourseOptionsMenuComponent]
+  entryComponents: [
+    CoreCoursesCourseOptionsMenuComponent,
+    ChilddetailComponent
+  ]
 })
 export class CoreCoursesComponentsModule {}

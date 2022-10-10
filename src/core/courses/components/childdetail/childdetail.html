@@ -40,14 +40,32 @@
   </ion-grid>
 </ion-card>
 
-<ion-list>
-  <ng-container *ngFor="let block of blocks | slice:1">
-    <core-block *ngIf="block.visible" [block]="block" contextLevel="user" [instanceId]="userId" [extraData]="{'downloadEnabled': downloadEnabled, 'studentId': child.child_id }"></core-block>
-</ng-container>
-</ion-list>
+<div *ngIf="courses.length > 0">
+  <ion-item-divider>
+    <h2>{{ 'Courses' | translate }}</h2>
+   
+  </ion-item-divider>
+  
+
+  <ion-scroll scrollX="true" direction="x">
+
+    <ng-container *ngFor="let course of child_courses;">
+      <script>
+        console.log(course)
+      </script>
+      <ion-card class="child_course_card" (click)="openCourse(course)">
+        <ion-card-content>
+          <ion-avatar class="child_course_avatar">
+            <img class="child_course_img" alt="Silhouette of a person's head" [src]="course.course_image_url" />
+          </ion-avatar>
+          <ion-label>{{ course.name }}</ion-label>
+        </ion-card-content>
+      </ion-card>
+  </ng-container>
+  </ion-scroll>
+</div>
 
 </ion-content>
-
 
 
 

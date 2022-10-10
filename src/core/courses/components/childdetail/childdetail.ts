@@ -1,10 +1,13 @@
-import { Component, OnDestroy, ViewChildren, QueryList } from '@angular/core';
-import { child } from '@core/block/components/mychildren/child.model';
+import { child_course } from './../mychildren/child_courses.model';
+import { Component, OnDestroy, ViewChildren, QueryList, Optional } from '@angular/core';
+import { child } from '@core/courses/components/mychildren/child.model';
 import { CoreBlockComponent } from "@core/block/components/block/block";
 import { CoreCoursesDashboardProvider } from '@core/courses/providers/dashboard';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
-import { IonicPage, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CoreSitesProvider } from '@providers/sites';
+import { CoreCoursesProvider } from '@core/courses/providers/courses';
+import { CoreCourseHelperProvider } from '@core/course/providers/helper';
 /**
  * Generated class for the ChilddetailComponent component.
  *
@@ -44,12 +47,18 @@ export class ChilddetailComponent implements OnDestroy {
   firstSelectedTab: number;
   announcementsLoaded: boolean;
   tabsReady: boolean;
+  courses: any[] = [];
+  child_courses: child_course[] = [];
 
   constructor(
     private dashboardProvider: CoreCoursesDashboardProvider,
     private domUtils: CoreDomUtilsProvider,
     private navParams: NavParams,
     private sitesProvider: CoreSitesProvider,
+    private coursesProvider: CoreCoursesProvider,
+    @Optional() private navCtrl: NavController,
+    private courseHelper: CoreCourseHelperProvider
+
   ) {
     this.child = navParams.get('child');
     this.childId = Number(this.child.child_id); 
@@ -58,8 +67,31 @@ export class ChilddetailComponent implements OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadDashboardContent();
+   // this.loadDashboardContent();
+   this.get_student_courses();
 }
+
+
+get_student_courses(){
+    return this.coursesProvider.getCoursesByField('ids', this.child.child_courses_ids).then((courses) => {
+      debugger;
+      this.courses = courses;
+      const currentSite = this.sitesProvider.getCurrentSite();
+      for(var child_course_key in courses){
+        var course: child_course = {
+          id: courses[child_course_key]['id'],
+          name: courses[child_course_key]['fullname'],
+          course_image_url: courses[child_course_key]['overviewfiles'][0]['fileurl']+"?token="+currentSite.getToken()
+        }
+
+        this.child_courses.push(course);
+      }
+
+    }).catch((error) => {
+        this.domUtils.showErrorModalDefault(error, 'core.courses.errorloadcourses', true);
+    });
+}
+
 
   /**
    * Convenience function to fetch the dashboard data.
@@ -114,6 +146,19 @@ export class ChilddetailComponent implements OnDestroy {
       }
     ];
   }
+
+  /**
+     * Open a course.
+     *
+     * @param course The course to open.
+     */
+   openCourse(course: any): void {
+    if (course.isEnrolled) {
+        this.courseHelper.openCourse(this.navCtrl, course);
+    } else {
+        this.navCtrl.push('CoreCoursesCoursePreviewPage', {course: course});
+    }
+}
 
     /**
    * Component being destroyed.

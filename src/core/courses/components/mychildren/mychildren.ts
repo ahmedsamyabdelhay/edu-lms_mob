@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 //import { ChilddetailComponent } from '@components/childdetail/childdetail';
-import { ChilddetailComponent } from "@core/block/components/childdetail/childdetail";
+import { ChilddetailComponent } from "@core/courses/components/childdetail/childdetail";
 
 import { CoreSitesProvider } from '@providers/sites';
 import { NavController } from 'ionic-angular';
@@ -59,8 +59,23 @@ export class MychildrenComponent {
               child_id: json[child_key]['child_id'],
               child_image_url:  this.check_image_URL(json[child_key]['child_image_url']),
               child_name: json[child_key]['child_name'],
+              child_courses_ids: "",
+              child_courses: []
+            }
+            let child_courses_ids = [];
+            for(var child_course_key in json[child_key]['child_courses']){
+              child_obj.child_courses.push(
+                {
+                  id: json[child_key]['child_courses'][child_course_key]['id'],
+                  course_image_url: "",
+                  name:json[child_key]['child_courses'][child_course_key]['name'],
+                }
+              )
+              child_courses_ids.push(json[child_key]['child_courses'][child_course_key]['id'])
             }
 
+            child_obj.child_courses_ids = child_courses_ids.toString();
+            console.log("Course Ids: ", child_obj.child_courses_ids);
             this.children.push(child_obj);
         }
       }
