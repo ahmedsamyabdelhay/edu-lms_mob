@@ -53,6 +53,7 @@ export class MychildrenComponent {
 
       for(var child_key in json){
         if(json.hasOwnProperty(child_key)){
+            debugger;
             var child_obj: child = {
               child_email: json[child_key]['child_email'],
               child_id: json[child_key]['child_id'],

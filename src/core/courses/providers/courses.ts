@@ -795,10 +795,10 @@ export class CoreCoursesProvider {
      * @param siteId Site to get the courses from. If not defined, use current site.
      * @return Promise resolved with the courses.
      */
-    getUserCourses(preferCache?: boolean, siteId?: string, strategy?: CoreSitesReadingStrategy): Promise<any[]> {
+    getUserCourses(preferCache?: boolean, siteId?: string, strategy?: CoreSitesReadingStrategy, studentId: number = 0): Promise<any[]> {
         return this.sitesProvider.getSite(siteId).then((site) => {
 
-            const userId = site.getUserId(),
+            const userId = studentId == 0 ? site.getUserId() : studentId,
                 data: any = {
                     userid: userId
                 },

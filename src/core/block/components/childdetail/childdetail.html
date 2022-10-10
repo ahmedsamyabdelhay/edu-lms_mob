@@ -42,9 +42,10 @@
 
 <ion-list>
   <ng-container *ngFor="let block of blocks | slice:1">
-    <core-block *ngIf="block.visible" [block]="block" contextLevel="user" [instanceId]="userId" [extraData]="{'downloadEnabled': downloadEnabled}"></core-block>
+    <core-block *ngIf="block.visible" [block]="block" contextLevel="user" [instanceId]="userId" [extraData]="{'downloadEnabled': downloadEnabled, 'studentId': child.child_id }"></core-block>
 </ng-container>
 </ion-list>
+
 </ion-content>
 
 

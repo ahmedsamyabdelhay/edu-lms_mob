@@ -34,6 +34,8 @@ import { CoreBlockBaseComponent } from '@core/block/classes/base-block-component
 export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implements OnInit, OnChanges, OnDestroy {
     @ViewChild('searchbar') searchbar: Searchbar;
     @Input() downloadEnabled: boolean;
+    //our field.
+    @Input() studentId: number;
 
     courses = {
         filter: '',
@@ -102,6 +104,9 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
      * Component being initialized.
      */
     ngOnInit(): void {
+
+        console.log("Student Id", this.studentId);
+
         // Refresh the enabled flags if enabled.
         this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
         this.downloadCoursesEnabled = !this.coursesProvider.isDownloadCoursesDisabledInSite();
@@ -178,11 +183,12 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
      */
     protected fetchContent(): Promise<any> {
         const config = this.block.configs;
-
+        debugger;
         const showCategories = config && config.displaycategories && config.displaycategories.value == '1';
-
-        return this.coursesHelper.getUserCoursesWithOptions(this.sort, null, null, showCategories).then((courses) => {
+        console.log("Student Id: ", this.studentId)
+        return this.coursesHelper.getUserCoursesWithOptions(this.sort, null, null, showCategories, this.studentId).then((courses) => {
             // Check to show sort by short name only if the text is visible.
+            debugger;
             if (courses.length > 0) {
                 const sampleCourse = courses[0];
                 this.showSortByShortName = sampleCourse.displayname && sampleCourse.shortname &&

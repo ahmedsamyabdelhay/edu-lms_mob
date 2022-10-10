@@ -4,6 +4,7 @@ import { CoreBlockComponent } from "@core/block/components/block/block";
 import { CoreCoursesDashboardProvider } from '@core/courses/providers/dashboard';
 import { CoreDomUtilsProvider } from '@providers/utils/dom';
 import { IonicPage, NavParams } from 'ionic-angular';
+import { CoreSitesProvider } from '@providers/sites';
 /**
  * Generated class for the ChilddetailComponent component.
  *
@@ -26,6 +27,7 @@ export class ChilddetailComponent implements OnDestroy {
   dashboardLoaded = false;
   child: child
   userId: number;
+  childId: number;
   downloadEnabled: boolean = true;
   downloadEnabledIcon = "square-outline"; // Disabled by default.
   downloadCourseEnabled: boolean;
@@ -47,9 +49,11 @@ export class ChilddetailComponent implements OnDestroy {
     private dashboardProvider: CoreCoursesDashboardProvider,
     private domUtils: CoreDomUtilsProvider,
     private navParams: NavParams,
+    private sitesProvider: CoreSitesProvider,
   ) {
-    this.child = navParams.get('child')
-    this.userId = Number(this.child.child_id); 
+    this.child = navParams.get('child');
+    this.childId = Number(this.child.child_id); 
+    this.userId = this.sitesProvider.getCurrentSiteUserId();;
     console.log('Hello ChilddetailComponent Component');
   }
 
@@ -74,10 +78,16 @@ export class ChilddetailComponent implements OnDestroy {
     //         });
     return this.dashboardProvider
             //.getDashboardBlocks(Number(this.child.child_id))
-            .getDashboardBlocks(5836)
+            .getDashboardBlocks(this.userId)
             .then(blocks => {
+              debugger;
               this.blocks = blocks;
-              
+              for(var i = 0; i < this.blocks.length; i++){
+                if(this.blocks[i].name == "myoverview"){
+                  
+                }
+               console.log(this.blocks[i]);
+              }
     
               console.log(this.overviewBlock);
             })
