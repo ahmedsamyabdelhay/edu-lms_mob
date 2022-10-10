@@ -74,7 +74,7 @@ export class ChilddetailComponent implements OnDestroy {
 
 get_student_courses(){
     return this.coursesProvider.getCoursesByField('ids', this.child.child_courses_ids).then((courses) => {
-      debugger;
+    
       this.courses = courses;
       const currentSite = this.sitesProvider.getCurrentSite();
       for(var child_course_key in courses){
@@ -153,11 +153,8 @@ get_student_courses(){
      * @param course The course to open.
      */
    openCourse(course: any): void {
-    if (course.isEnrolled) {
         this.courseHelper.openCourse(this.navCtrl, course);
-    } else {
-        this.navCtrl.push('CoreCoursesCoursePreviewPage', {course: course});
-    }
+   
 }
 
     /**
