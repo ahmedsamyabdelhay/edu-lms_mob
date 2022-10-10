@@ -67,26 +67,21 @@ export class ChilddetailComponent implements OnDestroy {
   }
 
   ngOnInit(): void {
-   // this.loadDashboardContent();
+   this.loadDashboardContent();
    this.get_student_courses();
 }
 
 
 get_student_courses(){
     return this.coursesProvider.getCoursesByField('ids', this.child.child_courses_ids).then((courses) => {
-    
-      this.courses = courses;
+      debugger
       const currentSite = this.sitesProvider.getCurrentSite();
       for(var child_course_key in courses){
-        var course: child_course = {
-          id: courses[child_course_key]['id'],
-          name: courses[child_course_key]['fullname'],
-          course_image_url: courses[child_course_key]['overviewfiles'][0]['fileurl']+"?token="+currentSite.getToken()
-        }
-
-        this.child_courses.push(course);
+        courses[child_course_key]['courseImage'] = courses[child_course_key]['overviewfiles'][0]['fileurl']+"?token="+currentSite.getToken();
       }
 
+      this.courses = courses;
+      debugger;
     }).catch((error) => {
         this.domUtils.showErrorModalDefault(error, 'core.courses.errorloadcourses', true);
     });
@@ -110,7 +105,7 @@ get_student_courses(){
     //         });
     return this.dashboardProvider
             //.getDashboardBlocks(Number(this.child.child_id))
-            .getDashboardBlocks(this.userId)
+            .getDashboardBlocks(2482)
             .then(blocks => {
               debugger;
               this.blocks = blocks;
@@ -153,7 +148,10 @@ get_student_courses(){
      * @param course The course to open.
      */
    openCourse(course: any): void {
-        this.courseHelper.openCourse(this.navCtrl, course);
+   var pageParams: any = {
+      sectionId: 10
+        };
+        this.courseHelper.openCourse(this.navCtrl, course, pageParams);
    
 }
 

@@ -46,23 +46,11 @@
    
   </ion-item-divider>
   
-
-  <ion-scroll scrollX="true" direction="x">
-
-    <ng-container *ngFor="let course of child_courses;">
-      <script>
-        console.log(course)
-      </script>
-      <ion-card class="child_course_card" (click)="openCourse(course)">
-        <ion-card-content>
-          <ion-avatar class="child_course_avatar">
-            <img class="child_course_img" alt="Silhouette of a person's head" [src]="course.course_image_url" />
-          </ion-avatar>
-          <ion-label>{{ course.name }}</ion-label>
-        </ion-card-content>
-      </ion-card>
-  </ng-container>
-  </ion-scroll>
+  <div class="core-horizontal-scroll">
+    <ng-container *ngFor="let course of courses">
+        <core-courses-course-progress [course]="course" class="core-courseoverview" showAll="true" [showDownload]="downloadCourseEnabled && downloadEnabled"></core-courses-course-progress>
+    </ng-container>
+  </div>
 </div>
 
 </ion-content>
