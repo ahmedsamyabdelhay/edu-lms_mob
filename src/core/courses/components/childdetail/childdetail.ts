@@ -51,7 +51,6 @@ export class ChilddetailComponent implements OnDestroy {
   child_courses: child_course[] = [];
 
   constructor(
-    private dashboardProvider: CoreCoursesDashboardProvider,
     private domUtils: CoreDomUtilsProvider,
     private navParams: NavParams,
     private sitesProvider: CoreSitesProvider,
@@ -67,7 +66,6 @@ export class ChilddetailComponent implements OnDestroy {
   }
 
   ngOnInit(): void {
-   this.loadDashboardContent();
    this.get_student_courses();
 }
 
@@ -88,59 +86,7 @@ get_student_courses(){
 }
 
 
-  /**
-   * Convenience function to fetch the dashboard data.
-   *
-   * @return Promise resolved when done.
-   */
-  protected loadDashboardContent(): Promise<any> {
 
-    // const promises = [];
-    //         this.blocksComponents.forEach(blockComponent => {
-    //           promises.push(
-    //             blockComponent.invalidate().catch(() => {
-    //               // Ignore errors.
-    //             })
-    //           );
-    //         });
-    return this.dashboardProvider
-            //.getDashboardBlocks(Number(this.child.child_id))
-            .getDashboardBlocks(2482)
-            .then(blocks => {
-              debugger;
-              this.blocks = blocks;
-              for(var i = 0; i < this.blocks.length; i++){
-                if(this.blocks[i].name == "myoverview"){
-                  
-                }
-               console.log(this.blocks[i]);
-              }
-    
-              console.log(this.overviewBlock);
-            })
-            .catch(error => {
-              this.domUtils.showErrorModal(error);
-
-              // Cannot get the blocks, just show dashboard if needed.
-              this.loadFallbackBlocks();
-            });
-            
-  }
-
-
-
-  protected loadFallbackBlocks(): void {
-    this.blocks = [
-      {
-        name: "myoverview",
-        visible: true
-      },
-      {
-        name: "timeline",
-        visible: true
-      }
-    ];
-  }
 
   /**
      * Open a course.

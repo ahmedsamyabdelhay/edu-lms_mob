@@ -48,7 +48,7 @@
   
   <div class="core-horizontal-scroll">
     <ng-container *ngFor="let course of courses">
-        <core-courses-course-progress [course]="course" class="core-courseoverview" showAll="true" [showDownload]="downloadCourseEnabled && downloadEnabled"></core-courses-course-progress>
+        <core-courses-course-progress [course]="course" class="core-courseoverview" showAll="true" [showDownload]="downloadCourseEnabled && downloadEnabled" [studentId]="child.child_id"></core-courses-course-progress>
     </ng-container>
   </div>
 </div>

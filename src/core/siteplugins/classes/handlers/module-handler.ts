@@ -92,7 +92,7 @@ export class CoreSitePluginsModuleHandler extends CoreSitePluginsBaseHandler imp
                 navCtrl.push('CoreSitePluginsModuleIndexPage', {
                     title: module.name,
                     module: module,
-                    courseId: courseId
+                    courseId: courseId,
                 }, options);
             };
         }
@@ -103,7 +103,8 @@ export class CoreSitePluginsModuleHandler extends CoreSitePluginsBaseHandler imp
 
             const args = {
                     courseid: courseId,
-                    cmid: module.id
+                    cmid: module.id,
+                    studentId: module.studentId
                 };
 
             this.sitePluginsProvider.getContent(this.plugin.component, this.handlerSchema.coursepagemethod, args).then((result) => {

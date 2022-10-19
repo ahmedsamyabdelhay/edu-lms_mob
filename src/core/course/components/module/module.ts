@@ -41,6 +41,7 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
     @Input() section: any; // The section the module belongs to.
     @Input() data: any;
     @Input() numOfKnownPosts: number;
+    @Input() studentId: number;
     @Input('downloadEnabled') set enabled(value: boolean) {
         this.downloadEnabled = value;
 
@@ -130,6 +131,7 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
      * @param event Click event.
      */
     moduleClicked(event: Event): void {
+        debugger;
         if (this.module.handlerData.title === "Site announcements") {
             this.db.insertRecord('schema_news_tracker', {key: 'numOfPosts', value: this.data.numberOfElements}).then(result => {
                 this.numOfKnownPosts = this.data.numberOfElements;
@@ -137,6 +139,7 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
             console.log(this.data, "eh da new module");
         }
         if (this.module.uservisible !== false && this.module.handlerData.action) {
+            this.module['studentId'] = this.studentId;
             this.module.handlerData.action(event, this.navCtrl, this.module, this.courseId);
         }
     }
@@ -148,6 +151,7 @@ export class CoreCourseModuleComponent implements OnInit, OnDestroy {
      * @param button The clicked button.
      */
     buttonClicked(event: Event, button: CoreCourseModuleHandlerButton): void {
+        debugger;
         if (button && button.action) {
             event.preventDefault();
             event.stopPropagation();

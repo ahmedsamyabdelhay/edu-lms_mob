@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Component, ViewChild, OnDestroy, Injector } from '@angular/core';
+import { Component, ViewChild, OnDestroy, Injector, Input } from '@angular/core';
 import { IonicPage, NavParams, Content, NavController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { CoreEventsProvider } from '@providers/events';
@@ -63,6 +63,9 @@ export class CoreCourseSectionPage implements OnDestroy {
     displayEnableDownload: boolean;
     displayRefresher: boolean;
 
+    @Input()
+    studentId: number;
+
     protected module: any;
     protected modParams: any;
     protected completionObserver;
@@ -71,6 +74,8 @@ export class CoreCourseSectionPage implements OnDestroy {
     protected syncObserver;
     protected firstTabName: string;
     protected isDestroyed = false;
+
+
 
     constructor(navParams: NavParams, private courseProvider: CoreCourseProvider, private domUtils: CoreDomUtilsProvider,
             private courseFormatDelegate: CoreCourseFormatDelegate, private courseOptionsDelegate: CoreCourseOptionsDelegate,
@@ -85,6 +90,7 @@ export class CoreCourseSectionPage implements OnDestroy {
         this.module = navParams.get('module');
         this.firstTabName = navParams.get('selectedTab');
         this.modParams = navParams.get('modParams');
+        this.studentId = navParams.get('studentId');
 
         // Get the title to display. We dont't have sections yet.
         this.title = courseFormatDelegate.getCourseTitle(this.course);
@@ -232,6 +238,7 @@ export class CoreCourseSectionPage implements OnDestroy {
                     return sections;
                 }
             }).then((sections) => {
+                debugger;
                 let promise;
 
                  // Get the completion status.
@@ -310,6 +317,13 @@ export class CoreCourseSectionPage implements OnDestroy {
                         tabToLoad = index + 1;
                     }
                 });
+                debugger;
+
+                //Initialize the student Id.
+                for(var handler_key in handlers){
+                    handlers[handler_key]["data"]["componentData"]["studentId"] = this.studentId;
+                }
+
 
                 this.courseHandlers = handlers;
 

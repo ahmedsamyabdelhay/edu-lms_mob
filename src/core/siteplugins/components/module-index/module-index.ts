@@ -33,6 +33,7 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
     @Input() module: any; // The module.
     @Input() courseId: number; // Course ID the module belongs to.
     @Input() pageTitle: string; // Current page title. It can be used by the "new-content" directives.
+    @Input() studentId: number;
 
     @ViewChild(CoreSitePluginsPluginContentComponent) content: CoreSitePluginsPluginContentComponent;
 
@@ -68,6 +69,7 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
      * Component being initialized.
      */
     ngOnInit(): void {
+        debugger;
         this.refreshIcon = 'spinner';
 
         if (this.module) {
@@ -79,7 +81,8 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
                 this.method = handler.handlerSchema.method;
                 this.args = {
                     courseid: this.courseId,
-                    cmid: this.module.id
+                    cmid: this.module.id,
+                    userid: Number(this.module["studentId"]) 
                 };
                 this.initResult = handler.initResult;
                 this.jsData = {
@@ -186,6 +189,7 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
      * @return Result of the call. Undefined if no component instance or the function doesn't exist.
      */
     callComponentFunction(name: string, params?: any[]): any {
+        debugger
         return this.content.callComponentFunction(name, params);
     }
 }

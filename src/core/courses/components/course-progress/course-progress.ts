@@ -41,6 +41,8 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
     @Input() course: any; // The course to render.
     @Input() showAll = false; // If true, will show all actions, options, star and progress.
     @Input() showDownload = true; // If true, will show download button. Only works if the options menu is not shown.
+    @Input() studentId: number;
+
 
     courseStatus = CoreConstants.NOT_DOWNLOADED;
     isDownloading: boolean;
@@ -139,7 +141,10 @@ export class CoreCoursesCourseProgressComponent implements OnInit, OnDestroy {
      * @param course The course to open.
      */
     openCourse(course: any): void {
-        this.courseHelper.openCourse(this.navCtrl, course);
+        var params = {
+            "studentId": this.studentId
+        };
+        this.courseHelper.openCourse(this.navCtrl, course, params);
     }
 
     /**

@@ -109,7 +109,7 @@
 
         <ng-container *ngIf="(section.modules || section.subSections) && section.open">
             <ng-container *ngFor="let module of section.modules">
-                <core-course-module class="sub-section-module" *ngIf="module.visibleoncoursepage !== 0" [module]="module" [courseId]="course.id" [downloadEnabled]="downloadEnabled" [section]="section"
+                <core-course-module class="sub-section-module" *ngIf="module.visibleoncoursepage !== 0" [module]="module" [courseId]="course.id" [studentId]="studentId" [downloadEnabled]="downloadEnabled" [section]="section"
                     (completionChanged)="onCompletionChange($event)" (statusChanged)="onModuleStatusChange($event)"></core-course-module>
             </ng-container>
             <ion-list class="sub-section-list">
@@ -142,7 +142,7 @@
                   <ng-container *ngIf="subSection.modules && subSection.open">
                       <ng-container *ngFor="let module of subSection.modules">
                           <core-course-module *ngIf="module.visibleoncoursepage !== 0" [module]="module" [courseId]="course.id" [downloadEnabled]="downloadEnabled" [section]="subSection"
-                              (completionChanged)="onCompletionChange($event)" (statusChanged)="onModuleStatusChange($event)"></core-course-module>
+                              (completionChanged)="onCompletionChange($event)" (statusChanged)="onModuleStatusChange($event)" [studentId]="studentId"></core-course-module>
                       </ng-container>
                   </ng-container>
               </section>

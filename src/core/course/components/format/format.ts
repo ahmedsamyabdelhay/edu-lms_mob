@@ -67,6 +67,10 @@ export class CoreCourseFormatComponent implements OnInit, OnChanges, OnDestroy {
   initialSectionNumber?: number; // The section to load first (by number).
   @Input()
   moduleId?: number; // The module ID to scroll to. Must be inside the initial selected section.
+
+  @Input()
+  studentId: number;
+  
   @Output()
   completionChanged?: EventEmitter<any>; // Will emit an event when any module completion changes.
 
