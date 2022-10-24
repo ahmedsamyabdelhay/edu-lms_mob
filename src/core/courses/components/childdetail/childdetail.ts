@@ -59,6 +59,7 @@ export class ChilddetailComponent implements OnDestroy {
     private courseHelper: CoreCourseHelperProvider
 
   ) {
+    debugger;
     this.child = navParams.get('child');
     this.childId = Number(this.child.child_id); 
     this.userId = this.sitesProvider.getCurrentSiteUserId();;

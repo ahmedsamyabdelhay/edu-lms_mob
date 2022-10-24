@@ -60,8 +60,9 @@ export class MychildrenComponent {
               child_image_url:  this.check_image_URL(json[child_key]['child_image_url']),
               child_name: json[child_key]['child_name'],
               child_courses_ids: "",
-              child_courses: []
-            }
+              child_courses: [],
+              child_report_link:  json[child_key]['child_reportlink']
+            };
             let child_courses_ids = [];
             for(var child_course_key in json[child_key]['child_courses']){
               child_obj.child_courses.push(
