@@ -59,7 +59,7 @@ export class ChilddetailComponent implements OnDestroy {
     private courseHelper: CoreCourseHelperProvider
 
   ) {
-    debugger;
+    //debugger;
     this.child = navParams.get('child');
     this.childId = Number(this.child.child_id); 
     this.userId = this.sitesProvider.getCurrentSiteUserId();;
@@ -80,7 +80,7 @@ get_student_courses(){
       }
 
       this.courses = courses;
-      debugger;
+      //debugger;
     }).catch((error) => {
         this.domUtils.showErrorModalDefault(error, 'core.courses.errorloadcourses', true);
     });

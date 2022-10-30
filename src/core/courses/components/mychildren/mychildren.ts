@@ -46,14 +46,14 @@ export class MychildrenComponent {
   async get_children(){
     this.get_children_data().subscribe(
       (response) => {   
-        debugger;
+        //debugger;
         var json = JSON.parse(response);                        //next() callback
 
       
 
       for(var child_key in json){
         if(json.hasOwnProperty(child_key)){
-            debugger;
+            //debugger;
             var child_obj: child = {
               child_email: json[child_key]['child_email'],
               child_id: json[child_key]['child_id'],
@@ -82,7 +82,7 @@ export class MychildrenComponent {
       }
 
 
-        console.log(json)
+        //console.log(json)
       },
       (error) => {                              //error() callback
         console.error('Request failed with error')

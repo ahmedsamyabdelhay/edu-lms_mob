@@ -49,7 +49,7 @@ export class CoreGradesCourseComponent {
      * View loaded.
      */
     ngOnInit(): void {
-        debugger;
+        //debugger;
         this.user_id = this.studentId > 0 ? this.studentId : this.userId;
         this.fetchData().then(() => {
             if (this.gradeId) {

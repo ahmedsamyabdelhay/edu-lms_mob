@@ -91,9 +91,9 @@ export class CoreSitePluginsPluginContentComponent implements OnInit, DoCheck {
         this.onLoadingContent.emit(refresh);
 
         this.forceCompile = false;
-        debugger;
+        //debugger;
         return this.sitePluginsProvider.getContent(this.component, this.method, this.args, this.preSets).then((result) => {
-           debugger;
+           //debugger;
             this.content = result.templates.length ? result.templates[0].html : ''; // Load first template.
             this.javascript = result.javascript;
             this.otherData = result.otherdata;

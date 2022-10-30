@@ -238,7 +238,7 @@ export class CoreCourseSectionPage implements OnDestroy {
                     return sections;
                 }
             }).then((sections) => {
-                debugger;
+                //debugger;
                 let promise;
 
                  // Get the completion status.
@@ -317,7 +317,7 @@ export class CoreCourseSectionPage implements OnDestroy {
                         tabToLoad = index + 1;
                     }
                 });
-                debugger;
+                //debugger;
 
                 //Initialize the student Id.
                 for(var handler_key in handlers){

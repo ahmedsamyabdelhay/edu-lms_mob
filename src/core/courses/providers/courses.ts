@@ -494,7 +494,7 @@ export class CoreCoursesProvider {
                 };
 
             return site.read('core_course_get_courses_by_field', data, preSets).then((courses) => {
-                debugger;
+                //debugger;
                 if (courses.courses) {
                     if (field == 'ids' && hasChanged) {
                         // The list of courses requestes was changed to optimize it.
@@ -818,7 +818,7 @@ export class CoreCoursesProvider {
             }
 
             return site.read('core_enrol_get_users_courses', data, preSets).then((courses) => {
-                debugger;
+                //debugger;
                 if (this.userCoursesIds) {
                     // Check if the list of courses has changed.
                     const added = [],

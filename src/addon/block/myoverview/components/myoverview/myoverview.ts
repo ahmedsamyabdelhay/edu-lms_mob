@@ -105,7 +105,7 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
      */
     ngOnInit(): void {
 
-        console.log("Student Id", this.studentId);
+        //console.log("Student Id", this.studentId);
 
         // Refresh the enabled flags if enabled.
         this.downloadCourseEnabled = !this.coursesProvider.isDownloadCourseDisabledInSite();
@@ -183,12 +183,12 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
      */
     protected fetchContent(): Promise<any> {
         const config = this.block.configs;
-        debugger;
+        //debugger;
         const showCategories = config && config.displaycategories && config.displaycategories.value == '1';
-        console.log("Student Id: ", this.studentId)
+        //console.log("Student Id: ", this.studentId)
         return this.coursesHelper.getUserCoursesWithOptions(this.sort, null, null, showCategories, this.studentId).then((courses) => {
             // Check to show sort by short name only if the text is visible.
-            debugger;
+            //debugger;
             if (courses.length > 0) {
                 const sampleCourse = courses[0];
                 this.showSortByShortName = sampleCourse.displayname && sampleCourse.shortname &&
