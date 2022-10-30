@@ -1600,6 +1600,7 @@ export class CoreCourseHelperProvider {
     openCourse(navCtrl: NavController, course: any, params?: any, siteId?: string): Promise<any> {
         if (!siteId || siteId == this.sitesProvider.getCurrentSiteId()) {
             // Current site, we can open the course.
+        
             return this.courseProvider.openCourse(navCtrl, course, params);
         } else {
             // We need to load the site first.

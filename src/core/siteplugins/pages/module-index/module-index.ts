@@ -31,11 +31,13 @@ export class CoreSitePluginsModuleIndexPage {
 
     module: any;
     courseId: number;
+    studentId: number;
 
     constructor(params: NavParams) {
         this.title = params.get('title');
         this.module = params.get('module');
         this.courseId = params.get('courseId');
+        this.studentId = params.get('studentId');
     }
 
     /**

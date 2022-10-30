@@ -33,9 +33,12 @@ export class CoreGradesCourseComponent {
     @Input() courseId: number;
     @Input() userId: number;
     @Input() gradeId?: number;
+    @Input() studentId: number;
 
     gradesLoaded = false;
     gradesTable: any;
+    //user Id for person whose grade need to be 
+    user_id : number;
 
     constructor(private gradesProvider: CoreGradesProvider, private domUtils: CoreDomUtilsProvider, navParams: NavParams,
         private gradesHelper: CoreGradesHelperProvider, @Optional() private navCtrl: NavController,
@@ -46,6 +49,8 @@ export class CoreGradesCourseComponent {
      * View loaded.
      */
     ngOnInit(): void {
+        debugger;
+        this.user_id = this.studentId > 0 ? this.studentId : this.userId;
         this.fetchData().then(() => {
             if (this.gradeId) {
                 // There is the grade to load.
@@ -53,7 +58,7 @@ export class CoreGradesCourseComponent {
             }
 
             // Add log in Moodle.
-            return this.gradesProvider.logCourseGradesView(this.courseId, this.userId).catch(() => {
+            return this.gradesProvider.logCourseGradesView(this.courseId, this.user_id).catch(() => {
                 // Ignore errors.
             });
         }).finally(() => {
@@ -68,7 +73,7 @@ export class CoreGradesCourseComponent {
      * @return Resolved when done.
      */
     fetchData(refresh: boolean = false): Promise<any> {
-        return this.gradesProvider.getCourseGradesTable(this.courseId, this.userId).then((table) => {
+        return this.gradesProvider.getCourseGradesTable(this.courseId, this.user_id).then((table) => {
             this.gradesTable = this.gradesHelper.formatGradesTable(table);
         }).catch((error) => {
             this.domUtils.showErrorModalDefault(error, 'Error loading grades');
@@ -81,7 +86,7 @@ export class CoreGradesCourseComponent {
      * @param refresher Refresher.
      */
     refreshGrades(refresher: any): void {
-        this.gradesProvider.invalidateCourseGradesData(this.courseId, this.userId).finally(() => {
+        this.gradesProvider.invalidateCourseGradesData(this.courseId, this.user_id).finally(() => {
             this.fetchData().finally(() => {
                 refresher.complete();
             });
@@ -119,7 +124,7 @@ export class CoreGradesCourseComponent {
                 }
 
             }
-            whereToPush.push(pageName, {courseId: this.courseId, userId: this.userId, gradeId: gradeId});
+            whereToPush.push(pageName, {courseId: this.courseId, userId: this.user_id, gradeId: gradeId});
         }
     }
 }

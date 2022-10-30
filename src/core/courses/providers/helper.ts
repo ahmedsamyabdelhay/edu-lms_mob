@@ -158,9 +158,9 @@ export class CoreCoursesHelperProvider {
      * @param loadCategoryNames Whether load category names or not.
      * @return Courses filled with options.
      */
-    getUserCoursesWithOptions(sort: string = 'fullname', slice: number = 0, filter?: string, loadCategoryNames: boolean = false):
+    getUserCoursesWithOptions(sort: string = 'fullname', slice: number = 0, filter?: string, loadCategoryNames: boolean = false, studentId: number = 0):
             Promise<any[]> {
-        return this.coursesProvider.getUserCourses().then((courses) => {
+        return this.coursesProvider.getUserCourses(null, null, null, studentId).then((courses) => {
             const promises = [],
                 courseIds = courses.map((course) => {
                     return course.id;

@@ -1,0 +1,54 @@
+<!-- Generated template for the ChilddetailComponent component -->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Student Demo</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+<ion-card>
+  <ion-grid>
+    <ion-row  text-center>
+    
+      <ion-col>
+        <ion-avatar>
+          <img style="border-radius:50%;" alt="Silhouette of a person's head" [src]=child.child_image_url />
+        </ion-avatar>
+      </ion-col>
+
+  </ion-row>
+  <ion-row  text-center style="border-bottom:2px solid #A6A6A6">
+
+    <ion-col>
+      <div class="ion-text-center">{{ child.child_name }}</div>
+      <div class="ion-text-center">{{ child.child_email }}</div>
+      <div class="ion-text-center">Grade</div>
+    </ion-col>
+
+
+  </ion-row>
+  <ion-row  text-center>
+    <ion-col>
+      <div><a href="{{child.child_report_link}}" style="text-decoration: none;">Report</a></div>
+    </ion-col>
+  </ion-row>
+
+  </ion-grid>
+</ion-card>
+
+<div *ngIf="courses.length > 0">
+  <ion-item-divider>
+    <h2>{{ 'Courses' | translate }}</h2>
+   
+  </ion-item-divider>
+  
+  <div class="core-horizontal-scroll">
+    <ng-container *ngFor="let course of courses">
+        <core-courses-course-progress [course]="course" class="core-courseoverview" showAll="true" [showDownload]="downloadCourseEnabled && downloadEnabled" [studentId]="child.child_id"></core-courses-course-progress>
+    </ng-container>
+  </div>
+</div>
+
+</ion-content>
+
+
+

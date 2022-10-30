@@ -100,7 +100,7 @@ export class CoreSitePluginsProvider {
 
             // Clone the object so the original one isn't modified.
             const argsToSend = this.utils.clone(args);
-
+            debugger;
             argsToSend.userid = args.userid || site.getUserId();
             argsToSend.appid = CoreConfigConstants.app_id;
             argsToSend.appversioncode = CoreConfigConstants.versioncode;
@@ -218,7 +218,7 @@ export class CoreSitePluginsProvider {
         this.logger.debug(`Get content for component '${component}' and method '${method}'`);
 
         return this.sitesProvider.getSite(siteId).then((site) => {
-
+            debugger;
             // Add some params that will always be sent.
             return this.addDefaultArgs(args, site).then((argsToSend) => {
                 // Now call the WS.
@@ -232,7 +232,7 @@ export class CoreSitePluginsProvider {
                 preSets.cacheKey = this.getContentCacheKey(component, method, args);
                 preSets.updateFrequency = typeof preSets.updateFrequency != 'undefined' ? preSets.updateFrequency :
                         CoreSite.FREQUENCY_OFTEN;
-
+                    debugger;
                 return this.sitesProvider.getCurrentSite().read('tool_mobile_get_content', data, preSets);
             }).then((result) => {
                 if (result.otherdata) {
