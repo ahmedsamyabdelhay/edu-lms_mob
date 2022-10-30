@@ -17,8 +17,8 @@ export class CoreConfigConstants {
     static app_id = 'com.future.edusync';
     static appname = 'Future-Schools Mobile';
     static desktopappname = 'Future-Schools Desktop';
-    static versioncode = 5;
-    static versionname = '0.0.5';
+    static versioncode = 8;
+    static versionname = '0.0.8';
     static cache_update_frequency_usually = 420000;
     static cache_update_frequency_often = 1200000;
     static cache_update_frequency_sometimes = 3600000;
@@ -120,6 +120,6 @@ export class CoreConfigConstants {
         mac: 'id1255924440',
         linux: 'https://download.moodle.org/desktop/download.php?platform=linux&arch=64'
     };
-    static compilationtime = 1663086424445;
-    static lastcommit = '3ae76b48c9481178462a1c806de010af2fbbdb6d';
+    static compilationtime = 1667122720188;
+    static lastcommit = 'f8ffeefbac4669b715c9adcc3a9d61180eba5a74';
 }

@@ -204,8 +204,16 @@ export class AddonNotificationsListPage {
      * @param notification The notification object.
      */
     protected formatText(notification: AddonNotificationsAnyNotification): void {
-        const text = notification.mobiletext.replace(/-{4,}/ig, '');
-        notification.mobiletext = this.textUtils.replaceNewLines(text, '<br>');
+        let text = null;
+        if (notification.mobiletext) {
+            text = notification.mobiletext.replace(/-{4,}/ig, '');
+        }
+        else if (notification.text) {
+            text = notification.text.replace(/-{4,}/ig, '');
+        }
+        if (text) {
+            notification.mobiletext = this.textUtils.replaceNewLines(text, '<br>');
+        }
     }
 
     /**

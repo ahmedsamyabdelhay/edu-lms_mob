@@ -40,7 +40,11 @@ export class CoreDbProvider {
      */
     getDB(name: string, forceNew?: boolean): SQLiteDB {
         if (typeof this.dbInstances[name] === 'undefined' || forceNew) {
-            this.dbInstances[name] = new SQLiteDBMock(name);
+            if (this.platform.is('ios')) {
+                this.dbInstances[name] = new SQLiteDB(name, this.sqlite, this.platform);
+            } else {
+                this.dbInstances[name] = new SQLiteDBMock(name);
+            }
         }
 
         return this.dbInstances[name];
