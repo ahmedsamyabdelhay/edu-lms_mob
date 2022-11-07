@@ -49,7 +49,7 @@
                            <core-dashboard-announcements  *ngIf="announcementsBlock && announcementsLoaded" [block]="announcementsBlock" [announcementsLoaded]="announcementsLoaded" contextLevel="user" [instanceId]="userId" [extraData]="{'downloadEnabled': downloadEnabled}"></core-dashboard-announcements>
                             <!-- Dashboard blocks. -->
                             <mychildren    *ngIf="childrenLoaded" ></mychildren>
-                            <ng-container *ngFor="let block of blocks | slice:1">
+                            <ng-container *ngFor="let block of blocks | slice:sliceValue">
                                 <core-block *ngIf="block.visible" [block]="block" contextLevel="user" [instanceId]="userId" [extraData]="{'downloadEnabled': downloadEnabled}"></core-block>
                             </ng-container>
                         </ion-list>

@@ -68,6 +68,7 @@ export class CoreCoursesDashboardPage implements OnDestroy {
   tabs = [];
   siteName: string;
   blocks: any[];
+  sliceValue=1;
   announcementsBlock: any;
   dashboardEnabled = false;
   userId: number;
@@ -316,6 +317,8 @@ export class CoreCoursesDashboardPage implements OnDestroy {
             .then(blocks => {
               this.blocks = blocks;
               for(var block of blocks) {
+                console.log("block",block)
+                console.log("current value",this.sliceValue)
                 if (block.name === "news_items") this.announcementsBlock = block;
               }
             })
@@ -350,13 +353,13 @@ export class CoreCoursesDashboardPage implements OnDestroy {
    this.get_children_data().subscribe(data=>{
     console.log("alihaider",data)
     if(!data){
+      this.sliceValue=0;
       this.childrenLoaded=false
     }else {
+      this.sliceValue=1;
       this.childrenLoaded=true
 
     }
-   debugger
-
    })
    }
 
