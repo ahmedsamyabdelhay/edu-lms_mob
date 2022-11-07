@@ -34,7 +34,7 @@ export class ChilddetailComponent implements OnDestroy {
   downloadEnabled: boolean = true;
   downloadEnabledIcon = "square-outline"; // Disabled by default.
   downloadCourseEnabled: boolean;
-  downloadCoursesEnabled: boolean;  
+  downloadCoursesEnabled: boolean;
   @ViewChildren(CoreBlockComponent)
   blocksComponents: QueryList<CoreBlockComponent>;
   myoverview_component = "addon-block-myoverview";
@@ -59,9 +59,8 @@ export class ChilddetailComponent implements OnDestroy {
     private courseHelper: CoreCourseHelperProvider
 
   ) {
-    debugger;
     this.child = navParams.get('child');
-    this.childId = Number(this.child.child_id); 
+    this.childId = Number(this.child.child_id);
     this.userId = this.sitesProvider.getCurrentSiteUserId();;
     console.log('Hello ChilddetailComponent Component');
   }
@@ -73,14 +72,12 @@ export class ChilddetailComponent implements OnDestroy {
 
 get_student_courses(){
     return this.coursesProvider.getCoursesByField('ids', this.child.child_courses_ids).then((courses) => {
-      debugger
       const currentSite = this.sitesProvider.getCurrentSite();
       for(var child_course_key in courses){
         courses[child_course_key]['courseImage'] = courses[child_course_key]['overviewfiles'][0]['fileurl']+"?token="+currentSite.getToken();
       }
 
       this.courses = courses;
-      debugger;
     }).catch((error) => {
         this.domUtils.showErrorModalDefault(error, 'core.courses.errorloadcourses', true);
     });
@@ -99,7 +96,7 @@ get_student_courses(){
       sectionId: 10
         };
         this.courseHelper.openCourse(this.navCtrl, course, pageParams);
-   
+
 }
 
     /**

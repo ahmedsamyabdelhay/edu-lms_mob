@@ -183,12 +183,10 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
      */
     protected fetchContent(): Promise<any> {
         const config = this.block.configs;
-        debugger;
         const showCategories = config && config.displaycategories && config.displaycategories.value == '1';
         console.log("Student Id: ", this.studentId)
         return this.coursesHelper.getUserCoursesWithOptions(this.sort, null, null, showCategories, this.studentId).then((courses) => {
             // Check to show sort by short name only if the text is visible.
-            debugger;
             if (courses.length > 0) {
                 const sampleCourse = courses[0];
                 this.showSortByShortName = sampleCourse.displayname && sampleCourse.shortname &&

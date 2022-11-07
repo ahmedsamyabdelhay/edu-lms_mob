@@ -45,11 +45,11 @@ export class MychildrenComponent {
 
   async get_children(){
     this.get_children_data().subscribe(
-      (response) => {   
-        debugger;
+      (response) => {
+
         var json = JSON.parse(response);                        //next() callback
 
-      
+
 
       for(var child_key in json){
         if(json.hasOwnProperty(child_key)){
@@ -90,8 +90,8 @@ export class MychildrenComponent {
         this.loading = false;
       },
       () => {                                   //complete() callback
-        console.error('Request completed')      //This is actually not needed 
-        this.loading = false; 
+        console.error('Request completed')      //This is actually not needed
+        this.loading = false;
       }
     )
   }
