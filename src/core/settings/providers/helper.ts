@@ -392,6 +392,6 @@ export class CoreSettingsHelper {
         document.body.classList.remove('scheme-light');
         document.body.classList.remove('scheme-dark');
         document.body.classList.remove('scheme-auto');
-        document.body.classList.add('scheme-' + colorScheme);
+        document.body.classList.add('scheme-light');
     }
 }
