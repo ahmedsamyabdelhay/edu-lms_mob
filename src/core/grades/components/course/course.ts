@@ -37,7 +37,7 @@ export class CoreGradesCourseComponent {
 
     gradesLoaded = false;
     gradesTable: any;
-    //user Id for person whose grade need to be 
+    //user Id for person whose grade need to be
     user_id : number;
 
     constructor(private gradesProvider: CoreGradesProvider, private domUtils: CoreDomUtilsProvider, navParams: NavParams,
@@ -49,7 +49,6 @@ export class CoreGradesCourseComponent {
      * View loaded.
      */
     ngOnInit(): void {
-        //debugger;
         this.user_id = this.studentId > 0 ? this.studentId : this.userId;
         this.fetchData().then(() => {
             if (this.gradeId) {

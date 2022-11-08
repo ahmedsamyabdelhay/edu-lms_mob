@@ -69,7 +69,6 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
      * Component being initialized.
      */
     ngOnInit(): void {
-        //debugger;
         this.refreshIcon = 'spinner';
 
         if (this.module) {
@@ -82,7 +81,7 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
                 this.args = {
                     courseid: this.courseId,
                     cmid: this.module.id,
-                    userid: Number(this.module["studentId"]) 
+                    userid: Number(this.module["studentId"])
                 };
                 this.initResult = handler.initResult;
                 this.jsData = {
@@ -189,7 +188,6 @@ export class CoreSitePluginsModuleIndexComponent implements OnInit, OnDestroy, C
      * @return Result of the call. Undefined if no component instance or the function doesn't exist.
      */
     callComponentFunction(name: string, params?: any[]): any {
-        debugger
         return this.content.callComponentFunction(name, params);
     }
 }

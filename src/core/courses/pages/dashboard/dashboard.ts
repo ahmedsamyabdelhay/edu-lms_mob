@@ -38,6 +38,9 @@ import { CoreSite } from "@classes/site";
 import { CoreDbProvider } from '../../../../providers/db';
 import { SQLiteDB, SQLiteDBTableSchema } from '@classes/sqlitedb';
 import { Strings } from '../../../../syncology/configs';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
 
 /**
  * Page that displays the dashboard.
@@ -65,12 +68,14 @@ export class CoreCoursesDashboardPage implements OnDestroy {
   tabs = [];
   siteName: string;
   blocks: any[];
+  sliceValue=1;
   announcementsBlock: any;
   dashboardEnabled = false;
   userId: number;
   dashboardLoaded = false;
   announcementsEnabled: boolean;
   announcementsLoaded = false;
+  childrenLoaded = false;
   section: any;
   siteHomeId: number;
   currentSite: CoreSite;
@@ -118,11 +123,13 @@ export class CoreCoursesDashboardPage implements OnDestroy {
     private courseHelper: CoreCourseHelperProvider,
     private prefetchDelegate: CoreCourseModulePrefetchDelegate,
     protected dbProvider: CoreDbProvider,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private http: HttpClient
+
   ) {
     this.db = dbProvider.getDB(this.DBNAME);
     this.db.createTableFromSchema(this.coreAppSchema);
-              
+
     this.currentSite = sitesProvider.getCurrentSite();
     this.siteHomeId = this.currentSite.getSiteHomeId();
     this.loadSiteName();
@@ -138,6 +145,7 @@ export class CoreCoursesDashboardPage implements OnDestroy {
       () => {
         this.refreshDashboard(null);
         this.refreshMyCourses(null);
+        this.get_children();
       },
       false
     );
@@ -303,13 +311,15 @@ export class CoreCoursesDashboardPage implements OnDestroy {
       .then(available => {
         if (available) {
           this.userId = this.sitesProvider.getCurrentSiteUserId();
-
+         this.get_children()
           return this.dashboardProvider
             .getDashboardBlocks()
             .then(blocks => {
               this.blocks = blocks;
               for(var block of blocks) {
-                if (block.name === "news_items") this.announcementsBlock = block; 
+                console.log("block",block)
+                console.log("current value",this.sliceValue)
+                if (block.name === "news_items") this.announcementsBlock = block;
               }
             })
             .catch(error => {
@@ -339,6 +349,26 @@ export class CoreCoursesDashboardPage implements OnDestroy {
    *
    * @param refresher Refresher.
    */
+   async get_children(){
+   this.get_children_data().subscribe(data=>{
+    console.log("alihaider",data)
+    if(!data){
+      this.sliceValue=0;
+      this.childrenLoaded=false
+    }else {
+      this.sliceValue=1;
+      this.childrenLoaded=true
+
+    }
+   })
+   }
+
+   get_children_data(): Observable<any>{
+    let userid = this.sitesProvider.getCurrentSiteUserId();;
+    let url = `https://national.future-schools.co/webservice/rest/server.php?wstoken=6cfa7f60bf579ba0d59b779bad638364&wsfunction=get_child&moodlewsrestformat=json&parentid=${userid}`
+    var response =this.http.get(url);
+    return response
+  }
   refreshDashboard(refresher: any): void {
     // Refresh announcements
     this.refreshAnnouncements();

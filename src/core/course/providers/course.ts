@@ -997,7 +997,6 @@ export class CoreCourseProvider {
                                 observer && observer.off();
 
                                 this.courseFormatDelegate.openCourse(navCtrl, course, params).then((response) => {
-                                    debugger
                                     deferred.resolve(response);
                                 }).catch((error) => {
                                     deferred.reject(error);
