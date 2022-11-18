@@ -120,6 +120,6 @@ export class CoreConfigConstants {
         mac: 'id1255924440',
         linux: 'https://download.moodle.org/desktop/download.php?platform=linux&arch=64'
     };
-    static compilationtime = 1666596861842;
-    static lastcommit = '4fd8dbaa0b1d126bc96f4af4a1071a5e6e5d86df';
+    static compilationtime = 1668745926275;
+    static lastcommit = '361753faa001209dd8f59574d1c4d16ffc35bebc';
 }

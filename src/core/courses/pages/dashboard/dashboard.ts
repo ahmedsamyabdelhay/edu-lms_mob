@@ -364,8 +364,10 @@ export class CoreCoursesDashboardPage implements OnDestroy {
    }
 
    get_children_data(): Observable<any>{
-    let userid = this.sitesProvider.getCurrentSiteUserId();;
-    let url = `https://national.future-schools.co/webservice/rest/server.php?wstoken=6cfa7f60bf579ba0d59b779bad638364&wsfunction=get_child&moodlewsrestformat=json&parentid=${userid}`
+    let userid = this.sitesProvider.getCurrentSiteUserId();
+    var current_site = this.sitesProvider.getCurrentSite();
+    let current_site_url = current_site.siteUrl;
+    let url = `${current_site_url}/webservice/rest/server.php?wstoken=6cfa7f60bf579ba0d59b779bad638364&wsfunction=get_child&moodlewsrestformat=json&parentid=${userid}`;
     var response =this.http.get(url);
     return response
   }
