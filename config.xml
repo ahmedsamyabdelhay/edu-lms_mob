@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="39208" id="com.future.edusync" ios-CFBundleVersion="0.0.8.0" version="0.0.8" versionCode="00080" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="39212" id="com.future.edusync" ios-CFBundleVersion="0.1.1.0" version="0.1.1" versionCode="00110" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Future-Schools</name>
     <description>Future-Schools LMS official app</description>
-    <author email="ahmed.mahmoud@syncology.tech" href="https://syncology.tech">Syncology team</author>
+    <author email="ahmed.mahmoud@future-schools.co" href="https://future-schools.co">Syncology team</author>
     <content src="index.html" />
     <access origin="*" />
     <access launch-external="yes" origin="tel:*" />
@@ -41,7 +41,7 @@
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="android-minSdkVersion" value="19" />
-    <preference name="android-targetSdkVersion" value="30" />
+    <preference name="android-targetSdkVersion" value="31" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="CustomURLSchemePluginClearsAndroidIntent" value="true" />
     <preference name="iosPersistentFileLocation" value="Compatibility" />
@@ -210,12 +210,12 @@
             <activity android:exported="true" android:name="com.adobe.phonegap.push.PushHandlerActivity" android:permission="${applicationId}.permission.PushHandlerActivity" />
             <receiver android:name="com.adobe.phonegap.push.BackgroundActionButtonHandler" />
             <receiver android:name="com.adobe.phonegap.push.PushDismissedHandler" />
-            <service android:name="com.adobe.phonegap.push.FCMService">
+            <service android:exported="false" android:name="com.adobe.phonegap.push.FCMService">
                 <intent-filter>
                     <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 </intent-filter>
             </service>
-            <service android:name="com.adobe.phonegap.push.PushInstanceIDListenerService">
+            <service android:exported="false" android:name="com.adobe.phonegap.push.PushInstanceIDListenerService">
                 <intent-filter>
                     <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
                 </intent-filter>
@@ -267,7 +267,7 @@
             <true />
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="CFBundleShortVersionString">
-            <string>0.0.8</string>
+            <string>0.1.1</string>
         </edit-config>
         <config-file parent="FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED" target="*-Info.plist">
             <string>YES</string>

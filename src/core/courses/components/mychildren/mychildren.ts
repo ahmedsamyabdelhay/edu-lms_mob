@@ -97,7 +97,7 @@ export class MychildrenComponent {
   }
 
   get_children_data(): Observable<any>{
-    debugger
+    // debugger
     let userid = this.sitesProvider.getCurrentSiteUserId();
     var current_site = this.sitesProvider.getCurrentSite();
     let current_site_url = current_site.siteUrl;

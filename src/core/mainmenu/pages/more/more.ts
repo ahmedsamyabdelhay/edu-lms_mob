@@ -25,6 +25,7 @@ import { CoreLoginHelperProvider } from '@core/login/providers/helper';
 import { CoreContentLinksHelperProvider } from '@core/contentlinks/providers/helper';
 import { TranslateService } from '@ngx-translate/core';
 import { Strings } from '../../../../syncology/configs';
+import { HttpClient } from '@angular/common/http';
 
 /**
  * Page that displays the list of main menu options that aren't in the tabs.
@@ -53,6 +54,7 @@ export class CoreMainMenuMorePage implements OnDestroy {
     protected updateSiteObserver;
 
     constructor(protected menuDelegate: CoreMainMenuDelegate,
+            private http: HttpClient,
             protected sitesProvider: CoreSitesProvider,
             protected navCtrl: NavController,
             protected mainMenuProvider: CoreMainMenuProvider,
@@ -136,7 +138,20 @@ export class CoreMainMenuMorePage implements OnDestroy {
         });
 
         this.mainMenuProvider.getCustomMenuItems().then((items) => {
-            this.customItems = items;
+            let userid = this.sitesProvider.getCurrentSiteUserId();
+            var current_site = this.sitesProvider.getCurrentSite();
+            let current_site_url = current_site.siteUrl;
+            let url = `${current_site_url}/webservice/rest/server.php?wstoken=6cfa7f60bf579ba0d59b779bad638364&wsfunction=get_child&moodlewsrestformat=json&parentid=${userid}`;
+            var response =this.http.get(url);
+            response.subscribe(data=>{
+                if (data) {
+                    this.customItems = items.filter((item: any) =>
+                      item.label !== "Time Table" && item.label !== "Report Card");
+                } else {
+                    this.customItems = items
+                }
+            });
+            
         });
     }
 

@@ -254,7 +254,7 @@ function setAppMenu() {
                     label: 'Docs',
                     accelerator: 'CmdOrCtrl+H',
                     click() {
-                        shell.openExternal('https://syncology.tech');
+                        shell.openExternal('https://future-schools.co');
                     }
                 }
             ]
