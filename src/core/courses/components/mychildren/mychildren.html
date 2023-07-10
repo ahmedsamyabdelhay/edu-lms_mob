@@ -5,7 +5,7 @@
 </ion-item-divider>
 <ion-scroll scrollX="true" direction="x">
   <ng-container *ngFor="let child of children;">
-    <ion-card (click)="openChildDetail(child)">
+    <ion-card (click)="openChildDetail(child)" style="height: 148px;">
       <ion-card-content>
         <ion-card-title>
           
@@ -21,8 +21,8 @@
               </ion-col>
     
             <ion-col col-8>
-              <div>{{ child.child_name }}</div>
-              <div>{{ child.child_email }}</div>
+              <p class="childName">{{ child.child_name }}</p>
+              <p class="childEmail">{{ child.child_email }}</p>
             </ion-col>
           </ion-row>
           </ion-grid>
@@ -30,3 +30,14 @@
     </ion-card>
   </ng-container>
 </ion-scroll>
+
+<style>
+.childName{
+  text-wrap: wrap;
+    font-size: small;
+}
+.childEmail{
+  text-wrap: wrap;
+    font-size: small;
+}
+</style>
