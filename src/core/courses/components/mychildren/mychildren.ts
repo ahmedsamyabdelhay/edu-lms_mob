@@ -107,7 +107,7 @@ export class MychildrenComponent {
 
    check_image_URL(url: string) : string{
       var image_url = "";
-      if(url.match(/\.(jpeg|jpg|gif|png)$/) != null){
+      if (url && url.trim() !== ''){
         image_url = url;
       }
       else{
