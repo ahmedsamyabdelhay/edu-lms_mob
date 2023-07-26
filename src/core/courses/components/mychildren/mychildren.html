@@ -21,8 +21,8 @@
               </ion-col>
     
             <ion-col col-8>
-              <p class="childName">{{ child.child_name }}</p>
-              <p class="childEmail">{{ child.child_email }}</p>
+              <p class="childName wrap">{{ child.child_name }}</p>
+              <p class="childEmail wrap">{{ child.child_email }}</p>
             </ion-col>
           </ion-row>
           </ion-grid>
@@ -32,12 +32,9 @@
 </ion-scroll>
 
 <style>
-.childName{
-  text-wrap: wrap;
+.wrap{
+    text-wrap: wrap;
     font-size: small;
-}
-.childEmail{
-  text-wrap: wrap;
-    font-size: small;
+    white-space: normal;
 }
 </style>
